@@ -1,0 +1,43 @@
+.photo-upload-content{
+    display:flex;
+    flex-direction: column;
+    max-width:250px;
+    max-height:250px;
+    
+}
+.photo-upload-content img{
+    width: 250px;
+    height: 250px;
+    max-width:250px;
+    max-height:250px;
+}
+
+.exit-row{
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+}
+
+.imageBlock{
+    position: relative;
+}
+
+.imageBlock button{
+    position: absolute;
+    right:0px;
+    top:0px;
+    transition:0.5s;
+}
+
+.imageBlock button:hover{
+    background-color:#3F51B5;
+    transition:0.5s;
+}
+
+input{
+    margin-top: 10px;
+}
+
+@media only screen and (max-width: 450px) {
+    
+}  

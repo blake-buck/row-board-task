@@ -1,0 +1,114 @@
+<div role='listitem'
+    (dblclick)=toggleInput() 
+    *ngIf='task.isInput && (!board.hideCompleteTasks && !task.isComplete)'
+    class='task-list-item'
+    [style.background]='task.cardColor'
+    [style.color]='task.fontColor'
+    style='height:100%;padding-top:10px;padding-bottom:10px;min-height:47px;'
+    #elementWrapper
+>   
+    <div class='task-list-item-wrapper'>
+        <img *ngIf='task.displayImageUrls' src={{task.displayImageUrls[0]}} />
+        <div class='task-list-item-div'>
+            <form class='task-list-form' (submit)='toggleInput($event)'>
+                <mat-form-field class='task-list-field' style='margin-bottom:-0.5em; margin-top:-0.5em; ' >
+                    <textarea   
+                        matInput
+                        #taskBodyInput
+                        value={{task.body}} 
+                        (keyup)='changeTaskBody($event)'
+                        (focusout)='toggleInput()'
+                        cdkTextareaAutosize
+                    >
+                    </textarea>
+                </mat-form-field>
+            </form>
+
+            <div>
+                <mat-icon *ngIf='task.important'>visibility</mat-icon>
+                <mat-icon *ngIf='task.warning'>warning</mat-icon>
+                <mat-icon *ngIf='task.payment'>payment</mat-icon>
+                <mat-icon *ngIf='task.vacation'>weekend</mat-icon>
+                <mat-icon *ngIf='task.attachment'>attach_file</mat-icon>
+                <mat-icon *ngIf='task.social'>group</mat-icon>
+                <mat-icon *ngIf='task.work'>work</mat-icon>
+                <mat-icon *ngIf='task.travel'>local_airport</mat-icon>
+            </div>
+        </div>
+    </div>
+
+    <span class='task-list-checklist-icon-wrapper'>
+            <mat-icon *ngFor='let checklist of task.checklists' [style.color]='checklist.color'>check_box</mat-icon>
+    </span>
+
+</div>
+
+<div role='listitem'
+    (click)='openDialog()' 
+    *ngIf='!task.isInput && (board.hideCompleteTasks===false && task.isComplete===true || task.isComplete===false)' 
+    draggable="true" 
+    (dragstart)='onDragStart($event)'
+    (drag)='onDrag($event)'
+    (dragend)='onDragEnd($event)' 
+    (dragover)='onDragOver($event)' 
+    (drop)='onDrop($event)' 
+    class='task-list-item'
+    [style.background]='task.cardColor'
+    [style.color]='task.fontColor'
+    [ngClass]='{"card-complete":task.isComplete}'
+    style='height:100%;padding-top:10px;padding-bottom:10px; position:relative; '
+    #elementWrapper
+>   
+    <div (click)='toggleDisplayLabelText()' *ngIf='!displayLabelText' class='label-row'>
+            
+        <p *ngFor='let label of task.labels' [style.background]='label.background'></p>
+    </div>
+
+    <div (click)='toggleDisplayLabelText()' *ngIf='displayLabelText' class='label-row'>
+        <input disabled (click)='focusLabel()' (keyup)='changeLabelText($event, i, task)' *ngFor='let label of task.labels; index as i' size={{labelLength(label.text.length)}} value={{label.text}} [style.background]='label.background' />
+    </div>
+    
+    <div class='task-list-item-wrapper'>
+        <div  style='display:flex; justify-content: center; align-items: center;'>
+            <button (click)='cyclePhoto(false, task.displayImageUrls)' *ngIf='task.displayImageUrls.length > 1' mat-icon-button><mat-icon>keyboard_arrow_left</mat-icon></button>
+            <img *ngIf='task.displayImageUrls' src={{task.displayImageUrls[currentDisplayPhoto]}} />
+            <button (click)='cyclePhoto(true, task.displayImageUrls)' *ngIf='task.displayImageUrls.length > 1' mat-icon-button><mat-icon>keyboard_arrow_right</mat-icon></button>
+        </div>
+
+        <div class='task-list-item-div'>
+            <div class='task-list-text-due-date' >
+                <div style='display:flex; align-items:center;'>
+                    <div style='width:100%; overflow-wrap: break-word; word-wrap: break-word;' [ngClass]='{"text-complete":task.isComplete}'>{{task.body}}</div>
+                    <div class='task-due-date' *ngIf='task.dueDate'>
+                        <mat-icon>alarm</mat-icon>
+                        <span >{{task.dueDate.format('MM/DD')}}</span>
+                    </div>
+                </div>
+                
+            </div>
+            
+
+            <div class='task-list-labels'>
+                <mat-icon *ngIf='task.important'>visibility</mat-icon>
+                <mat-icon *ngIf='task.warning'>warning</mat-icon>
+                <mat-icon *ngIf='task.payment'>payment</mat-icon>
+                <mat-icon *ngIf='task.vacation'>weekend</mat-icon>
+                <mat-icon *ngIf='task.attachment'>attach_file</mat-icon>
+                <mat-icon *ngIf='task.social'>group</mat-icon>
+                <mat-icon *ngIf='task.work'>work</mat-icon>
+                <mat-icon *ngIf='task.travel'>local_airport</mat-icon>
+            </div>
+
+        </div>
+    
+    </div>
+
+    <span class='task-list-checklist-icon-wrapper' *ngIf='task.checklists.length > 0'>
+        <mat-icon class='task-list-checklist-icon' *ngFor='let checklist of task.checklists' [style.color]='checklist.color'>check_box</mat-icon>
+    </span>
+        
+    
+
+    
+
+</div>

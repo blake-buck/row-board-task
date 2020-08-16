@@ -1,0 +1,2 @@
+
+<a #exportButton *ngIf='exportData' download='{{title}}.json' [href]='exportData' (load)='downloadLinkLoads()'> </a>

@@ -1,0 +1,7 @@
+.row{
+    width:100%;
+    overflow:auto;
+}
+button{
+    margin-right:10px;
+}

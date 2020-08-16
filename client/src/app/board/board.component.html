@@ -1,0 +1,63 @@
+<mat-card class='task-board' *ngIf='board$ | async; let board'  [draggable]='!isEditingBoardTitle' (dragstart)='onDragStart($event, board)' (drag)='onDrag($event)'  (dragover)='onDragOver($event, board)' (drop)='onDrop($event, board)' (taskTransfer)='onTaskTransfer($event)'>
+    
+    <div class='card-title' >
+        <h3 (click)='toggleEditBoardTitle(board)' *ngIf='!isEditingBoardTitle && board.title'>{{board.title}}</h3>
+        <h3 (click)='toggleEditBoardTitle(board)' *ngIf='!isEditingBoardTitle && !board.title' class='placeholderTitle' >Board Title...</h3>
+        
+        <mat-form-field *ngIf='isEditingBoardTitle' class='board-title-input'>
+            <input #boardTitleInput matInput (focusout)='toggleEditBoardTitle(board)' *ngIf='isEditingBoardTitle' [value]='board.title' class='board-title-input-a' (keyup)='editBoardTitle($event, board)'>
+        </mat-form-field>
+
+        <div class='board-buttons'>
+            <button mat-icon-button [matMenuTriggerFor]='boardOptions'>
+                <mat-icon matTooltip='Board Actions'>more_vert</mat-icon>
+                <mat-menu #boardOptions>
+                    <button mat-menu-item><mat-checkbox (change)='toggleHideCompleteTasks(board.key, !board.hideCompleteTasks)' [checked]='board.hideCompleteTasks'>Hide completed tasks</mat-checkbox></button>
+                    
+                    <button mat-menu-item (click)='archiveBoard(board)'>
+                        <mat-icon>archive</mat-icon>
+                        <span>Archive Board</span>
+                    </button>
+                    
+                    <button mat-menu-item (click)='openDialog("delete-board-dialog", board.key)'>
+                        <mat-icon>delete</mat-icon>
+                        <span>Delete Board</span>
+                    </button>
+
+                    <button mat-menu-item (click)='openDialog("transfer-board-dialog", board)'>
+                        <mat-icon>screen_share</mat-icon>
+                        <span>Transfer Board</span>
+                    </button>
+
+                    <button mat-menu-item (click)='exportBoard(board)'>
+                        <mat-icon>cloud_download</mat-icon>
+                        <span>Export Board</span>
+                    </button>
+
+                    <button mat-menu-item [matMenuTriggerFor]='orderBy'>
+                        Order By
+                    </button>
+                    
+                </mat-menu>
+
+                <mat-menu #orderBy>
+                    <button mat-menu-item (click)='orderTasksBy(orderByAlphabetical, board.tasks, board.key)'>A-Z</button>
+                    <button mat-menu-item (click)='orderTasksBy(orderByDateCreated, board.tasks, board.key)'>Date Created</button>
+                    <button mat-menu-item (click)='orderTasksBy(orderByLastEdited, board.tasks, board.key)'>Last Edited</button>
+                </mat-menu>
+
+            </button>
+
+            <button mat-icon-button (click)='addTask(board.tasks)' matTooltip='Add Task'>
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </div>
+    
+    <mat-list role='list'>
+        <task (autoScroller)='taskAutoScroll($event)' *ngFor='let task of board.tasks; index as i' [task]='task' [board]='board'></task>
+    </mat-list>
+
+</mat-card>
+
+

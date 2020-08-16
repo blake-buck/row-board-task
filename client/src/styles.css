@@ -1,0 +1,47 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+*{
+    font-family: 'Roboto', sans-serif;
+}
+.home_div{
+    display: flex;
+    overflow:auto;
+}
+.board{
+    margin-left:10px;
+    margin-right:10px;
+}
+
+.task-dialog{
+    background-color:#E5E5E5;
+    max-height:90vh;
+    overflow:auto;
+    width:100vw;
+    max-width:800px;
+    z-index: -1;
+    position: relative;
+}
+.task-dialog mat-dialog-container{
+    background-color:#E5E5E5;
+}
+/* #task-dialog{
+    background-color:#E5E5E5;
+    max-height:90vh;
+    overflow:auto;
+    width:100vh;
+    max-width:800px;
+} */
+
+#imageToDisplay{
+    max-width: 250px;
+    max-height: 250px;
+}
+
+.dialogToBack{
+    z-index:-1;
+}
+
+.max-secondary-dialog-width{
+    width:100vw;
+    max-width:500px;
+}
