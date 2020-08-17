@@ -59,6 +59,7 @@ import { AppErrorHandler } from './error-handler.service';
 import { ArchivedItemsComponent } from './archived-items/archived-items.component';
 import { RestoreBoardDialogComponent } from './archived-items/restore-board-dialog/restore-board-dialog.component';
 import { RestoreTaskDialogComponent } from './archived-items/restore-task-dialog/restore-task-dialog.component';
+import { RegisterComponent } from './register/register.component';
 
 
 @NgModule({
@@ -84,6 +85,7 @@ import { RestoreTaskDialogComponent } from './archived-items/restore-task-dialog
 
     RowHolderComponent,
     LoginComponent,
+    RegisterComponent,
     ArchivedItemsComponent,
     RestoreBoardDialogComponent,
     RestoreTaskDialogComponent
