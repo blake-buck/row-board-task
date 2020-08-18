@@ -38,6 +38,23 @@ export class CognitoController{
             }
             return res.status(badRequestStatus).send(this.responseService.standardMessage(e.message, badRequestStatus));
         }
-    
+    }
+
+    @Post('login')
+    async login(@Req() req: Request, @Res() res:Response){
+        const {username, password} = req.body;
+        const badRequestStatus = 400;
+
+        if(!this.verificationService.isValidEmail(username)){
+            return res.status(badRequestStatus).send(this.responseService.standardMessage('Invalid Email', badRequestStatus));
+        }
+
+        try{
+            const result:any = await this.cognitoService.login(username, password, req);
+            res.send(this.responseService.standardMessage('Successful login.'));
+        }
+        catch(e){
+            return res.status(badRequestStatus).send(this.responseService.standardMessage(e.message, badRequestStatus))
+        }
     }
 }

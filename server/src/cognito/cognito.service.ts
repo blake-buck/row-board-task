@@ -67,4 +67,30 @@ export class CognitoService{
         );
     }
 
+    login(username, password, {ip, headers}){
+        const params = {
+            AuthFlow:   'ADMIN_USER_PASSWORD_AUTH',
+            UserPoolId: this.ENV.AWS_USER_POOL_ID,
+            ClientId:   this.ENV.AWS_CLIENT_ID,
+            
+            AuthParameters:{
+                USERNAME: username,
+                PASSWORD: password,
+                SECRET_HASH: this.createSecrectHash(username)
+            },
+    
+            ContextData:{
+                IpAddress:   ip,
+                ServerName:  this.ENV.SERVER_NAME,
+                ServerPath:  '/api/login',
+                HttpHeaders: this.formatHeaders(headers)
+            }
+        }
+
+        return this.callbackToPromise(
+            'adminInitiateAuth',
+            params
+        )
+    }
+
 }

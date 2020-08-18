@@ -1,14 +1,17 @@
 <mat-card id='login'>
     <h2>Login</h2>
 
-    <mat-form-field>
-        <input matInput placeholder='Username' />
-    </mat-form-field>
-
-    <mat-form-field>
-        <input matInput placeholder='Password' type='password' />
-    </mat-form-field>
-
-    <button (click)='login()' mat-flat-button color='primary'>Login</button>
+    <form (submit)='login($event)'>
+        <mat-form-field>
+            <input (change)='changeValue("username", $event)' matInput placeholder='Username' />
+        </mat-form-field>
+    
+        <mat-form-field>
+            <input (change)='changeValue("password", $event)' matInput placeholder='Password' type='password' />
+        </mat-form-field>
+    
+        <button mat-flat-button color='primary'>Login</button>
+    </form>
+    
 
 </mat-card>

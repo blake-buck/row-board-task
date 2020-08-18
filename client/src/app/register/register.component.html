@@ -2,11 +2,11 @@
     <h2>Register</h2>
     <form (submit)='register($event)'>
         <mat-form-field>
-            <input matInput placeholder='Username' />
+            <input matInput (change)='changeValue("username", $event)' placeholder='Username' />
         </mat-form-field>
     
         <mat-form-field>
-            <input matInput placeholder='Password' type='password' />
+            <input matInput (change)='changeValue("password", $event)' placeholder='Password' type='password' />
         </mat-form-field>
     
         <button mat-flat-button color='primary'>Register</button>

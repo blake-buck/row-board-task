@@ -1,8 +1,11 @@
 #register{
     text-align:center;
-    display:flex;
-    flex-direction:column;
     max-width:300px;
     margin-left:auto;
     margin-right:auto;
+}
+
+#register form{
+    display:flex;
+    flex-direction:column;
 }
