@@ -14,7 +14,7 @@ import { CognitoModule } from './cognito/cognito.module';
     ConfigModule.forRoot({
       isGlobal:true
     }),
-    CognitoModule
+    CognitoModule,
   ],
   controllers: [AppController],
   providers: [
