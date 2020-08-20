@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 
+// Verifies that data follows a correct structure;
 @Injectable()
 export class VerificationService{
     isValidEmail(email){

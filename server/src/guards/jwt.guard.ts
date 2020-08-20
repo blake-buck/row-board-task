@@ -1,6 +1,7 @@
 import { Injectable, CanActivate, ExecutionContext } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 
+// verifies user JWT
 const jwkToPem = require('jwk-to-pem');
 const jwk = require('../../jwks.json');
 
