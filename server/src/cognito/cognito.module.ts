@@ -6,11 +6,13 @@ import {ResponseService} from '../services/response.service';
 import {VerificationService} from '../services/verification.service';
 import { GuardsModule } from "src/guards/guards.module";
 import { JwtModule } from "@nestjs/jwt";
+import { LoggerModule } from "src/logger/logger.module";
 
 @Module({
     imports:[
         GuardsModule,
-        JwtModule.register({})
+        JwtModule.register({}),
+        LoggerModule
     ],
     controllers:[CognitoController],
     providers:[

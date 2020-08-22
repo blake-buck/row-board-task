@@ -6,13 +6,15 @@ import { VerificationService } from "../services/verification.service";
 import { ResponseService } from "../services/response.service";
 
 import { JwtGuard } from "src/guards/jwt.guard";
+import { LoggerService } from "src/logger/logger.service";
 
 @Controller('api/auth')
 export class CognitoController{
     constructor(
         private cognitoService:CognitoService, 
         private verificationService: VerificationService,
-        private responseService: ResponseService
+        private responseService: ResponseService,
+        private logger: LoggerService
     ){}
 
     @Post('register')
@@ -34,6 +36,7 @@ export class CognitoController{
             return this.responseService.standardMessage('Check your email for a registration message.');
         }
         catch(e){
+            await this.logger.errorLog(e, 'COGNITO', 'register');
             if(e.message === 'An account with the given email already exists.'){
                 return this.responseService.standardMessage('Check your email for a registration message.');
             }
@@ -55,6 +58,7 @@ export class CognitoController{
             return this.responseService.standardMessage(result);
         }
         catch(e){
+            await this.logger.errorLog(e, 'COGNITO', 'login');
             throw new BadRequestException(this.responseService.standardMessage(e.message, badRequestStatus))
         }
     }
@@ -75,7 +79,8 @@ export class CognitoController{
             }
         }
         catch(e){
-            throw new BadRequestException(this.responseService.standardMessage('Token refreshed', 400));
+            await this.logger.errorLog(e, 'COGNITO', 'refresh-token');
+            throw new BadRequestException(this.responseService.standardMessage(e.message, 400));
         }
     }
 
@@ -87,6 +92,7 @@ export class CognitoController{
             return this.responseService.standardMessage('Password is changed.');
         }
         catch(e){
+            await this.logger.errorLog(e, 'COGNITO', 'change-password');
             throw new BadRequestException(this.responseService.standardMessage(e.message, 400))
         }
     }
@@ -99,6 +105,7 @@ export class CognitoController{
             return this.responseService.standardMessage('Check your email for a reset code.');
         }
         catch(e){
+            await this.logger.errorLog(e, 'COGNITO', 'forgot-password');
             throw new BadRequestException(this.responseService.standardMessage(e.message, 400));
         }
     }
@@ -110,6 +117,7 @@ export class CognitoController{
             return this.responseService.standardMessage('Your password has been successfully reset');
         }
         catch(e){
+            await this.logger.errorLog(e, 'COGNITO', 'forgot-password/confirm');
             throw new BadRequestException(this.responseService.standardMessage(e.message, 400));
         }
     }
@@ -123,6 +131,7 @@ export class CognitoController{
             return this.responseService.standardMessage('Your account has been deleted.');
         }
         catch(e){
+            await this.logger.errorLog(e, 'COGNITO', 'delete-account');
             throw new BadRequestException(this.responseService.standardMessage(e.message, 400));
         }
     }

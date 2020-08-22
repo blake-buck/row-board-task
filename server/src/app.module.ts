@@ -6,6 +6,7 @@ import {ConfigModule, ConfigService} from '@nestjs/config';
 import {MongooseModule} from '@nestjs/mongoose';
 import {join} from 'path';
 import { CognitoModule } from './cognito/cognito.module';
+import { LoggerModule } from './logger/logger.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { CognitoModule } from './cognito/cognito.module';
     }),
 
     CognitoModule,
+    LoggerModule
   ],
   controllers: [AppController],
   providers: [
