@@ -1,7 +1,9 @@
 import { Moment } from 'moment';
-import { isNumber, createVerificationObject, isString, isBoolean, isArray, isNull, isOneOf, isObject, hasShape, isArrayOf } from './verification/verification';
+import { isNumber, isString, isBoolean, isNull, isOneOf, hasShape, isArrayOf } from './verification/verification';
 export namespace App{
     export interface AppState{
+        isAuthenticated:boolean;
+
         partitionKey:string;
         currentTaskKey:number,
         currentBoardKey:number,
@@ -219,6 +221,8 @@ export const appStateTypes = {
 }
 
 export const initialState:App.AppState = {
+    isAuthenticated:false,
+    
     partitionKey:'state',
     currentTaskKey:1,
     currentBoardKey:3,

@@ -184,3 +184,15 @@ export const restoreArchivedTask = createAction(
     'RESTORE_ARCHIVED_TASK',
     props<{board:any, task:any}>()
 )
+
+
+export const login = createAction(
+    'AUTH_LOGIN',
+    props<{loginForm:{username:string, password:string}}>()
+);
+export const loginSuccess = createAction(
+    'AUTH_LOGIN_SUCCESS'
+);
+export const loginFailure = createAction(
+    'AUTH_LOGIN_FAILURE'
+);

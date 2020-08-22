@@ -1,18 +1,27 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, first} from 'rxjs/operators'
+import { map, first, mergeMap, catchError} from 'rxjs/operators'
 import { Store } from '@ngrx/store';
 import { selectAppState } from './app.selector';
-import { combineLatest } from 'rxjs';
-import { editRowTitle, editRowTitleSuccess, postStateToCosmos, putStateToCosmos, getStateFromCosmos, getStateFromCosmosSuccess, saveChanges, openTaskDialog, closeTaskDialog } from './app.actions';
+import { combineLatest, EMPTY } from 'rxjs';
+import { editRowTitle, editRowTitleSuccess, postStateToCosmos, putStateToCosmos, getStateFromCosmos, getStateFromCosmosSuccess, saveChanges, openTaskDialog, closeTaskDialog, login, loginSuccess, loginFailure } from './app.actions';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material';
 import { TaskDialogComponent } from '../task_dialog/task_dialog.component';
+import { AppService } from './app.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 
 export class AppEffects {
-    constructor(private actions$:Actions, private store:Store<any>, private http:HttpClient, public dialog:MatDialog){}
+    constructor(
+        private actions$:Actions, 
+        private store:Store<any>, 
+        private http:HttpClient, 
+        public dialog:MatDialog, 
+        private service: AppService,
+        private router: Router
+    ){}
 
     editRowTitle$ = createEffect(
         () => this.actions$.pipe(
@@ -102,6 +111,23 @@ export class AppEffects {
             ofType(closeTaskDialog),
             map(() => {
                 this.dialog.closeAll();
+            })
+        ),
+        {dispatch: false}
+    )
+
+
+    login$ = createEffect(
+        () => this.actions$.pipe(
+            ofType(login),
+            mergeMap((action) => this.service.login(action.loginForm)),
+            map((result:any) => {
+                this.service.addTokensToStorage({
+                    refreshToken:result.message.AuthenticationResult.AccessToken,
+                    accessToken: result.message.AuthenticationResult.RefreshToken
+                });
+                this.store.dispatch(loginSuccess());
+                this.router.navigate(['app']);
             })
         ),
         {dispatch: false}

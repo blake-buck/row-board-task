@@ -60,6 +60,7 @@ import { ArchivedItemsComponent } from './archived-items/archived-items.componen
 import { RestoreBoardDialogComponent } from './archived-items/restore-board-dialog/restore-board-dialog.component';
 import { RestoreTaskDialogComponent } from './archived-items/restore-task-dialog/restore-task-dialog.component';
 import { RegisterComponent } from './register/register.component';
+import { AppService } from './store/app.service';
 
 
 @NgModule({
@@ -120,7 +121,8 @@ import { RegisterComponent } from './register/register.component';
   ],
   providers: [
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue:{hasBackdrop:false}},
-    {provide: ErrorHandler, useClass:AppErrorHandler}
+    {provide: ErrorHandler, useClass:AppErrorHandler},
+    AppService
   ],
   bootstrap: [AppComponent],
   entryComponents : [

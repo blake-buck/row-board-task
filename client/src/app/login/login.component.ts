@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { Store } from '@ngrx/store';
+import { login } from '../store/app.actions';
 
 @Component({
     selector:'login',
@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class LoginComponent{
-    constructor(private router:Router, private http:HttpClient){}
+    constructor(private store:Store<any>){}
 
     formValue ={
         username:'',
@@ -18,13 +18,11 @@ export class LoginComponent{
 
     login(e){
         e.preventDefault();
-        this.http.post('http://localhost:3000/api/auth/login', {username:this.formValue.username, password:this.formValue.password}).subscribe(val => console.log(val));
-        this.router.navigate(['app'])
+        this.store.dispatch(login({loginForm: this.formValue}));
     }
 
     changeValue(property, e){
         this.formValue[property] = e.target.value;
     }
-
 
 }
