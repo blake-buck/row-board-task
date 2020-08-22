@@ -4,17 +4,20 @@ import { Model } from "mongoose";
 import { Injectable } from "@nestjs/common";
 
 type ErrorDomain = 'COGNITO' | 'GENERAL';
+type ErrorLogObj = {
+    error: string;
+    domain: ErrorDomain;
+    route: string;
+    timestamp: string;
+    ip: string;
+}
 
 @Injectable()
 export class LoggerService{
     constructor(@InjectModel(ErrorLog.name) private errorLogModel: Model<ErrorLog>){}
 
-    errorLog(error, domain:ErrorDomain, route:string){
-        const newLog = new this.errorLogModel({
-            error: JSON.stringify(error),
-            domain,
-            route
-        })
+    errorLog(errorLog: ErrorLogObj){
+        const newLog = new this.errorLogModel(errorLog);
         return newLog.save();
     }
 }
