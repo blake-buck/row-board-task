@@ -60,19 +60,16 @@ export class CognitoController{
     }
 
     @UseGuards(JwtGuard)
-    @Post('refresh-token')
+    @Post('refresh')
     async refreshToken(@Req() req: Request){
         try{
             const result:any = await this.cognitoService.refreshToken({
-                body: req.body,
+                refresh: req.body?.refreshToken,
                 headers: req.headers,
                 ip: req.ip
             });
 
-            return {
-                status: 200,
-                token: result.data.AuthenticationResult.AccessToken
-            }
+            return this.responseService.standardMessage(result)
         }
         catch(e){
             throw new BadRequestException(e);

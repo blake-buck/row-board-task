@@ -122,9 +122,10 @@ export class AppEffects {
             ofType(login),
             mergeMap((action) => this.service.login(action.loginForm)),
             map((result:any) => {
+                console.log(result);
                 this.service.addTokensToStorage({
-                    refreshToken:result.message.AuthenticationResult.AccessToken,
-                    accessToken: result.message.AuthenticationResult.RefreshToken
+                    refreshToken:result.message.AuthenticationResult.RefreshToken,
+                    accessToken: result.message.AuthenticationResult.AccessToken
                 });
                 this.store.dispatch(loginSuccess());
                 this.router.navigate(['app']);

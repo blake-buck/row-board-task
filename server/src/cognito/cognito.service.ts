@@ -52,20 +52,6 @@ export class CognitoService{
         return newHeaders;
     }
 
-    private cognitoMethod(cognitoMethod, params){
-        return new Promise((resolve, reject) => {
-            this.cognito[cognitoMethod](params, (error, data) => {
-                if(error){
-                    reject(error);
-                }
-                if(data){
-                    resolve(data);
-                }
-            })
-        });
-    }
-
-
 
     signUp(username, password){
         const params = {
@@ -76,10 +62,7 @@ export class CognitoService{
         };
 
         
-        return this.cognitoMethod(
-            'signUp', 
-            params
-        );
+        return this.cognito.signUp(params).promise();
     }
 
     login(username, password, {ip, headers}){
@@ -102,36 +85,31 @@ export class CognitoService{
             }
         }
 
-        return this.cognitoMethod(
-            'adminInitiateAuth',
-            params
-        )
+        return this.cognito.adminInitiateAuth(params).promise();
     }
 
     
-    refreshToken({body, headers, ip}){
+    refreshToken({refresh, headers, ip}){
+        console.log('REFRESH ', refresh)
         const params = {
             UserPoolId: this.ENV.AWS_USER_POOL_ID,
             ClientId: this.ENV.AWS_CLIENT_ID,
             AuthFlow:'REFRESH_TOKEN_AUTH',
             
             AuthParameters:{
-                REFRESH_TOKEN:body.refresh,
+                REFRESH_TOKEN:refresh,
                 SECRET_HASH: this.createSecrectHash(this.getUserIdFromJwt(headers.jwt)),
             },
     
             ContextData:{
                 IpAddress:   ip,
                 ServerName:  this.ENV.SERVER_NAME,
-                ServerPath:  '/api/refresh-token',
+                ServerPath:  '/api/refresh',
                 HttpHeaders: this.formatHeaders(headers)
             }
         };
 
-        return this.cognitoMethod(
-            'adminInitiateAuth',
-            params
-        );
+        return this.cognito.adminInitiateAuth(params).promise();
     }
 
     
@@ -140,10 +118,7 @@ export class CognitoService{
             AccessToken:jwt
         }
 
-        return this.cognitoMethod(
-            'deleteUser',
-            params
-        )
+        return this.cognito.deleteUser(params).promise();
     }
 
     
@@ -157,7 +132,7 @@ export class CognitoService{
             ProposedPassword: proposedPassword
         }
 
-        return this.cognitoMethod('changePassword', changePasswordParams).then(() => this.cognitoMethod('globalSignOut', signOutParams))
+        return this.cognito.changePassword(changePasswordParams).promise().then(() => this.cognito.globalSignOut(signOutParams).promise())
     }
 
     forgotPassword(username){
@@ -167,7 +142,7 @@ export class CognitoService{
             SecretHash: this.createSecrectHash(username)
         }
 
-        return this.cognitoMethod('forgotPassword', params);
+        return this.cognito.forgotPassword(params).promise();
     }
 
     confirmForgotPassword({confirmationCode, username, password}){
@@ -179,7 +154,7 @@ export class CognitoService{
             SecretHash: this.createSecrectHash(username)
         }
 
-        return this.cognitoMethod('confirmForgotPassword', params);
+        return this.cognito.confirmForgotPassword(params).promise();
     }
 
 }

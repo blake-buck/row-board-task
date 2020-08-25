@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 import {appReducer} from './store/app.reducer'
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import 
 { MatCardModule, 
@@ -61,6 +61,7 @@ import { RestoreBoardDialogComponent } from './archived-items/restore-board-dial
 import { RestoreTaskDialogComponent } from './archived-items/restore-task-dialog/restore-task-dialog.component';
 import { RegisterComponent } from './register/register.component';
 import { AppService } from './store/app.service';
+import { HeadersInterceptor } from './headers-interceptor';
 
 
 @NgModule({
@@ -122,7 +123,8 @@ import { AppService } from './store/app.service';
   providers: [
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue:{hasBackdrop:false}},
     {provide: ErrorHandler, useClass:AppErrorHandler},
-    AppService
+    AppService,
+    {provide: HTTP_INTERCEPTORS, useClass:HeadersInterceptor, multi:true}
   ],
   bootstrap: [AppComponent],
   entryComponents : [
