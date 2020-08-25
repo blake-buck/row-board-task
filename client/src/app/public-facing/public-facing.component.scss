@@ -1,11 +1,11 @@
-#login{
+.form-wrapper{
     text-align:center;
     max-width:300px;
     margin-left:auto;
     margin-right:auto;
 }
 
-#login form{
+.form-wrapper form{
     display:flex;
     flex-direction:column;
 }

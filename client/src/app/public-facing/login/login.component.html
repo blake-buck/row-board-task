@@ -1,4 +1,4 @@
-<mat-card id='login'>
+<mat-card class='form-wrapper'>
     <h2>Login</h2>
 
     <form (submit)='login($event)'>
@@ -12,6 +12,7 @@
     
         <button mat-flat-button color='primary'>Login</button>
     </form>
-    
 
+    <button (click)='navTo("/forgot-password")' mat-button>FORGOT PASSWORD</button>
+    
 </mat-card>

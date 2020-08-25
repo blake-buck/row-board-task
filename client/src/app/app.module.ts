@@ -51,7 +51,6 @@ import {PreviewAttachmentDialogComponent} from './task_dialog/preview_attachment
 import { LinkTaskDialogComponent } from './task_dialog/link_task_dialog/link_task_dialog.component';
 
 import { RowHolderComponent } from './row-holder/row-holder.component';
-import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppEffects } from './store/app.effects';
 import { EffectsModule } from '@ngrx/effects';
@@ -59,9 +58,9 @@ import { AppErrorHandler } from './error-handler.service';
 import { ArchivedItemsComponent } from './archived-items/archived-items.component';
 import { RestoreBoardDialogComponent } from './archived-items/restore-board-dialog/restore-board-dialog.component';
 import { RestoreTaskDialogComponent } from './archived-items/restore-task-dialog/restore-task-dialog.component';
-import { RegisterComponent } from './register/register.component';
 import { AppService } from './store/app.service';
 import { HeadersInterceptor } from './headers-interceptor';
+import { PublicFacingModule } from './public-facing/public-facing.module';
 
 
 @NgModule({
@@ -86,8 +85,6 @@ import { HeadersInterceptor } from './headers-interceptor';
     LinkTaskDialogComponent,
 
     RowHolderComponent,
-    LoginComponent,
-    RegisterComponent,
     ArchivedItemsComponent,
     RestoreBoardDialogComponent,
     RestoreTaskDialogComponent
@@ -118,7 +115,9 @@ import { HeadersInterceptor } from './headers-interceptor';
 
     HttpClientModule,
 
-    AppRoutingModule
+    AppRoutingModule,
+
+    PublicFacingModule
   ],
   providers: [
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue:{hasBackdrop:false}},
