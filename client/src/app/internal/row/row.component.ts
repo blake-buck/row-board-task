@@ -5,8 +5,8 @@ import {Observable} from 'rxjs';
 
 import { onDragStart, onDragOver, onDrop } from './row.logic';
 
-import { archiveRow, editRowTitle, editRowDescription, addBoard, transferBoard, scrollRowForward, scrollRowBackward, editRowExpanded, shiftRowUp, shiftRowDown, deleteRow } from '../store/app.actions';
-import { selectSpecificBoards } from '../store/app.selector';
+import { archiveRow, editRowTitle, editRowDescription, addBoard, transferBoard, scrollRowForward, scrollRowBackward, editRowExpanded, shiftRowUp, shiftRowDown, deleteRow } from '../../store/app.actions';
+import { selectSpecificBoards } from '../../store/app.selector';
 import { Actions } from '@ngrx/effects';
 
 export interface AppState{

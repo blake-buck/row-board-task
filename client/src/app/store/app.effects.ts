@@ -1,13 +1,12 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, first, mergeMap, catchError} from 'rxjs/operators'
+import { map, mergeMap} from 'rxjs/operators'
 import { Store } from '@ngrx/store';
 import { selectAppState } from './app.selector';
-import { combineLatest, EMPTY } from 'rxjs';
-import { editRowTitle, editRowTitleSuccess, postStateToCosmos, putStateToCosmos, getStateFromCosmos, getStateFromCosmosSuccess, saveChanges, openTaskDialog, closeTaskDialog, login, loginSuccess, loginFailure, forgotPassword, confirmForgotPassword } from './app.actions';
-import { HttpClient } from '@angular/common/http';
+import { combineLatest } from 'rxjs';
+import { editRowTitle, editRowTitleSuccess, openTaskDialog, closeTaskDialog, login, loginSuccess, forgotPassword, confirmForgotPassword } from './app.actions';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { TaskDialogComponent } from '../task_dialog/task_dialog.component';
+import { TaskDialogComponent } from '../internal/task_dialog/task_dialog.component';
 import { AppService } from './app.service';
 import { Router } from '@angular/router';
 

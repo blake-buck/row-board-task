@@ -1,6 +1,6 @@
 import {RouterModule, Routes, Router} from '@angular/router'
 import { NgModule } from '@angular/core';
-import { RowHolderComponent } from './row-holder/row-holder.component';
+import { RowHolderComponent } from './internal/row-holder/row-holder.component';
 import { AuthenticationGuard } from './authentication.guard';
 import { ForgotPasswordComponent } from './public-facing/forgot-password/forgot-password.component';
 import { ConfirmForgotPasswordComponent } from './public-facing/confirm-forgot-password/confirm-forgot-password.component';

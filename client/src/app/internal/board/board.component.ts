@@ -6,8 +6,8 @@ import {Observable} from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import {orderByLastEdited, orderByAlphabetical, orderByDateCreated, onDrop} from './board.logic';
-import {editBoardTitle, archiveBoard, deleteBoard, toggleHideCompleteTasks, addTask, editTask, reorderBoardTasks, duplicateBoard, scrollRowForward, scrollRowBackward} from '../store/app.actions'
-import { selectRows, selectBoards, selectBoardFromBoardKey } from '../store/app.selector';
+import {editBoardTitle, archiveBoard, deleteBoard, toggleHideCompleteTasks, addTask, editTask, reorderBoardTasks, duplicateBoard, scrollRowForward, scrollRowBackward} from '../../store/app.actions'
+import { selectRows, selectBoards, selectBoardFromBoardKey } from '../../store/app.selector';
 import { TransferBoardDialogComponent } from './transfer-board-dialog/transfer-board-dialog.component';
 import { DeleteBoardDialogComponent } from './delete-board-dialog/delete-board-dialog.component';
 

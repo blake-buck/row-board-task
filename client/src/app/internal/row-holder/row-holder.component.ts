@@ -2,14 +2,14 @@ import { Component } from "@angular/core";
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { selectRows, selectIsDataSaved, selectBoardCount, selectTaskCount, selectRowCount } from '../store/app.selector';
-import { getState, addRow, setState } from '../store/app.actions';
+import { selectRows, selectIsDataSaved, selectBoardCount, selectTaskCount, selectRowCount } from '../../store/app.selector';
+import { getState, addRow, setState } from '../../store/app.actions';
 import { MatDialog } from '@angular/material';
 import { ArchivedItemsComponent } from '../archived-items/archived-items.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { first } from 'rxjs/operators';
-import { createVerificationObject, validateStrict } from '../store/verification/verification';
-import { appStateTypes } from '../store/app.state';
+import { createVerificationObject, validateStrict } from '../../store/verification/verification';
+import { appStateTypes } from '../../store/app.state';
 
 @Component({
     selector:'row-holder',

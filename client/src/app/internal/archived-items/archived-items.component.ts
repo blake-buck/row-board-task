@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { selectArchivedRows, selectArchivedBoards, selectArchivedTasks } from '../store/app.selector';
+import { selectArchivedRows, selectArchivedBoards, selectArchivedTasks } from '../../store/app.selector';
 import { MatDialog } from '@angular/material';
-import { restoreArchivedRow } from '../store/app.actions';
+import { restoreArchivedRow } from '../../store/app.actions';
 import { RestoreBoardDialogComponent } from './restore-board-dialog/restore-board-dialog.component';
 import { RestoreTaskDialogComponent } from './restore-task-dialog/restore-task-dialog.component';
 
