@@ -35,4 +35,12 @@ export class AppService{
         return tokenPayload.exp - Math.floor(Date.now()/1000) < 0;
     }
 
+    forgotPassword(username){
+        return this.http.post(`${environment.apiUrl}/api/auth/forgot-password`, {username});
+    }
+
+    confirmForgotPassword({username, password, confirmationCode}){
+        console.log(username, password, confirmationCode)
+        return this.http.post(`${environment.apiUrl}/api/auth/forgot-password/confirm`, {username, password, confirmationCode});
+    }
 }

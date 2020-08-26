@@ -188,11 +188,20 @@ export const restoreArchivedTask = createAction(
 
 export const login = createAction(
     'AUTH_LOGIN',
-    props<{loginForm:{username:string, password:string}}>()
+    props<{formValue:{username:string, password:string}}>()
 );
 export const loginSuccess = createAction(
     'AUTH_LOGIN_SUCCESS'
 );
 export const loginFailure = createAction(
     'AUTH_LOGIN_FAILURE'
+);
+
+export const forgotPassword = createAction(
+    'AUTH_FORGOT_PASSWORD',
+    props<{formValue:{username:string}}>()
+);
+export const confirmForgotPassword = createAction(
+    'AUTH_CONFIRM_FORGOT_PASSWORD',
+    props<{formValue:{username:string, password:string, confirmationCode:string}}>()
 );

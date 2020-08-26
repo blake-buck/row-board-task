@@ -4,9 +4,9 @@ import { map, first, mergeMap, catchError} from 'rxjs/operators'
 import { Store } from '@ngrx/store';
 import { selectAppState } from './app.selector';
 import { combineLatest, EMPTY } from 'rxjs';
-import { editRowTitle, editRowTitleSuccess, postStateToCosmos, putStateToCosmos, getStateFromCosmos, getStateFromCosmosSuccess, saveChanges, openTaskDialog, closeTaskDialog, login, loginSuccess, loginFailure } from './app.actions';
+import { editRowTitle, editRowTitleSuccess, postStateToCosmos, putStateToCosmos, getStateFromCosmos, getStateFromCosmosSuccess, saveChanges, openTaskDialog, closeTaskDialog, login, loginSuccess, loginFailure, forgotPassword, confirmForgotPassword } from './app.actions';
 import { HttpClient } from '@angular/common/http';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { TaskDialogComponent } from '../task_dialog/task_dialog.component';
 import { AppService } from './app.service';
 import { Router } from '@angular/router';
@@ -17,10 +17,10 @@ export class AppEffects {
     constructor(
         private actions$:Actions, 
         private store:Store<any>, 
-        private http:HttpClient, 
         public dialog:MatDialog, 
         private service: AppService,
-        private router: Router
+        private router: Router,
+        private snackbar: MatSnackBar
     ){}
 
     editRowTitle$ = createEffect(
@@ -44,52 +44,6 @@ export class AppEffects {
         ),
         {dispatch:false}
     )
-
-    postState$ = createEffect(
-        () => this.actions$.pipe(
-            ofType(postStateToCosmos),
-            map(() => {
-                return this.store.select(selectAppState)
-            }),
-            map((state) => {
-                state.subscribe(val => {
-                    this.http.post('http://localhost:7071/api/PostState/', val).subscribe(val => val)
-                })
-            })
-        ),
-        {dispatch: false}
-    )
-
-    putState$ = createEffect(
-        () => this.actions$.pipe(
-            ofType(putStateToCosmos.type),
-            map(() => {
-                return this.store.select(selectAppState).pipe(first())
-            }),
-            map((state) => {
-                state.subscribe(val => {
-                    this.http.put('http://localhost:7071/api/PutState/', val).pipe(first()).subscribe(val => {
-                        console.log('PUT STATE')
-                        console.log(val)
-                        this.store.dispatch(saveChanges())
-                    })
-                })
-            })
-        ),
-        {dispatch: false}
-    )
-
-    getState$ = createEffect(
-        () => this.actions$.pipe(
-            ofType(getStateFromCosmos),
-            map(() => {
-                this.http.get('http://localhost:7071/api/GetState').subscribe(val => {
-                    this.store.dispatch(getStateFromCosmosSuccess({state:val}))
-                })
-            })
-        ),
-        {dispatch: false}
-    );
 
     openTaskDialog$ = createEffect(
         () => this.actions$.pipe(
@@ -120,9 +74,8 @@ export class AppEffects {
     login$ = createEffect(
         () => this.actions$.pipe(
             ofType(login),
-            mergeMap((action) => this.service.login(action.loginForm)),
+            mergeMap((action) => this.service.login(action.formValue)),
             map((result:any) => {
-                console.log(result);
                 this.service.addTokensToStorage({
                     refreshToken:result.message.AuthenticationResult.RefreshToken,
                     accessToken: result.message.AuthenticationResult.AccessToken
@@ -133,5 +86,27 @@ export class AppEffects {
         ),
         {dispatch: false}
     )
+
+    forgotPassword$ = createEffect(
+        () => this.actions$.pipe(
+            ofType(forgotPassword),
+            mergeMap(action => this.service.forgotPassword(action.formValue.username)),
+            map(result => {
+                this.router.navigate(['forgot-password', 'confirm']);
+            })
+        ),
+        {dispatch: false}
+    )
     
+    confirmForgotPassword$ = createEffect(
+        () => this.actions$.pipe(
+            ofType(confirmForgotPassword),
+            mergeMap(action => this.service.confirmForgotPassword(action.formValue)),
+            map(result => {
+                this.snackbar.open('Your password has been successfully reset.', 'close')
+                this.router.navigate(['']);
+            })
+        ),
+        {dispatch: false}
+    )
 }

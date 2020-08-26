@@ -8,7 +8,7 @@ export class BaseClass{
         username:'',
         password:'',
         confirmPassword:'',
-        recoveryCode:''
+        confirmationCode:''
     }
 
     changeValue(property, e){

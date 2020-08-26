@@ -2,7 +2,7 @@ import { Moment } from 'moment';
 import { isNumber, isString, isBoolean, isNull, isOneOf, hasShape, isArrayOf } from './verification/verification';
 export namespace App{
     export interface AppState{
-        isAuthenticated:boolean;
+        userEmail:string;
 
         partitionKey:string;
         currentTaskKey:number,
@@ -221,7 +221,7 @@ export const appStateTypes = {
 }
 
 export const initialState:App.AppState = {
-    isAuthenticated:false,
+    userEmail:'',
     
     partitionKey:'state',
     currentTaskKey:1,

@@ -12,6 +12,6 @@ export class LoginComponent extends BaseClass{
 
     login(e){
         e.preventDefault();
-        this.store.dispatch(login({loginForm: this.formValue}));
+        this.store.dispatch(login({formValue: this.formValue}));
     }
 }

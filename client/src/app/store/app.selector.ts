@@ -54,3 +54,5 @@ export const selectArchivedBoards = createSelector(selectAppState, state => {
     return state.archivedBoards.filter(board => !allRows.map(row => row.boards).flat().includes(board.key));
 });
 export const selectArchivedTasks = createSelector(selectAppState, state => state.archivedTasks);
+
+export const selectUserEmail = createSelector(selectAppState, state => state.userEmail);
