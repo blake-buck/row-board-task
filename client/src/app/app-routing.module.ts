@@ -6,13 +6,16 @@ import { ForgotPasswordComponent } from './public-facing/forgot-password/forgot-
 import { ConfirmForgotPasswordComponent } from './public-facing/confirm-forgot-password/confirm-forgot-password.component';
 import { LoginComponent } from './public-facing/login/login.component';
 import { RegisterComponent } from './public-facing/register/register.component';
+import { AccountComponent } from './internal/account/account.component';
 
 const routes:Routes = [
     {path:'', component:LoginComponent},
     {path:'register', component:RegisterComponent},
-    {path:'app', component:RowHolderComponent, canActivate:[AuthenticationGuard]},
     {path:'forgot-password', component:ForgotPasswordComponent},
-    {path:'forgot-password/confirm', component:ConfirmForgotPasswordComponent}
+    {path:'forgot-password/confirm', component:ConfirmForgotPasswordComponent},
+
+    {path:'app', component:RowHolderComponent, canActivate:[AuthenticationGuard]},
+    {path: 'account', component:AccountComponent, canActivate:[AuthenticationGuard]}
 ]
 
 @NgModule({

@@ -23,6 +23,7 @@ import { MatCardModule, MatListModule, MatDividerModule, MatInputModule, MatForm
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from '../app-routing.module';
 import { EffectsModule } from '@ngrx/effects';
+import { AccountComponent } from './account/account.component';
 
 
 @NgModule({
@@ -47,7 +48,9 @@ import { EffectsModule } from '@ngrx/effects';
         RowHolderComponent,
         ArchivedItemsComponent,
         RestoreBoardDialogComponent,
-        RestoreTaskDialogComponent
+        RestoreTaskDialogComponent,
+
+        AccountComponent
     ],
     imports: [
         BrowserModule,

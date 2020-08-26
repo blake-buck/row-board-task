@@ -1,0 +1,21 @@
+div.card-holder{
+    display:flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+    margin:5px;
+}
+
+mat-card mat-card-actions{
+    display: flex;
+    justify-content: flex-end;
+}
+mat-card mat-card-content{
+    display:flex;
+    flex-direction: column;
+}
+mat-card{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
