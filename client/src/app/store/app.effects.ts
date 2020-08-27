@@ -4,7 +4,7 @@ import { map, mergeMap} from 'rxjs/operators'
 import { Store } from '@ngrx/store';
 import { selectAppState } from './app.selector';
 import { combineLatest } from 'rxjs';
-import { editRowTitle, editRowTitleSuccess, openTaskDialog, closeTaskDialog, login, loginSuccess, forgotPassword, confirmForgotPassword } from './app.actions';
+import { editRowTitle, editRowTitleSuccess, openTaskDialog, closeTaskDialog, login, loginSuccess, forgotPassword, confirmForgotPassword, changePassword } from './app.actions';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { TaskDialogComponent } from '../internal/task_dialog/task_dialog.component';
 import { AppService } from './app.service';
@@ -102,8 +102,19 @@ export class AppEffects {
             ofType(confirmForgotPassword),
             mergeMap(action => this.service.confirmForgotPassword(action.formValue)),
             map(result => {
-                this.snackbar.open('Your password has been successfully reset.', 'close')
+                this.snackbar.open('Your password has been successfully reset.', 'CLOSE');
                 this.router.navigate(['']);
+            })
+        ),
+        {dispatch: false}
+    )
+
+    changePassword$ = createEffect(
+        () => this.actions$.pipe(
+            ofType(changePassword),
+            mergeMap(action => this.service.changePassword(action.formValue)),
+            map(() => {
+                this.snackbar.open('Your password has been sucessfully changed.', 'CLOSE');
             })
         ),
         {dispatch: false}

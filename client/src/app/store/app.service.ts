@@ -40,7 +40,10 @@ export class AppService{
     }
 
     confirmForgotPassword({username, password, confirmationCode}){
-        console.log(username, password, confirmationCode)
         return this.http.post(`${environment.apiUrl}/api/auth/forgot-password/confirm`, {username, password, confirmationCode});
+    }
+
+    changePassword({previousPassword, proposedPassword}){
+        return this.http.post(`${environment.apiUrl}/api/auth/change-password`, {previousPassword, proposedPassword});
     }
 }

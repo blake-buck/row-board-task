@@ -10,7 +10,7 @@ mat-card mat-card-actions{
     display: flex;
     justify-content: flex-end;
 }
-mat-card mat-card-content{
+mat-card mat-card-content, mat-card mat-card-content form{
     display:flex;
     flex-direction: column;
 }

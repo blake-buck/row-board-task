@@ -205,3 +205,8 @@ export const confirmForgotPassword = createAction(
     'AUTH_CONFIRM_FORGOT_PASSWORD',
     props<{formValue:{username:string, password:string, confirmationCode:string}}>()
 );
+
+export const changePassword = createAction(
+    'AUTH_CHANGE_PASSWORD',
+    props<{formValue:{previousPassword:string, proposedPassword:string}}>()
+)

@@ -11,16 +11,22 @@
         </mat-card-header>
 
         <mat-card-content>
-            <mat-form-field>
-                <input matInput placeholder='New password' />
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput placeholder='Confirm new password' />
-            </mat-form-field>
+            <form id='changePassword' (submit)='changePassword($event)'>
+                <mat-form-field>
+                    <input type='password' (keyup)='changeForm($event, "changePassword", "previousPassword")' matInput placeholder='Current Password' />
+                </mat-form-field>
+                <mat-form-field>
+                    <input type='password' (keyup)='changeForm($event, "changePassword", "proposedPassword")' matInput placeholder='New password' />
+                </mat-form-field>
+                <mat-form-field>
+                    <input type='password' (keyup)='changeForm($event, "changePassword", "confirmPassword")' matInput placeholder='Confirm new password' />
+                </mat-form-field>
+            </form>
+            
         </mat-card-content>
 
         <mat-card-actions>
-            <button mat-button color='primary'>CHANGE PASSWORD</button>
+            <button mat-button color='primary' type='submit' form='changePassword'>CHANGE PASSWORD</button>
         </mat-card-actions>
     </mat-card>
 
