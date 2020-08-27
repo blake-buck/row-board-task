@@ -225,42 +225,18 @@ export const initialState:App.AppState = {
     
     partitionKey:'state',
     currentTaskKey:1,
-    currentBoardKey:3,
-    currentRowKey:3,
+    currentBoardKey:1,
+    currentRowKey:1,
     archivedRows:[],
-    rows:[
-        {key: 1, position:0, title:'Test Row', description:'One small step for row, one big step for rowkind', boards:[1], expanded:false},
-        {key: 2, position:1, title:'Financial Row', description:'All my financial Info', boards:[2], expanded:false}
-    ],
+    rows:[],
     archivedBoards:[],
     archivedTasks:[],
-    boards:[
-        {
-            rowKey:1,
-            key:1, 
-            title:'Test Board', 
-            hideCompleteTasks:false,
-            isArchived:false,
-            tasks:[
-                
-            ]
-        },
-        {
-            rowKey:2,
-            key:2, 
-            title:'12321', 
-            hideCompleteTasks:false,
-            isArchived:false,
-            tasks:[
-                
-            ]
-        }
-    ],
+    boards:[],
     isDataSaved:true,
     isDataSaving:false,
     isTaskDialogOpen:false,
     selectedTask:null,
-    rowCount:2,
-    boardCount:2,
+    rowCount:0,
+    boardCount:0,
     taskCount:0
 }
