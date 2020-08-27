@@ -210,3 +210,7 @@ export const changePassword = createAction(
     'AUTH_CHANGE_PASSWORD',
     props<{formValue:{previousPassword:string, proposedPassword:string}}>()
 )
+
+export const deleteAccount = createAction(
+    'AUTH_DELETE_ACCOUNT'
+);

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { changePassword } from 'src/app/store/app.actions';
+import { changePassword, deleteAccount } from 'src/app/store/app.actions';
 
 @Component({
     selector:'account-page',
@@ -18,6 +18,10 @@ export class AccountComponent{
             confirmPassword:''
         },
 
+        deleteAccount:{
+            delete:''
+        }
+
     }
 
     changeForm(e, form, field){
@@ -31,5 +35,14 @@ export class AccountComponent{
             throw new Error('Password fields must match.');
         }
         this.store.dispatch(changePassword({formValue:form}))
+    }
+
+    deleteAccount(e){
+        e.preventDefault();
+        const form = this .forms.deleteAccount;
+        if(form.delete !== 'delete'){
+            throw new Error('Type "delete" in the field to delete your account.');
+        }
+        this.store.dispatch(deleteAccount());
     }
 }

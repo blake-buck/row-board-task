@@ -113,7 +113,7 @@ export class CognitoController{
 
 
     @UseGuards(JwtGuard)
-    @Post('delete-account')
+    @Delete('delete-account')
     async deleteAccount(@Req() req: Request){
         try{
             const result:any = await this.cognitoService.deleteAccount(req.headers.jwt);

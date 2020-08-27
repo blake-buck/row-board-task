@@ -37,13 +37,15 @@
         </mat-card-header>
 
         <mat-card-content>
-            <mat-form-field>
-                <input matInput placeholder='' />
-            </mat-form-field>
+            <form (submit)='deleteAccount($event)' id='deleteAccount'>
+                <mat-form-field>
+                    <input (keyup)='changeForm($event, "deleteAccount", "delete")' matInput placeholder='' />
+                </mat-form-field>
+            </form>
         </mat-card-content>
 
         <mat-card-actions>
-            <button mat-button color='warn'>DELETE</button>
+            <button mat-button color='warn' type='submit' form='deleteAccount'>DELETE</button>
         </mat-card-actions>
     </mat-card>
 </div>

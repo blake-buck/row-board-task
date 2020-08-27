@@ -46,4 +46,8 @@ export class AppService{
     changePassword({previousPassword, proposedPassword}){
         return this.http.post(`${environment.apiUrl}/api/auth/change-password`, {previousPassword, proposedPassword});
     }
+
+    deleteAccount(){
+        return this.http.delete(`${environment.apiUrl}/api/auth/delete-account`);
+    }
 }
