@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { changePassword, deleteAccount } from 'src/app/store/app.actions';
+import { Router } from '@angular/router';
 
 @Component({
     selector:'account-page',
@@ -9,7 +10,7 @@ import { changePassword, deleteAccount } from 'src/app/store/app.actions';
 })
 
 export class AccountComponent{
-    constructor(private store:Store<any>){}
+    constructor(private store:Store<any>, private router:Router){}
 
     forms = {
         changePassword:{
@@ -44,5 +45,9 @@ export class AccountComponent{
             throw new Error('Type "delete" in the field to delete your account.');
         }
         this.store.dispatch(deleteAccount());
+    }
+
+    toKanban(){
+        this.router.navigate(['app']);
     }
 }

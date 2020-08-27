@@ -10,6 +10,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { first } from 'rxjs/operators';
 import { createVerificationObject, validateStrict } from '../../store/verification/verification';
 import { appStateTypes } from '../../store/app.state';
+import { Router } from '@angular/router';
 
 @Component({
     selector:'row-holder',
@@ -27,7 +28,7 @@ export class RowHolderComponent{
 
     dataSaved$:Observable<boolean>
 
-    constructor(private store:Store<any>, private dialog:MatDialog, private sanitization:DomSanitizer){
+    constructor(private store:Store<any>, private dialog:MatDialog, private sanitization:DomSanitizer, private router:Router){
         this.row$ = this.store.select(selectRows)
         this.dataSaved$ = this.store.select(selectIsDataSaved);
         this.rowCount$ = this.store.select(selectRowCount);
@@ -94,6 +95,10 @@ export class RowHolderComponent{
         if(file){
             fileReader.readAsText(file)
         }
+    }
+
+    toAccountPage(){
+        this.router.navigate(['account']);
     }
 
 }
