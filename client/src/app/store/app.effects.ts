@@ -180,7 +180,7 @@ export class AppEffects {
             }),
             mergeMap(result => result),
             map((result:[{message:any, status:number}, any]) => {
-
+                
                 const fileLocation = result[0].message.Location;
                 const task = result[1];
 

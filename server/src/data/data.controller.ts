@@ -78,6 +78,7 @@ export class DataController{
     async uploadFile(@Req() req:any){
         try{
             const {fileName, dataUrl} = req.body;
+            const {jwt} = req.headers;
 
             // if user tries to upload a file with no extension, an error will get thrown
             const splitFileArray = fileName.split('.');
@@ -86,7 +87,7 @@ export class DataController{
             const base64 = dataUrl.slice(dataUrl.indexOf(',') + 1);
 
             return this.responseService.standardMessage(
-                await this.dataService.uploadObjectToBucket(fileExtension, base64)
+                await this.dataService.uploadObjectToBucket(fileExtension, base64, jwt)
             )
         }
         catch(e){
@@ -99,10 +100,11 @@ export class DataController{
     @Delete('file/:file')
     async deleteFile(@Req() req:any, @Param() params){
         try{
+            const {jwt} = req.headers;
             const fileName = params.file;
 
             return this.responseService.standardMessage(
-                await this.dataService.deleteObjectFromBucket(fileName)
+                await this.dataService.deleteObjectFromBucket(fileName, jwt)
             )
         }
         catch(e){
