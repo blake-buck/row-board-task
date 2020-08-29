@@ -44,14 +44,14 @@ export class DataController{
     
     @UseGuards(JwtGuard)
     @Put('state')
-    putAppState(@Req() req:any){
+    async putAppState(@Req() req:any){
         try{
             const { jwt } = req.headers;
             const userId = this.jwtService.decode(jwt)['username'];
 
             console.log(req.body);
             return this.responseService.standardMessage(
-                this.dataService.updateState(userId, {...req.body, userId})
+                await this.dataService.updateState(userId, {...req.body, userId})
             )
         }
         catch(e){
@@ -61,15 +61,39 @@ export class DataController{
     
     @UseGuards(JwtGuard)
     @Delete('state')
-    deleteAppState(@Req() req:any){
+    async deleteAppState(@Req() req:any){
         try{
             const { jwt } = req.headers;
             const userId = this.jwtService.decode(jwt)['username'];
             return this.responseService.standardMessage(
-                this.dataService.deleteState(userId)
+                await this.dataService.deleteState(userId)
             )
         }
         catch(e){
+            throw new InternalServerErrorException(this.responseService.standardMessage(e, 500));
+        }
+    }
+
+    @UseGuards(JwtGuard)
+    @Post('file')
+    async uploadFile(@Req() req:any){
+        try{
+            const {fileName, dataUrl} = req.body;
+
+            // if user tries to upload a file with no extension, an error will get thrown
+            const splitFileArray = fileName.split('.');
+            const fileExtension = splitFileArray[splitFileArray.length -1];
+
+            console.log(fileExtension)
+
+            const base64 = dataUrl.slice(dataUrl.indexOf(',') + 1);
+
+            return this.responseService.standardMessage(
+                await this.dataService.uploadObjectToBucket(fileExtension, base64)
+            )
+        }
+        catch(e){
+            console.log(e);
             throw new InternalServerErrorException(this.responseService.standardMessage(e, 500));
         }
     }

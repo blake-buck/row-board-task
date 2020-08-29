@@ -4,7 +4,7 @@ import { map, mergeMap} from 'rxjs/operators'
 import { Store } from '@ngrx/store';
 import { selectAppState } from './app.selector';
 import { combineLatest } from 'rxjs';
-import { editRowTitle, editRowTitleSuccess, openTaskDialog, closeTaskDialog, login, loginSuccess, forgotPassword, confirmForgotPassword, changePassword, deleteAccount, retrieveStateFromDb, initializeDbState, retrieveStateFromDbSuccess, saveChanges } from './app.actions';
+import { editRowTitle, editRowTitleSuccess, openTaskDialog, closeTaskDialog, login, loginSuccess, forgotPassword, confirmForgotPassword, changePassword, deleteAccount, retrieveStateFromDb, initializeDbState, retrieveStateFromDbSuccess, saveChanges, uploadTaskPhoto } from './app.actions';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { TaskDialogComponent } from '../internal/task_dialog/task_dialog.component';
 import { AppService } from './app.service';
@@ -172,5 +172,14 @@ export class AppEffects {
             map(result => console.log('update db state ', result))
         ),
         { dispatch: false }
+    )
+
+    uploadTaskPhoto$ = createEffect(
+        () => this.actions$.pipe(
+            ofType(uploadTaskPhoto),
+            mergeMap(action => this.service.uploadFile(action.fileName, action.dataUrl)),
+            map(result => console.log('UPLOAD RESULT ', result))
+        ),
+        {dispatch: false}
     )
 }

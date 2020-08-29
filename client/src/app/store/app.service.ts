@@ -69,4 +69,8 @@ export class AppService{
     deleteDbState(){
         return this.http.delete(`${environment.apiUrl}/api/data/state`);
     }
+
+    uploadFile(fileName, dataUrl){
+        return this.http.post(`${environment.apiUrl}/api/data/file`, {fileName, dataUrl});
+    }
 }

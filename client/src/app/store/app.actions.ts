@@ -223,3 +223,9 @@ export const retrieveStateFromDbSuccess = createAction(
 );
 
 export const initializeDbState = createAction('DB_INITIALIZE_STATE');
+
+export const uploadTaskPhoto = createAction(
+    'UPLOAD_TASK_PHOTO',
+    props<{fileName:string, dataUrl:string | ArrayBuffer}>()
+);
+export const uploadTaskPhotoSuccess = createAction('UPLOAD_TASK_PHOTO_SUCCESS');
