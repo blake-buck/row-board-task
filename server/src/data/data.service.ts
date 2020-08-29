@@ -38,15 +38,36 @@ export class DataService{
         return this.stateModel.findOneAndDelete({userId}).exec();
     }
 
-    uploadObjectToBucket(fileExtension, base64Contents, jwt){
-        // check that object exists before uploading
+    async uploadObjectToBucket(fileExtension, base64Contents, jwt){
         const userId = this.jwtService.decode(jwt)['username'];
-        const fileHash = crypto.createHash('sha256').update('a ' +Math.random()).digest('base64').replace(/\//g, '')
+        const Bucket = this.configService.get('AWS_S3_BUCKET');
+
+        // check if filename already exists; if it does keep generating to avoid overwriting an existing file
+        let continueGeneratingName = false;
+        let fileName;
+        do{
+            fileName = crypto.createHash('sha256').update(userId +Math.random()).digest('base64').replace(/\//g, '');
+            const params = {
+                Key:`${userId}/${fileName}.${fileExtension}`,
+                Bucket
+            }
+
+            try{
+                const existingFileName = await this.s3.getObject(params).promise();
+                continueGeneratingName = true;
+            }
+            catch(e){
+                continueGeneratingName = false
+            }
+
+        }
+        while(continueGeneratingName);
+
         const params = {
             ACL:'public-read',
-            Key:`${userId}/${fileHash}.${fileExtension}`,
+            Key:`${userId}/${fileName}.${fileExtension}`,
             Body:Buffer.from(base64Contents, 'base64'),
-            Bucket:this.configService.get('AWS_S3_BUCKET')
+            Bucket
         };
         return this.s3.upload(params).promise();
     }
