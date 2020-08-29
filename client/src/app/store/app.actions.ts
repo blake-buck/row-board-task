@@ -146,7 +146,8 @@ export const scrollRowBackward = createAction(
 )
 
 export const saveChanges = createAction(
-    'SAVE_CHANGES'
+    'SAVE_CHANGES',
+    props<{appState:any}>()
 )
 
 export const openTaskDialog = createAction(
@@ -214,3 +215,11 @@ export const changePassword = createAction(
 export const deleteAccount = createAction(
     'AUTH_DELETE_ACCOUNT'
 );
+
+export const retrieveStateFromDb = createAction('DB_RETRIEVE_STATE');
+export const retrieveStateFromDbSuccess = createAction(
+    'DB_RETRIEVE_STATE_SUCCESS',
+    props<{storedState:any}>()
+);
+
+export const initializeDbState = createAction('DB_INITIALIZE_STATE');

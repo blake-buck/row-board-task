@@ -1,4 +1,4 @@
-import {getState, addRow, editRowDescription, addBoard, transferBoard, editBoardTitle, archiveBoard, deleteBoard, toggleHideCompleteTasks, addTask, editTask, deleteTask, transferTaskEmpty, transferTask, linkTask, editRowTitleSuccess, getStateFromCosmosSuccess, saveChanges, editRowExpanded, openTaskDialog, setSelectedTask, closeTaskDialog, shiftRowUp, shiftRowDown, deleteRow, archiveRow, archiveTask, restoreArchivedRow, restoreArchivedBoard, restoreArchivedTask, setState, loginSuccess, forgotPassword} from './app.actions';
+import {getState, addRow, editRowDescription, addBoard, transferBoard, editBoardTitle, archiveBoard, deleteBoard, toggleHideCompleteTasks, addTask, editTask, deleteTask, transferTaskEmpty, transferTask, linkTask, editRowTitleSuccess, getStateFromCosmosSuccess, saveChanges, editRowExpanded, openTaskDialog, setSelectedTask, closeTaskDialog, shiftRowUp, shiftRowDown, deleteRow, archiveRow, archiveTask, restoreArchivedRow, restoreArchivedBoard, restoreArchivedTask, setState, loginSuccess, forgotPassword, retrieveStateFromDbSuccess} from './app.actions';
 import {initialState } from './app.state';
 import { _addTask, _editTask, _deleteTask, _transferTaskEmpty, _transferTask, _linkTask, _archiveTask, _restoreArchivedTask } from './reducer-helpers/task.helpers';
 import { _addBoard, _transferBoard, _editBoardTitle, _archiveBoard, _deleteBoard, _reorderBoardTasks, _toggleHideCompleteTasks, _restoreArchivedBoard } from './reducer-helpers/board.helpers';
@@ -123,6 +123,12 @@ export function appReducer(state=initialState, action){
             return {
                 ...state,
                 userEmail: action.formValue.username
+            }
+
+        case retrieveStateFromDbSuccess.type:
+            return {
+                ...state,
+                ...action.storedState
             }
         
         default:

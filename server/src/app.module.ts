@@ -7,6 +7,7 @@ import {MongooseModule} from '@nestjs/mongoose';
 import {join} from 'path';
 import { CognitoModule } from './cognito/cognito.module';
 import { LoggerModule } from './logger/logger.module';
+import { DataModule } from './data/data.module';
 
 @Module({
   imports: [
@@ -25,7 +26,8 @@ import { LoggerModule } from './logger/logger.module';
     }),
 
     CognitoModule,
-    LoggerModule
+    LoggerModule,
+    DataModule
   ],
   controllers: [AppController],
   providers: [

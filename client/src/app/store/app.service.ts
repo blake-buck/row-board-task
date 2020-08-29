@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import {initialState} from './app.state';
+import { Store } from '@ngrx/store';
+import { selectAppState } from './app.selector';
 
 @Injectable()
 export class AppService{
-    constructor(private http:HttpClient){}
+    constructor(private http:HttpClient, private store:Store<any>){}
 
     login({username, password}){
         return this.http.post(`${environment.apiUrl}/api/auth/login`, {username, password});
@@ -49,5 +52,21 @@ export class AppService{
 
     deleteAccount(){
         return this.http.delete(`${environment.apiUrl}/api/auth/delete-account`);
+    }
+
+    retrieveStateFromDb(){
+        return this.http.get(`${environment.apiUrl}/api/data/state`);
+    }
+
+    initializeDbState(){
+        return this.http.post(`${environment.apiUrl}/api/data/state`, initialState);
+    }
+
+    updateDbState(appState){
+        return this.http.put(`${environment.apiUrl}/api/data/state`, appState);
+    }
+
+    deleteDbState(){
+        return this.http.delete(`${environment.apiUrl}/api/data/state`);
     }
 }

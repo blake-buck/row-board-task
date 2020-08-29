@@ -2,8 +2,8 @@ import { Component } from "@angular/core";
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { selectRows, selectIsDataSaved, selectBoardCount, selectTaskCount, selectRowCount } from '../../store/app.selector';
-import { getState, addRow, setState } from '../../store/app.actions';
+import { selectRows, selectIsDataSaved, selectBoardCount, selectTaskCount, selectRowCount, selectAppState } from '../../store/app.selector';
+import { getState, addRow, setState, retrieveStateFromDb, saveChanges } from '../../store/app.actions';
 import { MatDialog } from '@angular/material';
 import { ArchivedItemsComponent } from '../archived-items/archived-items.component';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -34,10 +34,6 @@ export class RowHolderComponent{
         this.rowCount$ = this.store.select(selectRowCount);
         this.boardCount$ = this.store.select(selectBoardCount);
         this.taskCount$ = this.store.select(selectTaskCount);
-    }
-
-    ngOnInit(){
-        this.store.dispatch(getState())
     }
 
     addRow(){
@@ -99,6 +95,13 @@ export class RowHolderComponent{
 
     toAccountPage(){
         this.router.navigate(['account']);
+    }
+
+    saveChanges(){
+        this.store.select(selectAppState).pipe(first()).subscribe(appState => {
+            console.log(appState)
+            this.store.dispatch(saveChanges({appState}));
+        })
     }
 
 }

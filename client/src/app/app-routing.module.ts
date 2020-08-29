@@ -7,6 +7,7 @@ import { ConfirmForgotPasswordComponent } from './public-facing/confirm-forgot-p
 import { LoginComponent } from './public-facing/login/login.component';
 import { RegisterComponent } from './public-facing/register/register.component';
 import { AccountComponent } from './internal/account/account.component';
+import { DatabaseSyncGuard } from './internal/database-sync.guard';
 
 const routes:Routes = [
     {path:'', component:LoginComponent},
@@ -14,7 +15,7 @@ const routes:Routes = [
     {path:'forgot-password', component:ForgotPasswordComponent},
     {path:'forgot-password/confirm', component:ConfirmForgotPasswordComponent},
 
-    {path:'app', component:RowHolderComponent, canActivate:[AuthenticationGuard]},
+    {path:'app', component:RowHolderComponent, canActivate:[AuthenticationGuard, DatabaseSyncGuard]},
     {path: 'account', component:AccountComponent, canActivate:[AuthenticationGuard]}
 ]
 

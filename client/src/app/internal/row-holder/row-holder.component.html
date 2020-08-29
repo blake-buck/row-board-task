@@ -1,7 +1,7 @@
 <export-button *ngIf='beginDataExport' [exportData]='exportData' title='app_state' (linkHasBegunDownload)='downloadLinkLoads()'></export-button>
 <mat-toolbar color='primary'>
   <mat-toolbar-row class='toolbar-row'>
-    <!-- <button mat-flat-button (click)='putState()'><mat-icon>save</mat-icon>Save</button> -->
+    <button mat-flat-button (click)='saveChanges()'><mat-icon>save</mat-icon>Save</button>
     <button mat-button (click)='addRow()'>Add Row</button>
     <button mat-button (click)='accordion.closeAll()'>Close All</button>
     <button mat-button (click)='accordion.openAll()'>Open All</button>

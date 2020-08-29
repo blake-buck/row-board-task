@@ -4,12 +4,16 @@ import { map, mergeMap} from 'rxjs/operators'
 import { Store } from '@ngrx/store';
 import { selectAppState } from './app.selector';
 import { combineLatest } from 'rxjs';
-import { editRowTitle, editRowTitleSuccess, openTaskDialog, closeTaskDialog, login, loginSuccess, forgotPassword, confirmForgotPassword, changePassword, deleteAccount } from './app.actions';
+import { editRowTitle, editRowTitleSuccess, openTaskDialog, closeTaskDialog, login, loginSuccess, forgotPassword, confirmForgotPassword, changePassword, deleteAccount, retrieveStateFromDb, initializeDbState, retrieveStateFromDbSuccess, saveChanges } from './app.actions';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { TaskDialogComponent } from '../internal/task_dialog/task_dialog.component';
 import { AppService } from './app.service';
 import { Router } from '@angular/router';
 
+type ApiResult = {
+    message:any,
+    status:number
+}
 @Injectable()
 
 export class AppEffects {
@@ -123,6 +127,7 @@ export class AppEffects {
     deleteAccount$ = createEffect(
         () => this.actions$.pipe(
             ofType(deleteAccount),
+            mergeMap(action => this.service.deleteDbState()),
             mergeMap(action => this.service.deleteAccount()),
             map(() => {
                 this.snackbar.open('Your account has been succesfully deleted', 'CLOSE');
@@ -130,5 +135,42 @@ export class AppEffects {
             })
         ),
         {dispatch: false}
+    )
+
+    retrieveState$ = createEffect(
+        () => this.actions$.pipe(
+            ofType(retrieveStateFromDb),
+            mergeMap(action => this.service.retrieveStateFromDb()),
+            map((result:ApiResult) => {
+                console.log('RESULT ', result)
+                if(result.message){
+                    this.store.dispatch(retrieveStateFromDbSuccess({storedState:result.message}))
+                }
+                else{
+                    this.store.dispatch(initializeDbState());
+                }
+            })
+        ),
+        {dispatch: false}
+    )
+
+    initializeDbState$ = createEffect(
+        () => this.actions$.pipe(
+            ofType(initializeDbState),
+            mergeMap(action => this.service.initializeDbState()),
+            map((result) => {
+                console.log('INITIALIZE ', result);
+            })
+        ),
+        {dispatch: false}
+    )
+
+    updateDbState$ = createEffect(
+        () => this.actions$.pipe(
+            ofType(saveChanges),
+            mergeMap(action => this.service.updateDbState(action.appState)),
+            map(result => console.log('update db state ', result))
+        ),
+        { dispatch: false }
     )
 }
