@@ -4,7 +4,7 @@ import { map, mergeMap} from 'rxjs/operators'
 import { Store } from '@ngrx/store';
 import { selectAppState } from './app.selector';
 import { combineLatest } from 'rxjs';
-import { editRowTitle, editRowTitleSuccess, openTaskDialog, closeTaskDialog, login, loginSuccess, forgotPassword, confirmForgotPassword, changePassword, deleteAccount, retrieveStateFromDb, initializeDbState, retrieveStateFromDbSuccess, saveChanges, uploadTaskPhoto, editTask, deleteTaskPhoto } from './app.actions';
+import { editRowTitle, editRowTitleSuccess, openTaskDialog, closeTaskDialog, login, loginSuccess, forgotPassword, confirmForgotPassword, changePassword, deleteAccount, retrieveStateFromDb, initializeDbState, retrieveStateFromDbSuccess, saveChanges, uploadTaskPhoto, editTask, deleteTaskPhoto, uploadTaskAttachment, deleteTaskAttachment } from './app.actions';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { TaskDialogComponent } from '../internal/task_dialog/task_dialog.component';
 import { AppService } from './app.service';
@@ -217,4 +217,52 @@ export class AppEffects {
         ),
         {dispatch: false}
     )
+
+    uploadTaskAttachment$ = createEffect(
+        () => this.actions$.pipe(
+            ofType(uploadTaskAttachment),
+            // not sure how i feel about the approach to this problem, but it works for now
+            map(action => {
+                return combineLatest(this.service.uploadFile(action.fileName, action.dataUrl), [action])
+            }),
+            mergeMap(result => result),
+            map((result:[{message:any, status:number}, any]) => {
+                
+                const fileLocation = result[0].message.Location;
+                const task = result[1].task;
+
+                this.store.dispatch(editTask({
+                    task:{
+                        ...task,
+                        attachedFiles:[...task.attachedFiles, {name: result[1].fileName, link:fileLocation}]
+                    }
+                }));
+            })
+        ),
+        {dispatch: false}
+    );
+
+    deleteTaskAttachment$ = createEffect(
+        () => this.actions$.pipe(
+            ofType(deleteTaskAttachment),
+            map(action => {
+                return combineLatest(this.service.deleteFile(action.fileName), [action.task], [action.fullUrl])
+            }),
+            mergeMap(result => result),
+            map((result:[{message:any, status:number}, any, string]) => {
+
+                const task = result[1];
+                const fullUrl = result[2];
+
+                this.store.dispatch(editTask({
+                    task:{
+                        ...task, 
+                        attachedFiles: task.attachedFiles.filter(file => file.link !== fullUrl)
+                    }
+                }))
+            })
+        ),
+        {dispatch: false}
+    );
+
 }

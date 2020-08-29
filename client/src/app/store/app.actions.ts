@@ -232,3 +232,12 @@ export const deleteTaskPhoto = createAction(
     'DELETE_TASK_PHOTO',
     props<{fileName:string, task:any, fullUrl:string}>()
 )
+
+export const uploadTaskAttachment = createAction(
+    'UPLOAD_TASK_ATTACHMENT',
+    props<{fileName:string, dataUrl:string | ArrayBuffer, task:any}>()
+)
+export const deleteTaskAttachment = createAction(
+    'DELETE_TASK_ATTACHMENT',
+    props<{fileName:string, task:any, fullUrl:string}>()
+)
