@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSnackBar } from '@angular/material';
-import { editTask, uploadTaskPhoto } from 'src/app/store/app.actions';
+import { editTask, uploadTaskPhoto, deleteTaskPhoto } from 'src/app/store/app.actions';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -20,7 +20,7 @@ export class PhotoDialogComponent{
         public snackbar: MatSnackBar
     ){}
 
-    realImages = [...this.data.displayImageUrls, ...[]]
+    realImages = this.data.displayImageUrls;
     canSave = false;
     isLoading = false;
     file;
@@ -30,22 +30,10 @@ export class PhotoDialogComponent{
         let fileReader = new FileReader();
     
         fileReader.onloadend = () => {
-
-            this.store.dispatch(uploadTaskPhoto({fileName:e.target.files[0].name, dataUrl:fileReader.result}))
-            
-            // this.http.post('http://localhost:7071/api/DisplayPhoto', {name:e.target.files[0].name, base64:fileReader.result, taskName:`task${this.data.key}`}, {responseType:'json'}).subscribe((val:any) => {
-            //     if(val.url){
-            //         this.realImages.push(val.url)
-            //         // this.unsavedImages.push(val.url)
-            //         this.canSave=true;
-            //     }
-            //     else{
-            //         this.snackbar.open('Error uploading photo! Please try again.', 'Close')
-            //     }
-            //     this.isLoading = false
-
-                
-            // })
+            this.store.dispatch(
+                uploadTaskPhoto({fileName:e.target.files[0].name, dataUrl:fileReader.result, task:this.data})
+            );
+            this.isLoading = false;
         }
         fileReader.readAsDataURL(e.target.files[0])
         
@@ -55,24 +43,12 @@ export class PhotoDialogComponent{
         this.dialogRef.close(); 
     }
 
-    clearImage(index){
-        if(this.realImages.length > 0){
-            // Best practice? of course not. Good regex practice? hell yeah!
-            let fileName = /display\/.+\?sv=/.exec(this.realImages[index])[0].replace('display/', '').replace('?sv=' ,'')
-            // console.log(/display\/.+\?sv=/.exec(this.realImages[this.realImages.length-1])[0].replace('display/', '').replace('?sv=' ,''))
-            this.http.delete('http://localhost:7071/api/DisplayPhoto', {params:{name:fileName, taskName:`task${this.data.key}`}}).subscribe(val => console.log(val))
+    deleteImage(index){
+        const fullUrl = this.data.displayImageUrls[index];
+        const splitUrl = fullUrl.split('/');
+        const fileName = splitUrl[splitUrl.length - 1];
 
-            this.realImages.splice(index, 1);
-        }
-        
+        this.store.dispatch(deleteTaskPhoto({fileName, task:this.data, fullUrl}));
+        this.realImages = this.realImages.filter(url => url !== fullUrl);
     }
-
-    saveImage(){
-        this.dialogRef.close();
-        this.dialogRef.afterClosed().subscribe(result => {
-            this.store.dispatch(editTask({task:{...this.data, displayImageUrls:this.realImages}}))
-        })
-    }
-
-    
 }

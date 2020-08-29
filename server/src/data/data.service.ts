@@ -38,11 +38,22 @@ export class DataService{
 
     uploadObjectToBucket(fileExtension, base64Contents){
         // check that object exists before uploading
+        const fileHash = crypto.createHash('sha256').update('a ' +Math.random()).digest('base64').replace(/\//g, '')
         const params = {
-            Key:`${crypto.createHash('sha256').update('a ' +Math.random()).digest('base64')}.${fileExtension}`,
+            ACL:'public-read',
+            Key:`${fileHash}.${fileExtension}`,
             Body:Buffer.from(base64Contents, 'base64'),
             Bucket:this.configService.get('AWS_S3_BUCKET')
         };
         return this.s3.upload(params).promise();
+    }
+
+    deleteObjectFromBucket(fileName){
+        const params = {
+            Bucket:this.configService.get('AWS_S3_BUCKET'),
+            Key:fileName
+        }
+
+        return this.s3.deleteObject(params).promise();
     }
 }

@@ -226,6 +226,9 @@ export const initializeDbState = createAction('DB_INITIALIZE_STATE');
 
 export const uploadTaskPhoto = createAction(
     'UPLOAD_TASK_PHOTO',
-    props<{fileName:string, dataUrl:string | ArrayBuffer}>()
+    props<{fileName:string, dataUrl:string | ArrayBuffer, task:any}>()
 );
-export const uploadTaskPhotoSuccess = createAction('UPLOAD_TASK_PHOTO_SUCCESS');
+export const deleteTaskPhoto = createAction(
+    'DELETE_TASK_PHOTO',
+    props<{fileName:string, task:any, fullUrl:string}>()
+)

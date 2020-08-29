@@ -4,7 +4,7 @@ import { map, mergeMap} from 'rxjs/operators'
 import { Store } from '@ngrx/store';
 import { selectAppState } from './app.selector';
 import { combineLatest } from 'rxjs';
-import { editRowTitle, editRowTitleSuccess, openTaskDialog, closeTaskDialog, login, loginSuccess, forgotPassword, confirmForgotPassword, changePassword, deleteAccount, retrieveStateFromDb, initializeDbState, retrieveStateFromDbSuccess, saveChanges, uploadTaskPhoto } from './app.actions';
+import { editRowTitle, editRowTitleSuccess, openTaskDialog, closeTaskDialog, login, loginSuccess, forgotPassword, confirmForgotPassword, changePassword, deleteAccount, retrieveStateFromDb, initializeDbState, retrieveStateFromDbSuccess, saveChanges, uploadTaskPhoto, editTask, deleteTaskPhoto } from './app.actions';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { TaskDialogComponent } from '../internal/task_dialog/task_dialog.component';
 import { AppService } from './app.service';
@@ -142,7 +142,6 @@ export class AppEffects {
             ofType(retrieveStateFromDb),
             mergeMap(action => this.service.retrieveStateFromDb()),
             map((result:ApiResult) => {
-                console.log('RESULT ', result)
                 if(result.message){
                     this.store.dispatch(retrieveStateFromDbSuccess({storedState:result.message}))
                 }
@@ -158,9 +157,7 @@ export class AppEffects {
         () => this.actions$.pipe(
             ofType(initializeDbState),
             mergeMap(action => this.service.initializeDbState()),
-            map((result) => {
-                console.log('INITIALIZE ', result);
-            })
+            map((result) => result)
         ),
         {dispatch: false}
     )
@@ -169,7 +166,7 @@ export class AppEffects {
         () => this.actions$.pipe(
             ofType(saveChanges),
             mergeMap(action => this.service.updateDbState(action.appState)),
-            map(result => console.log('update db state ', result))
+            map(result =>  result)
         ),
         { dispatch: false }
     )
@@ -177,8 +174,46 @@ export class AppEffects {
     uploadTaskPhoto$ = createEffect(
         () => this.actions$.pipe(
             ofType(uploadTaskPhoto),
-            mergeMap(action => this.service.uploadFile(action.fileName, action.dataUrl)),
-            map(result => console.log('UPLOAD RESULT ', result))
+            // not sure how i feel about the approach to this problem, but it works for now
+            map(action => {
+                return combineLatest(this.service.uploadFile(action.fileName, action.dataUrl), [action.task])
+            }),
+            mergeMap(result => result),
+            map((result:[{message:any, status:number}, any]) => {
+
+                const fileLocation = result[0].message.Location;
+                const task = result[1];
+
+                this.store.dispatch(editTask({
+                    task:{
+                        ...task,
+                        displayImageUrls:[...task.displayImageUrls, fileLocation]
+                    }
+                }));
+            })
+        ),
+        {dispatch: false}
+    );
+
+    deleteTaskPhoto$ = createEffect(
+        () => this.actions$.pipe(
+            ofType(deleteTaskPhoto),
+            map(action => {
+                return combineLatest(this.service.deleteFile(action.fileName), [action.task], [action.fullUrl])
+            }),
+            mergeMap(result => result),
+            map((result:[{message:any, status:number}, any, string]) => {
+
+                const task = result[1];
+                const fullUrl = result[2];
+
+                this.store.dispatch(editTask({
+                    task:{
+                        ...task, 
+                        displayImageUrls: task.displayImageUrls.filter(url => url !== fullUrl)
+                    }
+                }))
+            })
         ),
         {dispatch: false}
     )

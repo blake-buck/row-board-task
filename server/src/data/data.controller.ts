@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, InternalServerErrorException, HttpCode, UseGuards, Req } from "@nestjs/common";
+import { Controller, Get, Post, Put, Delete, InternalServerErrorException, HttpCode, UseGuards, Req, Param } from "@nestjs/common";
 import { ResponseService } from "src/services/response.service";
 import { DataService } from "./data.service";
 import { JwtGuard } from "src/guards/jwt.guard";
@@ -49,7 +49,6 @@ export class DataController{
             const { jwt } = req.headers;
             const userId = this.jwtService.decode(jwt)['username'];
 
-            console.log(req.body);
             return this.responseService.standardMessage(
                 await this.dataService.updateState(userId, {...req.body, userId})
             )
@@ -84,12 +83,26 @@ export class DataController{
             const splitFileArray = fileName.split('.');
             const fileExtension = splitFileArray[splitFileArray.length -1];
 
-            console.log(fileExtension)
-
             const base64 = dataUrl.slice(dataUrl.indexOf(',') + 1);
 
             return this.responseService.standardMessage(
                 await this.dataService.uploadObjectToBucket(fileExtension, base64)
+            )
+        }
+        catch(e){
+            console.log(e);
+            throw new InternalServerErrorException(this.responseService.standardMessage(e, 500));
+        }
+    }
+
+    @UseGuards(JwtGuard)
+    @Delete('file/:file')
+    async deleteFile(@Req() req:any, @Param() params){
+        try{
+            const fileName = params.file;
+
+            return this.responseService.standardMessage(
+                await this.dataService.deleteObjectFromBucket(fileName)
             )
         }
         catch(e){

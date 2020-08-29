@@ -73,4 +73,8 @@ export class AppService{
     uploadFile(fileName, dataUrl){
         return this.http.post(`${environment.apiUrl}/api/data/file`, {fileName, dataUrl});
     }
+
+    deleteFile(fileName){
+        return this.http.delete(`${environment.apiUrl}/api/data/file/${fileName}`);
+    }
 }
