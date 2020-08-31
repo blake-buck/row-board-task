@@ -6,12 +6,14 @@ import { State, StateSchema } from "./state.schema";
 import { GuardsModule } from "src/guards/guards.module";
 import { ResponseService } from "src/services/response.service";
 import { JwtModule } from "@nestjs/jwt";
+import { LoggerModule } from "src/logger/logger.module";
 
 @Module({
     imports:[
         MongooseModule.forFeature([{name: State.name, schema: StateSchema}]),
         JwtModule.register({}),
-        GuardsModule
+        GuardsModule,
+        LoggerModule
     ],
     controllers:[
         DataController

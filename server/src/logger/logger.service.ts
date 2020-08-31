@@ -3,7 +3,7 @@ import { ErrorLog } from ".//schemas/error-log.schema";
 import { Model } from "mongoose";
 import { Injectable } from "@nestjs/common";
 
-type ErrorDomain = 'COGNITO' | 'GENERAL';
+type ErrorDomain = 'COGNITO' | 'DATA' | 'GENERAL';
 type ErrorLogObj = {
     error: string;
     domain: ErrorDomain;

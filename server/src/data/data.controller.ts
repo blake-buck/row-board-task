@@ -1,11 +1,13 @@
-import { Controller, Get, Post, Put, Delete, InternalServerErrorException, HttpCode, UseGuards, Req, Param } from "@nestjs/common";
+import { Controller, Get, Post, Put, Delete, InternalServerErrorException, HttpCode, UseGuards, Req, Param, UseFilters } from "@nestjs/common";
 import { ResponseService } from "src/services/response.service";
 import { DataService } from "./data.service";
 import { JwtGuard } from "src/guards/jwt.guard";
 import { JwtService } from "@nestjs/jwt";
 import { Request } from "express";
+import { DataFilter } from "./data.filter";
 
 @Controller('api/data')
+@UseFilters(DataFilter)
 export class DataController{
     constructor(private dataService:DataService, private responseService:ResponseService, private jwtService: JwtService){}
     
