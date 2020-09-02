@@ -25,7 +25,8 @@ import { CognitoController } from './cognito/cognito.controller';
       imports:[],
       inject:[ConfigService],
       useFactory: async (configService: ConfigService) => ({
-        uri:`mongodb+srv://${configService.get('DB_USER_NAME')}:${configService.get('DB_USER_PASSWORD')}@cluster0.gbvkv.mongodb.net/${configService.get('DB_NAME')}?retryWrites=true&w=majority`
+        uri:`mongodb+srv://${configService.get('DB_USER_NAME')}:${configService.get('DB_USER_PASSWORD')}@cluster0.gbvkv.mongodb.net/${configService.get('DB_NAME')}?retryWrites=true&w=majority`,
+        useFindAndModify: false
       })
     }),
 
