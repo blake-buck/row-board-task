@@ -1,16 +1,17 @@
-<div class='exit-row max-secondary-dialog-width'>
-    <h3>Attach a display photo</h3>
-    <button mat-icon-button (click)='onCloseDialog()'><mat-icon>clear</mat-icon></button>
-</div>
-
-
-<div class='photo-upload-content'>
-    <div style='overflow-y:auto; max-height: 500px; display:flex; flex-direction: column;'> 
-        <div class='imageBlock' *ngFor='let imageUrl of realImages; index as i'>
-            <img [src]='imageUrl' style='width:250px; height:250px;' class='imageToDisplay' />
-            <button color='warn' mat-icon-button (click)='deleteImage(i)'><mat-icon>delete</mat-icon></button>
+<ng-container *ngIf='data$ | async as task'>
+    <div class='exit-row max-secondary-dialog-width'>
+        <h3>Attach a display photo</h3>
+        <button mat-icon-button (click)='onCloseDialog()'><mat-icon>clear</mat-icon></button>
+    </div>
+    
+    <div class='photo-upload-content'>
+        <div style='overflow-y:auto; max-height: 500px; display:flex; flex-direction: column;'> 
+            <div class='imageBlock' *ngFor='let imageUrl of task.displayImageUrls; index as i'>
+                <img [src]='imageUrl' style='width:250px; height:250px;' class='imageToDisplay' />
+                <button color='warn' mat-icon-button (click)='deleteImage(i, task)'><mat-icon>delete</mat-icon></button>
+            </div>
         </div>
     </div>
-</div>
-<mat-spinner style='margin-left:auto; margin-right:auto;' *ngIf='isLoading'></mat-spinner>
-<input type='file' id='attachment-upload-input' (change)='getFile($event)' accept='image/*'/>
+    <mat-spinner style='margin-left:auto; margin-right:auto;' *ngIf='isLoading'></mat-spinner>
+    <input type='file' id='attachment-upload-input' (change)='getFile($event, task)' accept='image/*'/>
+</ng-container>

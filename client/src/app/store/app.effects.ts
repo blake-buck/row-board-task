@@ -234,7 +234,8 @@ export class AppEffects {
                 this.store.dispatch(editTask({
                     task:{
                         ...task,
-                        attachedFiles:[...task.attachedFiles, {name: result[1].fileName, link:fileLocation}]
+                        attachedFiles:[...task.attachedFiles, {name: result[1].fileName, link:fileLocation}],
+                        attachment:true
                     }
                 }));
             })
@@ -254,11 +255,13 @@ export class AppEffects {
                 const task = result[1];
                 const fullUrl = result[2];
 
+                task.attachedFiles = task.attachedFiles.files.filter(file => file.link !== fullUrl);
+                if(task.attachedFiles.length === 0){
+                    task.attachment = false;
+                }
+                
                 this.store.dispatch(editTask({
-                    task:{
-                        ...task, 
-                        attachedFiles: task.attachedFiles.filter(file => file.link !== fullUrl)
-                    }
+                    task
                 }))
             })
         ),

@@ -66,6 +66,7 @@ export namespace App{
         displayImageUrls:string[],
     
         attachedFiles:{name:string, link:string}[],
+        attachment:boolean,
     
         labels:TaskLabel[],
         linkedTasks:any[],
@@ -173,7 +174,10 @@ const taskTypes = {
     comments: isArrayOf(hasShape(taskComment)),
     checklists: isArrayOf(hasShape(taskChecklistTypes)),
     displayImageUrls: isArrayOf(isString),
+    
     attachedFiles: isArrayOf(hasShape(attachedFilesTypes)),
+    attachment: isBoolean,
+
     labels: isArrayOf(hasShape(taskLabelTypes)),
     linkedTasks: isArrayOf(hasShape(taskLinkedTaskTypes)),
 
