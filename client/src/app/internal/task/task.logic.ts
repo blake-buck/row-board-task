@@ -24,11 +24,11 @@ export function onDrop(transferredData, task){
     return null;
 }
 
-export function labelLength(labelLength){
-    if(labelLength < 4){
-        return 2
+export function labelLength(textLength){
+    if(textLength > 2){
+        return textLength
     }
-    return labelLength -2;
+    return 2;
 }
 
 export function cyclePhoto(isForward, displayImageUrls, currentDisplayPhoto){
