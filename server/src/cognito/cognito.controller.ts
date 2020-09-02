@@ -37,7 +37,7 @@ export class CognitoController{
             if(e.message === 'An account with the given email already exists.'){
                 return this.responseService.standardMessage('Check your email for a registration message.');
             }
-            throw new BadRequestException(e);
+            throw new BadRequestException(this.responseService.standardMessage(e, 400));
         }
     }
 
@@ -55,13 +55,15 @@ export class CognitoController{
             return this.responseService.standardMessage(result);
         }
         catch(e){
-            throw new BadRequestException(e)
+            throw new BadRequestException(this.responseService.standardMessage(e, 400))
         }
     }
 
-    @UseGuards(JwtGuard)
     @Post('refresh')
     async refreshToken(@Req() req: Request){
+        if(!req.headers.jwt){
+            throw new BadRequestException(this.responseService.standardMessage('Missing refresh token in request header.', 400));
+        }
         try{
             const result:any = await this.cognitoService.refreshToken({
                 refresh: req.body?.refreshToken,
@@ -72,7 +74,7 @@ export class CognitoController{
             return this.responseService.standardMessage(result)
         }
         catch(e){
-            throw new BadRequestException(e);
+            throw new BadRequestException(this.responseService.standardMessage(e, 400));
         }
     }
 
@@ -84,7 +86,7 @@ export class CognitoController{
             return this.responseService.standardMessage('Password is changed.');
         }
         catch(e){
-            throw new BadRequestException(e)
+            throw new BadRequestException(this.responseService.standardMessage(e, 400))
         }
     }
 
@@ -96,7 +98,7 @@ export class CognitoController{
             return this.responseService.standardMessage('Check your email for a reset code.');
         }
         catch(e){
-            throw new BadRequestException(e);
+            throw new BadRequestException(this.responseService.standardMessage(e, 400));
         }
     }
 
@@ -107,7 +109,7 @@ export class CognitoController{
             return this.responseService.standardMessage('Your password has been successfully reset');
         }
         catch(e){
-            throw new BadRequestException(e);
+            throw new BadRequestException(this.responseService.standardMessage(e, 400));
         }
     }
 
@@ -120,7 +122,7 @@ export class CognitoController{
             return this.responseService.standardMessage('Your account has been deleted.');
         }
         catch(e){
-            throw new BadRequestException(e);
+            throw new BadRequestException(this.responseService.standardMessage(e, 400));
         }
     }
 
