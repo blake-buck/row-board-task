@@ -5,9 +5,9 @@
     </div>
     
     <div class='photo-upload-content'>
-        <div style='overflow-y:auto; max-height: 500px; display:flex; flex-direction: column;'> 
+        <div class='imageBlock-holder'> 
             <div class='imageBlock' *ngFor='let imageUrl of task.displayImageUrls; index as i'>
-                <img [src]='imageUrl' style='width:250px; height:250px;' class='imageToDisplay' />
+                <img [src]='imageUrl' class='imageToDisplay' />
                 <button color='warn' mat-icon-button (click)='deleteImage(i, task)'><mat-icon>delete</mat-icon></button>
             </div>
         </div>
