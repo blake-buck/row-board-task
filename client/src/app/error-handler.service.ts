@@ -6,8 +6,18 @@ export class AppErrorHandler implements ErrorHandler{
 
     handleError(e){
         console.error(e);
+        let errorMessage;
+        if(e.error){
+            errorMessage = e.error.message;
+        }
+        else if(e.message){
+            errorMessage = e.message;
+        }
+        else{
+            errorMessage = e;
+        }
         this.snackbar.open(
-            `Error: ${e.error ? e.error.message : e.message}`, 
+            `Error: ${errorMessage}`, 
             'CLOSE',
             {
                 verticalPosition:'top',
