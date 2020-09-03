@@ -3,12 +3,12 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { selectRows, selectIsDataSaved, selectBoardCount, selectTaskCount, selectRowCount, selectAppState } from '../../store/app.selector';
-import { getState, addRow, setState, retrieveStateFromDb, saveChanges } from '../../store/app.actions';
+import { addRow, setState, saveChanges } from '../../store/app.actions';
 import { MatDialog } from '@angular/material';
 import { ArchivedItemsComponent } from '../archived-items/archived-items.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { first } from 'rxjs/operators';
-import { createVerificationObject, validateStrict } from '../../store/verification/verification';
+import { createVerificationObject, validateStrict } from '../../../../../shared/verification';
 import { appStateTypes } from '../../store/app.state';
 import { Router } from '@angular/router';
 

@@ -1,206 +1,26 @@
-import { Moment } from 'moment';
-import { isNumber, isString, isBoolean, isNull, isOneOf, hasShape, isArrayOf } from './verification/verification';
-export namespace App{
-    export interface AppState{
-        userEmail:string;
+import { isNumber, isString, isBoolean, isNull, isOneOf, hasShape, isArrayOf } from '../../../../shared/verification';
+import { Row, Board, Task } from '../../../../shared/types';
+import { rowTypes, boardTypes, taskTypes } from '../../../../shared/type-verifiers';
 
-        partitionKey:string;
-        currentTaskKey:number,
-        currentBoardKey:number,
-        currentRowKey:number,
-        archivedRows:Row[],
-        rows:Row[],
-        archivedBoards:Board[],
-        archivedTasks:Task[],
-        boards:Board[],
-        isDataSaved:boolean;
-        isDataSaving:boolean;
-        isTaskDialogOpen:boolean;
-        selectedTask:Task | null;
-        rowCount:number;
-        boardCount:number;
-        taskCount:number;
-    }
-    
-    export interface Row{
-        key:number,
-        title:string,
-        description:string,
-        boards:number[],
-        expanded:boolean,
-        position:number
-    }
-    
-    export interface Board{
-        rowKey:number,
-        key:number,
-        title:string,
-        hideCompleteTasks:boolean,
-        isArchived:boolean,
-        tasks:Task[]
-    }
+export interface AppState{
+    userEmail:string;
 
-    export interface Task{
-        key:number,
-        boardKey:number,
-        currentChecklistKey:number,
-    
-        body:string,
-        description:string,
-        cardColor:string,
-        fontColor:string,
-    
-        // This could also stand to be one array of booleans
-        isEditing:boolean,
-        isComplete:boolean,
-        important:boolean,
-        warning:boolean,
-        payment:boolean,
-        vacation:boolean,
-        social:boolean,
-        work:boolean,
-        travel:boolean,
-    
-        comments:TaskComment[],
-        checklists:TaskChecklist[],
-        displayImageUrls:string[],
-    
-        attachedFiles:{name:string, link:string}[],
-        attachment:boolean,
-    
-        labels:TaskLabel[],
-        linkedTasks:any[],
-    
-        dueDate:Moment | null,
-        dateCreated:Moment,
-        lastEdited:Moment,
-
-        dialogOpen:boolean
-    }
-    
-    export interface TaskComment{
-        content:string,
-        date:string
-    }
-    
-    export interface TaskChecklist{
-        title:{content:string, isEditing:boolean},
-        key:number,
-        color:string,
-        currentKey:number,
-        completedTasks:number,
-        content:TaskChecklistItem[]
-    }
-    
-    export interface TaskChecklistItem{
-        key:number,
-        checklistKey:number,
-        content:string,
-        checked:boolean,
-        isEditing:boolean
-    }
-    
-    export interface TaskLabel{
-        background:string,
-        fontColor:string,
-        text:string
-    }
-    
-    export interface TaskLinkedTask{
-        taskKey:number,
-        boardKey:number
-    }
-}
-
-
-
-
-const taskComment = {
-    content: isString,
-    date: isString
-}
-const taskLinkedTaskTypes = {
-    taskKey: isNumber,
-    boardKey: isNumber
-}
-const taskLabelTypes = {
-    background: isString,
-    fontColor: isString,
-    text: isString
-}
-const taskChecklistItemTypes = {
-    key: isNumber,
-    checklistKey: isNumber,
-    content: isString,
-    checked: isBoolean,
-    isEditing: isBoolean
-}
-const taskChecklistTypes ={
-    title: hasShape({
-        content:isString, 
-        isEditing:isBoolean
-    }),
-    key: isNumber,
-    color: isString,
-    currentKey: isNumber,
-    completedTasks: isNumber,
-    content: isArrayOf(hasShape(taskChecklistItemTypes))
-}
-const attachedFilesTypes = {
-    name:isString,
-    link:isString
-}
-const taskTypes = {
-    key: isNumber,
-    boardKey: isNumber,
-    currentChecklistKey: isNumber,
-
-    body: isString,
-    description: isString,
-    cardColor: isString,
-    fontColor: isString,
-
-    isEditing: isBoolean,
-    isComplete: isBoolean,
-    dialogOpen: isBoolean,
-    important: isBoolean,
-    warning: isBoolean,
-    payment: isBoolean,
-    vacation: isBoolean,
-    social: isBoolean,
-    work: isBoolean,
-    travel: isBoolean,
-
-    comments: isArrayOf(hasShape(taskComment)),
-    checklists: isArrayOf(hasShape(taskChecklistTypes)),
-    displayImageUrls: isArrayOf(isString),
-    
-    attachedFiles: isArrayOf(hasShape(attachedFilesTypes)),
-    attachment: isBoolean,
-
-    labels: isArrayOf(hasShape(taskLabelTypes)),
-    linkedTasks: isArrayOf(hasShape(taskLinkedTaskTypes)),
-
-    dueDate: isOneOf(isString, isNull),
-    dateCreated: isString,
-    lastEdited: isString,
-}
-
-const boardTypes = {
-    rowKey: isNumber,
-    key: isNumber,
-    title: isString,
-    hideCompleteTasks: isBoolean,
-    isArchived: isBoolean,
-    tasks: isArrayOf(hasShape(taskTypes))
-}
-const rowTypes = {
-    key: isNumber,
-    title: isString,
-    description: isString,
-    boards: isArrayOf(isNumber),
-    expanded: isBoolean,
-    position: isNumber
+    partitionKey:string;
+    currentTaskKey:number,
+    currentBoardKey:number,
+    currentRowKey:number,
+    archivedRows:Row[],
+    rows:Row[],
+    archivedBoards:Board[],
+    archivedTasks:Task[],
+    boards:Board[],
+    isDataSaved:boolean;
+    isDataSaving:boolean;
+    isTaskDialogOpen:boolean;
+    selectedTask:Task | null;
+    rowCount:number;
+    boardCount:number;
+    taskCount:number;
 }
 
 export const appStateTypes = {
@@ -224,7 +44,7 @@ export const appStateTypes = {
     taskCount:isNumber
 }
 
-export const initialState:App.AppState = {
+export const initialState:AppState = {
     userEmail:'',
     
     partitionKey:'state',

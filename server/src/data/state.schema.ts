@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document } from 'mongoose';
+import { Row, Board, Task } from '../../../shared/types';
 
 @Schema()
 export class State extends Document{
@@ -16,19 +17,19 @@ export class State extends Document{
     currentRowKey:number;
 
     @Prop()
-    archivedRows:any[];
+    archivedRows:Row[];
 
     @Prop()
-    rows:any[];
+    rows:Row[];
 
     @Prop()
-    archivedBoards:any[];
+    archivedBoards:Board[];
 
     @Prop()
-    archivedTasks:any[];
+    archivedTasks:Task[];
 
     @Prop()
-    boards:any[];
+    boards:Board[];
 
     @Prop()
     rowCount:number;
