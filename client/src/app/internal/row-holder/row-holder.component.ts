@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { selectRows, selectIsDataSaved, selectBoardCount, selectTaskCount, selectRowCount, selectAppState } from '../../store/app.selector';
+import { selectRows, selectIsDataSaved, selectBoardCount, selectTaskCount, selectRowCount, selectAppState, selectIsStateLoading } from '../../store/app.selector';
 import { addRow, setState, saveChanges } from '../../store/app.actions';
 import { MatDialog } from '@angular/material';
 import { ArchivedItemsComponent } from '../archived-items/archived-items.component';
@@ -19,22 +19,17 @@ import { Router } from '@angular/router';
 })
 
 export class RowHolderComponent{
-    board$:Observable<any>
-    row$:Observable<any>
+    constructor(private store:Store<any>, private dialog:MatDialog, private sanitization:DomSanitizer, private router:Router){}
+    
+    row$:Observable<any> = this.store.select(selectRows);
 
-    rowCount$:Observable<any>;
-    boardCount$:Observable<any>;
-    taskCount$:Observable<any>;
+    rowCount$:Observable<any> = this.store.select(selectRowCount);
+    boardCount$:Observable<any> = this.store.select(selectBoardCount);
+    taskCount$:Observable<any> = this.store.select(selectTaskCount);
 
-    dataSaved$:Observable<boolean>
+    dataSaved$:Observable<boolean> = this.store.select(selectIsDataSaved);
 
-    constructor(private store:Store<any>, private dialog:MatDialog, private sanitization:DomSanitizer, private router:Router){
-        this.row$ = this.store.select(selectRows)
-        this.dataSaved$ = this.store.select(selectIsDataSaved);
-        this.rowCount$ = this.store.select(selectRowCount);
-        this.boardCount$ = this.store.select(selectBoardCount);
-        this.taskCount$ = this.store.select(selectTaskCount);
-    }
+    isStateLoading$ = this.store.select(selectIsStateLoading);
 
     addRow(){
         this.store.dispatch(addRow())

@@ -14,7 +14,6 @@ export class AuthenticationGuard implements CanActivate{
             try{
                 const result:any = await this.service.refresh().toPromise()
                 localStorage.setItem('accessToken', result.message.AuthenticationResult.AccessToken)
-                return true
             }
             catch(e){
                 return this.router.parseUrl('/');

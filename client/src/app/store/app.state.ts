@@ -14,10 +14,15 @@ export interface AppState{
     archivedBoards:Board[],
     archivedTasks:Task[],
     boards:Board[],
+    selectedTask:Task | null;
+
     isDataSaved:boolean;
     isDataSaving:boolean;
     isTaskDialogOpen:boolean;
-    selectedTask:Task | null;
+
+    isStateRetrieved:boolean;
+    isStateLoading:boolean;
+
     rowCount:number;
     boardCount:number;
     taskCount:number;
@@ -34,11 +39,16 @@ export const appStateTypes = {
 
     archivedBoards: isArrayOf(hasShape(boardTypes)),
     archivedTasks: isArrayOf(hasShape(taskTypes)),
+    selectedTask: isOneOf(isNull, hasShape(taskTypes)),
     boards: isArrayOf(hasShape(boardTypes)),
+
     isDataSaved: isBoolean,
     isDataSaving: isBoolean,
     isTaskDialogOpen: isBoolean,
-    selectedTask: isOneOf(isNull, hasShape(taskTypes)),
+
+    isStateRetrieved: isBoolean,
+    isStateLoading: isBoolean,
+
     rowCount:isNumber,
     boardCount:isNumber,
     taskCount:isNumber
@@ -59,6 +69,10 @@ export const initialState:AppState = {
     isDataSaved:true,
     isDataSaving:false,
     isTaskDialogOpen:false,
+
+    isStateRetrieved: false,
+    isStateLoading: true,
+
     selectedTask:null,
     rowCount:0,
     boardCount:0,

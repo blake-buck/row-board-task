@@ -56,3 +56,5 @@ export const selectArchivedBoards = createSelector(selectAppState, state => {
 export const selectArchivedTasks = createSelector(selectAppState, state => state.archivedTasks);
 
 export const selectUserEmail = createSelector(selectAppState, state => state.userEmail);
+
+export const selectIsStateLoading = createSelector(selectAppState, state => state.isStateLoading)

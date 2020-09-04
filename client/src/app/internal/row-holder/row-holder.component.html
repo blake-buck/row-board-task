@@ -17,6 +17,11 @@
   <row *ngFor='let row of row$ | async' [rowData]='row' [accordion]='accordion'></row>
 </mat-accordion>
 
+<div class='loading-message' *ngIf='isStateLoading$ | async'>
+  <mat-spinner></mat-spinner>
+  <h1>Loading App Data</h1>
+</div>
+
 <footer>
   <span *ngIf='(dataSaved$ | async) as dataSaved'>Saved</span>
   <span *ngIf='!(dataSaved$ | async)'>Unsaved Changes</span>

@@ -128,7 +128,9 @@ export function appReducer(state=initialState, action){
         case retrieveStateFromDbSuccess.type:
             return {
                 ...state,
-                ...action.storedState
+                ...action.storedState,
+                isStateLoading:false,
+                isStateRetrieved:true
             }
         
         default:
