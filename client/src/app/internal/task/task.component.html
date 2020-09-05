@@ -8,7 +8,7 @@
     #elementWrapper
 >   
     <div class='task-list-item-wrapper'>
-        <img *ngIf='task.displayImageUrls' src={{task.displayImageUrls[0]}} />
+        <img *ngIf='task.displayImageUrls && task.displayImageUrls.length > 0' [src]='task.displayImageUrls[0]' />
         <div class='task-list-item-div'>
             <form class='task-list-form' (submit)='toggleInput($event)'>
                 <mat-form-field class='task-list-field' style='margin-bottom:-0.5em; margin-top:-0.5em; ' >
@@ -64,14 +64,14 @@
         <p *ngFor='let label of task.labels' [style.background]='label.background'></p>
     </div>
 
-    <div (click)='toggleDisplayLabelText()' *ngIf='displayLabelText' class='label-row'>
-        <input disabled (click)='focusLabel()' (keyup)='changeLabelText($event, i, task)' *ngFor='let label of task.labels; index as i' size={{labelLength(label.text.length)}} value={{label.text}} [style.background]='label.background' />
+    <div *ngIf='displayLabelText' class='label-row'>
+        <input (click)='toggleDisplayLabelText()' *ngFor='let label of task.labels; index as i' [value]='label.text' [size]='label.text.length ? label.text.length : 1' [style.background]='label.background' />
     </div>
     
     <div class='task-list-item-wrapper'>
         <div  style='display:flex; justify-content: center; align-items: center;'>
             <button (click)='cyclePhoto(false, task.displayImageUrls)' *ngIf='task.displayImageUrls.length > 1' mat-icon-button><mat-icon>keyboard_arrow_left</mat-icon></button>
-            <img *ngIf='task.displayImageUrls' src={{task.displayImageUrls[currentDisplayPhoto]}} />
+            <img *ngIf='task.displayImageUrls && task.displayImageUrls.length > 0' [src]='task.displayImageUrls[currentDisplayPhoto]' />
             <button (click)='cyclePhoto(true, task.displayImageUrls)' *ngIf='task.displayImageUrls.length > 1' mat-icon-button><mat-icon>keyboard_arrow_right</mat-icon></button>
         </div>
 
