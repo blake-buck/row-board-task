@@ -11,6 +11,8 @@ export class CognitoRequestFilter implements ExceptionFilter{
         const request = ctx.getRequest<Request>();
         const status = 400
 
+        console.log(exception);
+        
         await this.logger.errorLog({
             ip:request.ip,
             error:JSON.stringify(exception),

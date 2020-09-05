@@ -7,6 +7,8 @@ import { ResponseService } from "../services/response.service";
 
 import { JwtGuard } from "src/guards/jwt.guard";
 import { CognitoRequestFilter } from "./cognito.filter";
+import { DataService } from "src/data/data.service";
+import { LoggerService } from "src/logger/logger.service";
 
 @Controller('api/auth')
 @UseFilters(CognitoRequestFilter)
@@ -14,7 +16,9 @@ export class CognitoController{
     constructor(
         private cognitoService:CognitoService, 
         private verificationService: VerificationService,
-        private responseService: ResponseService
+        private responseService: ResponseService,
+        private dataService: DataService,
+        private loggerService:LoggerService
     ){}
 
     @Post('register')
@@ -118,12 +122,27 @@ export class CognitoController{
     @Delete('delete-account')
     async deleteAccount(@Req() req: Request){
         try{
-            const result:any = await this.cognitoService.deleteAccount(req.headers.jwt);
-            return this.responseService.standardMessage('Your account has been deleted.');
+            await this.cognitoService.deleteAccount(req.headers.jwt);
         }
         catch(e){
             throw new BadRequestException(this.responseService.standardMessage(e, 400));
         }
+
+        try{
+            await this.dataService.deleteUserFiles(req.headers.jwt);
+        }
+        catch(error){
+            // If an error occurs while deleting the user's file, log it and move on
+            await this.loggerService.errorLog({
+                error,
+                ip: req.ip,
+                route:req.url,
+                domain:'DATA',
+                timestamp: new Date().toISOString()
+            })
+        }
+
+        return this.responseService.standardMessage('Your account has been deleted.');
     }
 
 }

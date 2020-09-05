@@ -8,10 +8,10 @@ import { DataFilter } from "./data.filter";
 
 @Controller('api/data')
 @UseFilters(DataFilter)
+@UseGuards(JwtGuard)
 export class DataController{
     constructor(private dataService:DataService, private responseService:ResponseService, private jwtService: JwtService){}
     
-    @UseGuards(JwtGuard)
     @Get('state')
     async getAppState(@Req() req:any){
         try{
@@ -27,7 +27,6 @@ export class DataController{
         }
     }
 
-    @UseGuards(JwtGuard)
     @Post('state')
     @HttpCode(200)
     async postAppState(@Req() req:any){
@@ -44,7 +43,6 @@ export class DataController{
         }
     }
     
-    @UseGuards(JwtGuard)
     @Put('state')
     async putAppState(@Req() req:any){
         try{
@@ -60,7 +58,6 @@ export class DataController{
         }
     }
     
-    @UseGuards(JwtGuard)
     @Delete('state')
     async deleteAppState(@Req() req:any){
         try{
@@ -75,7 +72,6 @@ export class DataController{
         }
     }
 
-    @UseGuards(JwtGuard)
     @Post('file')
     async uploadFile(@Req() req:any){
         try{
@@ -98,7 +94,6 @@ export class DataController{
         }
     }
 
-    @UseGuards(JwtGuard)
     @Delete('file/:file')
     async deleteFile(@Req() req:any, @Param() params){
         try{
@@ -114,4 +109,6 @@ export class DataController{
             throw new InternalServerErrorException(this.responseService.standardMessage(e, 500));
         }
     }
+
+    
 }

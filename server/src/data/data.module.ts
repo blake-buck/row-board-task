@@ -21,6 +21,9 @@ import { LoggerModule } from "src/logger/logger.module";
     providers:[
         DataService,
         ResponseService
+    ],
+    exports:[
+        MongooseModule.forFeature([{name: State.name, schema: StateSchema}])
     ]
 })
 
