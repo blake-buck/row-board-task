@@ -66,11 +66,29 @@ export class RowComponent{
     })
 
     editTitle(e, rowData){
-        this.store.dispatch(editRowTitle({key:rowData.key, title:e.target.value}))
+        if(e.key === ' '){
+            e.target.value += ' ';
+        }
     }
+    submitTitle(e, rowData){
+        e.preventDefault();
+        this.toggleEditTitle(rowData);
+        this.store.dispatch(editRowTitle({key:rowData.key, title: new FormData(e.target).get('title').toString()}))
+
+    }
+
     editDescription(e, rowData){
-        this.store.dispatch(editRowDescription({key:rowData.key, description:e.target.value}))
+        console.log(e.key)
+        if(e.key === ' '){
+            e.target.value += ' ';
+        }
     }
+    submitDescription(e, rowData){
+        e.preventDefault();
+        this.toggleEditDescription(rowData);
+        this.store.dispatch(editRowDescription({key:rowData.key, description: new FormData(e.target).get('description').toString()}))
+    }
+
     onDragStart = onDragStart
     onDragOver = onDragOver
 
@@ -83,6 +101,7 @@ export class RowComponent{
     }
 
     toggleEditDescription(row){
+        if(this.isEditingDescription){}
         this.isEditingDescription = !this.isEditingDescription;
     }
 

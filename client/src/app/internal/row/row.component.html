@@ -1,31 +1,41 @@
-<mat-expansion-panel class='row-wrapper' accordion='accordion' (dragover)='onDragOver($event)' (drop)='onDrop($event, rowData)' [expanded]='rowData.expanded' (opened)='openRow()' (closed)='closeRow()'>
+<mat-expansion-panel 
+    class='row-wrapper' 
+    accordion='accordion' 
+    (dragover)='onDragOver($event)' 
+    (drop)='onDrop($event, rowData)'
+    [expanded]='rowData.expanded' 
+    (opened)='openRow()' 
+    (closed)='closeRow()'
+    [disabled]='isEditingTitle || isEditingDescription'
+>
     <mat-expansion-panel-header>
 
-        <mat-panel-title>
-            <span>{{rowData.title}}</span>
+        <mat-panel-title style='display: flex; flex-direction: column; justify-content: center;'>
+            <span *ngIf='!isEditingTitle'>{{rowData.title}}</span>
+            <form (submit)='submitTitle($event, rowData)' *ngIf='isEditingTitle'>
+                <mat-form-field style='width:80%;'>
+                    <input name='title' matInput (keyup)='editTitle($event, rowData)' [value]='rowData.title'/>
+                </mat-form-field>
+                <button mat-button>Save</button>
+            </form>        
         </mat-panel-title>
 
-        <mat-panel-description>
-            {{rowData.description}}
+        <mat-panel-description style='display: flex; flex-direction: column; justify-content: center;'>
+            <span *ngIf='!isEditingDescription'>{{rowData.description}}</span>
+            <form (submit)='submitDescription($event, rowData)' *ngIf='isEditingDescription'>
+                <mat-form-field style='width:80%;'>
+                    <input name='description' matInput (keyup)='editDescription($event, rowData)' [value]='rowData.description'/>
+                </mat-form-field>
+                <button mat-button>Save</button>
+            </form>
         </mat-panel-description>
 
     </mat-expansion-panel-header>
 
     <mat-divider style='margin-bottom:10px;'></mat-divider>
 
-    <span *ngIf='isEditingTitle'>
-        <mat-form-field>
-            <input matInput (change)='editTitle($event, rowData)' [value]='rowData.title'/>
-        </mat-form-field>
-        <button mat-button (click)='toggleEditTitle(rowData)'>Save</button>
-    </span>
-
-    <div *ngIf='isEditingDescription'>
-        <mat-form-field style='width:30%;'>
-            <input matInput (change)='editDescription($event, rowData)' [value]='rowData.description'/>
-        </mat-form-field>
-        <button mat-button (click)='toggleEditDescription(rowData)'>Save</button>
-    </div>
+    
+    
 
     <button mat-stroked-button class='row-action-button' (click)='addBoard(rowData)'>New Board <mat-icon>add</mat-icon></button>
     <button mat-stroked-button class='row-action-button' [matMenuTriggerFor]='rowActions'>Row Actions</button>

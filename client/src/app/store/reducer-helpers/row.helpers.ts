@@ -4,7 +4,7 @@ export function _addRow(state){
         isDataSaved:false,
         rows:[
             ...state.rows,
-            {key:state.currentRowKey, position:state.rows.length, title:'New Row', description:'this is a new row', boards:[], expanded:false}
+            {key:state.currentRowKey, position:state.rows.length, title:'', description:'', boards:[], expanded:false}
         ],
         currentRowKey:state.currentRowKey + 1,
         rowCount: state.rowCount + 1
