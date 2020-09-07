@@ -15,7 +15,7 @@
                     <textarea   
                         matInput
                         #taskBodyInput
-                        value={{task.body}} 
+                        [value]='task.body'
                         (keyup)='changeTaskBody($event)'
                         (focusout)='toggleInput()'
                         cdkTextareaAutosize
@@ -60,7 +60,6 @@
     #elementWrapper
 >   
     <div (click)='toggleDisplayLabelText()' *ngIf='!displayLabelText' class='label-row'>
-            
         <p *ngFor='let label of task.labels' [style.background]='label.background'></p>
     </div>
 
@@ -106,9 +105,5 @@
     <span class='task-list-checklist-icon-wrapper' *ngIf='task.checklists.length > 0'>
         <mat-icon class='task-list-checklist-icon' *ngFor='let checklist of task.checklists' [style.color]='checklist.color'>check_box</mat-icon>
     </span>
-        
-    
-
-    
 
 </div>

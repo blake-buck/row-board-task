@@ -47,7 +47,8 @@ export class TaskComponent{
         if(this.task.isInput && !this.isTaskTitleInputFocused){
             this.isTaskTitleInputFocused = true;
             setTimeout(() => {
-                this.taskBodyInput.nativeElement.focus()
+                this.taskBodyInput.nativeElement.focus({preventScroll:true});
+                this.taskBodyInput.nativeElement.scrollIntoView();
             }, 0)
             
         }
