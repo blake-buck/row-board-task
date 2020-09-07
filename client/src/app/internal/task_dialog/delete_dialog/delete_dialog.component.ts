@@ -2,6 +2,8 @@ import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { deleteTask } from 'src/app/store/app.actions';
+import { AppStore } from 'src/app/store/app.state';
+import { Task } from '../../../../../../shared/types';
 
 @Component({
     templateUrl:'./delete_dialog.component.html',
@@ -11,9 +13,9 @@ import { deleteTask } from 'src/app/store/app.actions';
 export class DeleteDialogComponent{
     constructor(
         public dialogRef: MatDialogRef<DeleteDialogComponent>, 
-        @Inject(MAT_DIALOG_DATA) public data:any,
+        @Inject(MAT_DIALOG_DATA) public data:Task,
         public dialog:MatDialog,
-        private store: Store<any>
+        private store: Store<AppStore>
     ){}
 
     onCloseDialog(){

@@ -1,10 +1,8 @@
 import { createSelector } from "@ngrx/store";
+import { AppStore } from './app.state';
+import { Row } from '../../../../shared/types';
 
-export interface ApplicationState{
-    appReducer: any;
-}
-
-export const selectAppState = (state: ApplicationState) => state.appReducer;
+export const selectAppState = (state: AppStore) => state.appReducer;
 
 export const selectAppStateWithProps = createSelector(selectAppState, (state, props) =>{
     return {state, props}
@@ -50,6 +48,8 @@ export const selectArchivedRows = createSelector(selectAppState, state => {
     }));
 });
 export const selectArchivedBoards = createSelector(selectAppState, state => {
+    // for whatever reason it says that flat() doesn't exist on an array of arrays, hence the any
+
     const allRows:any = [...state.rows, ...state.archivedRows];
     return state.archivedBoards.filter(board => !allRows.map(row => row.boards).flat().includes(board.key));
 });

@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { PhotoDialogComponent } from '../photo_dialog/photo_dialog.component';
 import { uploadTaskAttachment, deleteTaskAttachment } from 'src/app/store/app.actions';
 import { selectSelectedTask } from 'src/app/store/app.selector';
+import { AppStore } from 'src/app/store/app.state';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { selectSelectedTask } from 'src/app/store/app.selector';
 
 export class AttachmentDialogComponent{
     constructor(
-        private store:Store<any>,
+        private store:Store<AppStore>,
         public dialogRef: MatDialogRef<PhotoDialogComponent>, 
     ){}
 

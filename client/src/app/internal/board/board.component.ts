@@ -10,6 +10,8 @@ import {editBoardTitle, archiveBoard, deleteBoard, toggleHideCompleteTasks, addT
 import { selectRows, selectBoards, selectBoardFromBoardKey } from '../../store/app.selector';
 import { TransferBoardDialogComponent } from './transfer-board-dialog/transfer-board-dialog.component';
 import { DeleteBoardDialogComponent } from './delete-board-dialog/delete-board-dialog.component';
+import { Task, Board } from '../../../../../shared/types';
+import { AppStore } from 'src/app/store/app.state';
 
 
 @Component({
@@ -35,11 +37,11 @@ export class BoardComponent{
     isEditingBoardTitle = false;
     isEditingBoardTitleFocused = false;
     
-    tasks$:Observable<any>
-    board$:Observable<any>
+    tasks$:Observable<Task[]>
+    board$:Observable<Board>
 
 
-    constructor(private store:Store<any>, public dialog:MatDialog){}
+    constructor(private store:Store<AppStore>, public dialog:MatDialog){}
 
    ngOnInit(){
        this.board$ = this.store.select(selectBoardFromBoardKey, this.boardKey)

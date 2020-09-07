@@ -4,6 +4,8 @@ import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { months, currentDayMoment, calculateDays, calculateFirstDayOfMonth, tabChange, dateSelection } from './date_pick_dialog.logic';
 import { editTask } from 'src/app/store/app.actions';
+import { AppStore } from 'src/app/store/app.state';
+import { Task } from '../../../../../../shared/types';
 
 @Component({
     templateUrl:'./date_pick_dialog.component.html',
@@ -13,9 +15,9 @@ import { editTask } from 'src/app/store/app.actions';
 
 export class DatePickDialogComponent{
     constructor(
-        private store:Store<any>,
+        private store:Store<AppStore>,
         public dialogRef: MatDialogRef<DatePickDialogComponent>, 
-        @Inject(MAT_DIALOG_DATA) public data:any,
+        @Inject(MAT_DIALOG_DATA) public data:Task,
         public dialog:MatDialog
     ){}
 

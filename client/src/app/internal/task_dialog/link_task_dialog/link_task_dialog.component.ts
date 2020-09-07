@@ -3,6 +3,8 @@ import { Store } from '@ngrx/store';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { selectRows, selectBoards } from 'src/app/store/app.selector';
 import { linkTask } from 'src/app/store/app.actions';
+import { AppStore } from 'src/app/store/app.state';
+import { Task } from '../../../../../../shared/types';
 
 @Component({
     selector:'link-task-dialog',
@@ -15,9 +17,9 @@ export class LinkTaskDialogComponent{
     boards$ = this.store.select(selectBoards);
 
     constructor(
-        private store:Store<any>,
+        private store:Store<AppStore>,
         public dialogRef: MatDialogRef<LinkTaskDialogComponent>, 
-        @Inject(MAT_DIALOG_DATA) public data:any,
+        @Inject(MAT_DIALOG_DATA) public data:Task,
         public dialog:MatDialog
     ){}
 

@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { deleteBoard } from 'src/app/store/app.actions';
+import { AppStore } from 'src/app/store/app.state';
 
 @Component({
     templateUrl:'./delete-board-dialog.component.html',
@@ -10,9 +11,9 @@ import { deleteBoard } from 'src/app/store/app.actions';
 
 export class DeleteBoardDialogComponent{
     constructor(
-        private store:Store<any>,
+        private store:Store<AppStore>,
         public dialogRef: MatDialogRef<DeleteBoardDialogComponent>, 
-        @Inject(MAT_DIALOG_DATA) public data:any,
+        @Inject(MAT_DIALOG_DATA) public data:number,
         public dialog:MatDialog
     ){}
 

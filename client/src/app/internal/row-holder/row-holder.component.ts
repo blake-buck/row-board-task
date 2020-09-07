@@ -9,8 +9,9 @@ import { ArchivedItemsComponent } from '../archived-items/archived-items.compone
 import { DomSanitizer } from '@angular/platform-browser';
 import { first } from 'rxjs/operators';
 import { createVerificationObject, validateStrict } from '../../../../../shared/verification';
-import { appStateTypes } from '../../store/app.state';
+import { appStateTypes, AppStore } from '../../store/app.state';
 import { Router } from '@angular/router';
+import { Row } from '../../../../../shared/types';
 
 @Component({
     selector:'row-holder',
@@ -19,13 +20,13 @@ import { Router } from '@angular/router';
 })
 
 export class RowHolderComponent{
-    constructor(private store:Store<any>, private dialog:MatDialog, private sanitization:DomSanitizer, private router:Router){}
+    constructor(private store:Store<AppStore>, private dialog:MatDialog, private sanitization:DomSanitizer, private router:Router){}
     
-    row$:Observable<any> = this.store.select(selectRows);
+    rows$:Observable<Row> = this.store.select(selectRows);
 
-    rowCount$:Observable<any> = this.store.select(selectRowCount);
-    boardCount$:Observable<any> = this.store.select(selectBoardCount);
-    taskCount$:Observable<any> = this.store.select(selectTaskCount);
+    rowCount$:Observable<Number> = this.store.select(selectRowCount);
+    boardCount$:Observable<Number> = this.store.select(selectBoardCount);
+    taskCount$:Observable<Number> = this.store.select(selectTaskCount);
 
     dataSaved$:Observable<boolean> = this.store.select(selectIsDataSaved);
 
@@ -71,7 +72,7 @@ export class RowHolderComponent{
     }
 
     beginAppStateImport(){
-        const el:any = document.querySelector('#importAppState');
+        const el:HTMLButtonElement = document.querySelector('#importAppState');
         el.click();
     }
     importAppState(e){

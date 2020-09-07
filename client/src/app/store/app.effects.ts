@@ -9,17 +9,19 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { TaskDialogComponent } from '../internal/task_dialog/task_dialog.component';
 import { AppService } from './app.service';
 import { Router } from '@angular/router';
+import { Task } from '../../../../shared/types';
+import { AppStore } from './app.state';
 
-type ApiResult = {
+export type ApiResult = {
     message:any,
     status:number
 }
-@Injectable()
 
+@Injectable()
 export class AppEffects {
     constructor(
         private actions$:Actions, 
-        private store:Store<any>, 
+        private store:Store<AppStore>, 
         public dialog:MatDialog, 
         private service: AppService,
         private router: Router,
@@ -78,7 +80,7 @@ export class AppEffects {
         () => this.actions$.pipe(
             ofType(login),
             mergeMap((action) => this.service.login(action.formValue)),
-            map((result:any) => {
+            map((result:ApiResult) => {
                 this.service.addTokensToStorage({
                     refreshToken:result.message.AuthenticationResult.RefreshToken,
                     accessToken: result.message.AuthenticationResult.AccessToken
@@ -94,7 +96,7 @@ export class AppEffects {
         () => this.actions$.pipe(
             ofType(forgotPassword),
             mergeMap(action => this.service.forgotPassword(action.formValue.username)),
-            map(result => {
+            map((result:ApiResult) => {
                 this.router.navigate(['forgot-password', 'confirm']);
             })
         ),
@@ -105,7 +107,7 @@ export class AppEffects {
         () => this.actions$.pipe(
             ofType(confirmForgotPassword),
             mergeMap(action => this.service.confirmForgotPassword(action.formValue)),
-            map(result => {
+            map((result: ApiResult) => {
                 this.snackbar.open('Your password has been successfully reset.', 'CLOSE');
                 this.router.navigate(['']);
             })
@@ -179,7 +181,7 @@ export class AppEffects {
                 return combineLatest(this.service.uploadFile(action.fileName, action.dataUrl), [action.task])
             }),
             mergeMap(result => result),
-            map((result:[{message:any, status:number}, any]) => {
+            map((result:[ApiResult, Task]) => {
                 
                 const fileLocation = result[0].message.Location;
                 const task = result[1];
@@ -202,7 +204,7 @@ export class AppEffects {
                 return combineLatest(this.service.deleteFile(action.fileName), [action.task], [action.fullUrl])
             }),
             mergeMap(result => result),
-            map((result:[{message:any, status:number}, any, string]) => {
+            map((result:[ApiResult, Task, string]) => {
 
                 const task = result[1];
                 const fullUrl = result[2];
@@ -226,7 +228,7 @@ export class AppEffects {
                 return combineLatest(this.service.uploadFile(action.fileName, action.dataUrl), [action])
             }),
             mergeMap(result => result),
-            map((result:[{message:any, status:number}, any]) => {
+            map((result:[ApiResult, any]) => {
                 
                 const fileLocation = result[0].message.Location;
                 const task = result[1].task;
@@ -250,7 +252,7 @@ export class AppEffects {
                 return combineLatest(this.service.deleteFile(action.fileName), [action.task], [action.fullUrl])
             }),
             mergeMap(result => result),
-            map((result:[{message:any, status:number}, any, string]) => {
+            map((result:[ApiResult, any, string]) => {
 
                 const task = result[1];
                 const fullUrl = result[2];

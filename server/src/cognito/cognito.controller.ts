@@ -34,7 +34,7 @@ export class CognitoController{
         }
 
         try{
-            const result:any = await this.cognitoService.signUp(username, password);
+            await this.cognitoService.signUp(username, password);
             return this.responseService.standardMessage('Check your email for a registration message.');
         }
         catch(e){
@@ -55,7 +55,7 @@ export class CognitoController{
         }
 
         try{
-            const result:any = await this.cognitoService.login(username, password, req);
+            const result = await this.cognitoService.login(username, password, req);
             return this.responseService.standardMessage(result);
         }
         catch(e){
@@ -69,7 +69,7 @@ export class CognitoController{
             throw new BadRequestException(this.responseService.standardMessage('Missing refresh token in request header.', 400));
         }
         try{
-            const result:any = await this.cognitoService.refreshToken({
+            const result = await this.cognitoService.refreshToken({
                 refresh: req.body?.refreshToken,
                 headers: req.headers,
                 ip: req.ip
@@ -86,7 +86,7 @@ export class CognitoController{
     @Post('change-password')
     async changePassword(@Req() req: Request){
         try{
-            const result:any = await this.cognitoService.changePassword(req.body, req.headers.jwt)
+            await this.cognitoService.changePassword(req.body, req.headers.jwt)
             return this.responseService.standardMessage('Password is changed.');
         }
         catch(e){
@@ -98,7 +98,7 @@ export class CognitoController{
     async forgotPassword(@Req() req: Request){
         const {username} = req.body;
         try{
-            const result: any = await this.cognitoService.forgotPassword(username);
+            await this.cognitoService.forgotPassword(username);
             return this.responseService.standardMessage('Check your email for a reset code.');
         }
         catch(e){
@@ -109,7 +109,7 @@ export class CognitoController{
     @Post('forgot-password/confirm')
     async confirmForgotPassword(@Req() req: Request){
         try{
-            const result: any = await this.cognitoService.confirmForgotPassword(req.body);
+            await this.cognitoService.confirmForgotPassword(req.body);
             return this.responseService.standardMessage('Your password has been successfully reset');
         }
         catch(e){

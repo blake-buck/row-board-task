@@ -1,4 +1,4 @@
-import {getState, addRow, editRowDescription, addBoard, transferBoard, editBoardTitle, archiveBoard, deleteBoard, toggleHideCompleteTasks, addTask, editTask, deleteTask, transferTaskEmpty, transferTask, linkTask, editRowTitleSuccess, getStateFromCosmosSuccess, saveChanges, editRowExpanded, openTaskDialog, setSelectedTask, closeTaskDialog, shiftRowUp, shiftRowDown, deleteRow, archiveRow, archiveTask, restoreArchivedRow, restoreArchivedBoard, restoreArchivedTask, setState, loginSuccess, forgotPassword, retrieveStateFromDbSuccess} from './app.actions';
+import {getState, addRow, editRowDescription, addBoard, transferBoard, editBoardTitle, archiveBoard, deleteBoard, toggleHideCompleteTasks, addTask, editTask, deleteTask, transferTaskEmpty, transferTask, linkTask, editRowTitleSuccess, saveChanges, editRowExpanded, openTaskDialog, setSelectedTask, closeTaskDialog, shiftRowUp, shiftRowDown, deleteRow, archiveRow, archiveTask, restoreArchivedRow, restoreArchivedBoard, restoreArchivedTask, setState, loginSuccess, forgotPassword, retrieveStateFromDbSuccess} from './app.actions';
 import {initialState } from './app.state';
 import { _addTask, _editTask, _deleteTask, _transferTaskEmpty, _transferTask, _linkTask, _archiveTask, _restoreArchivedTask } from './reducer-helpers/task.helpers';
 import { _addBoard, _transferBoard, _editBoardTitle, _archiveBoard, _deleteBoard, _reorderBoardTasks, _toggleHideCompleteTasks, _restoreArchivedBoard } from './reducer-helpers/board.helpers';
@@ -78,7 +78,6 @@ export function appReducer(state=initialState, action){
             return _archiveTask(state, action);
 
         case restoreArchivedTask.type:
-            console.log('restore archived task')
             return _restoreArchivedTask(state, action);
         
         case transferTaskEmpty.type:
@@ -89,11 +88,6 @@ export function appReducer(state=initialState, action){
         
         case linkTask.type:
             return _linkTask(state, action);
-
-        case getStateFromCosmosSuccess.type:
-            return {...action.state[0],
-                isDataSaved:true
-            }
 
         case saveChanges.type:
             return {

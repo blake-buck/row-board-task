@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { MatDialogRef } from '@angular/material';
 import { uploadTaskPhoto, deleteTaskPhoto } from 'src/app/store/app.actions';
 import { selectSelectedTask } from 'src/app/store/app.selector';
+import { AppStore } from 'src/app/store/app.state';
 
 @Component({
     templateUrl:'./photo_dialog.component.html',
@@ -12,7 +13,7 @@ import { selectSelectedTask } from 'src/app/store/app.selector';
 export class PhotoDialogComponent{
     
     constructor(
-        private store:Store<any>,
+        private store:Store<AppStore>,
         public dialogRef: MatDialogRef<PhotoDialogComponent>, 
     ){}
     data$ = this.store.select(selectSelectedTask);

@@ -8,10 +8,8 @@ import { onDragStart, onDragOver, onDrop } from './row.logic';
 import { archiveRow, editRowTitle, editRowDescription, addBoard, transferBoard, scrollRowForward, scrollRowBackward, editRowExpanded, shiftRowUp, shiftRowDown, deleteRow } from '../../store/app.actions';
 import { selectSpecificBoards } from '../../store/app.selector';
 import { Actions } from '@ngrx/effects';
-
-export interface AppState{
-    appReducer:any
-}
+import { AppStore } from 'src/app/store/app.state';
+import { Row, Board } from '../../../../../shared/types';
 
 @Component({
     templateUrl:'./row.component.html',
@@ -20,12 +18,12 @@ export interface AppState{
 })
 
 export class RowComponent{
-    @Input() rowData:any;
+    @Input() rowData:Row;
     @Input() accordion:any;
 
     @ViewChild('scrollRow', {read: ElementRef, static:false}) scrollRow: ElementRef;
 
-    board$:Observable<any>
+    boards$:Observable<Board[]> = this.store.pipe(select(selectSpecificBoards, this.rowData.key));
     specificBoards$;
 
     isEditingTitle = false;
@@ -33,11 +31,8 @@ export class RowComponent{
 
     canScrollRow = false;
 
-    constructor(private store:Store<AppState>, private actions$:Actions){}
+    constructor(private store:Store<AppStore>, private actions$:Actions){}
 
-    ngOnInit(){
-        this.board$ = this.store.pipe(select(selectSpecificBoards, this.rowData.key))
-    }
 
     ngOnDestroy(){
         this.scroll.unsubscribe()

@@ -2,12 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import {initialState} from './app.state';
-import { Store } from '@ngrx/store';
-import { selectAppState } from './app.selector';
 
 @Injectable()
 export class AppService{
-    constructor(private http:HttpClient, private store:Store<any>){}
+    constructor(private http:HttpClient){}
 
     login({username, password}){
         return this.http.post(`${environment.apiUrl}/api/auth/login`, {username, password});

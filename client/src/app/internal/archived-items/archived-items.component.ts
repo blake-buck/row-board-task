@@ -6,6 +6,8 @@ import { MatDialog } from '@angular/material';
 import { restoreArchivedRow } from '../../store/app.actions';
 import { RestoreBoardDialogComponent } from './restore-board-dialog/restore-board-dialog.component';
 import { RestoreTaskDialogComponent } from './restore-task-dialog/restore-task-dialog.component';
+import { Row, Board, Task } from '../../../../../shared/types';
+import { AppStore } from 'src/app/store/app.state';
 
 @Component({
     selector:'archived-items',
@@ -14,11 +16,11 @@ import { RestoreTaskDialogComponent } from './restore-task-dialog/restore-task-d
 })
 
 export class ArchivedItemsComponent{
-    archivedRows$:Observable<any>;
-    archivedBoards$:Observable<any>;
-    archivedTasks$:Observable<any>;
+    archivedRows$:Observable<Row[]>;
+    archivedBoards$:Observable<Board[]>;
+    archivedTasks$:Observable<Task[]>;
 
-    constructor(private store:Store<any>, private dialog:MatDialog){
+    constructor(private store:Store<AppStore>, private dialog:MatDialog){
         this.archivedRows$ = this.store.select(selectArchivedRows);
         this.archivedBoards$ = this.store.select(selectArchivedBoards);
         this.archivedTasks$ = this.store.select(selectArchivedTasks);

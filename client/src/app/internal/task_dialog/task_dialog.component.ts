@@ -18,6 +18,7 @@ import { LinkTaskDialogComponent } from './link_task_dialog/link_task_dialog.com
 import { HttpClient } from '@angular/common/http';
 import { labelLength } from '../task/task.logic';
 import { map, first } from 'rxjs/operators';
+import { AppStore } from 'src/app/store/app.state';
 
 
 
@@ -41,14 +42,14 @@ export class TaskDialogComponent {
     isEditingDescription = false;
     isEditingDescriptionFocused = false;
 
-    boardAndRowTitle$:Observable<any>;
+    boardAndRowTitle$:Observable<{rowTitle:string, boardTitle:string}>;
     linkedTasks$ = [];
 
     commentContent = '';
     data$;
 
     constructor(
-        private store:Store<any>,
+        private store:Store<AppStore>,
         public dialog:MatDialog,
         public http:HttpClient
         ){}

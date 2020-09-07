@@ -3,6 +3,8 @@ import { Store } from '@ngrx/store';
 import { selectRows, selectBoards } from 'src/app/store/app.selector';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
 import { restoreArchivedTask } from 'src/app/store/app.actions';
+import { AppStore } from 'src/app/store/app.state';
+import { Task } from '../../../../../../shared/types';
 
 @Component({
     selector:'restore-task-dialog',
@@ -12,8 +14,8 @@ import { restoreArchivedTask } from 'src/app/store/app.actions';
 
 export class RestoreTaskDialogComponent{
     constructor(
-        private store:Store<any>,
-        @Inject(MAT_DIALOG_DATA) public data:any,
+        private store:Store<AppStore>,
+        @Inject(MAT_DIALOG_DATA) public data:Task,
         private dialog:MatDialog,
         private dialogRef:MatDialogRef<RestoreTaskDialogComponent>
     ){}

@@ -14,7 +14,7 @@
 
 
 <mat-accordion #accordion='matAccordion' multi='true'>
-  <row *ngFor='let row of row$ | async' [rowData]='row' [accordion]='accordion'></row>
+  <row *ngFor='let row of rows$ | async' [rowData]='row' [accordion]='accordion'></row>
 </mat-accordion>
 
 <div class='loading-message' *ngIf='isStateLoading$ | async'>

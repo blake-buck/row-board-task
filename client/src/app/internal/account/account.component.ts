@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { changePassword, deleteAccount } from 'src/app/store/app.actions';
 import { Router } from '@angular/router';
+import { AppStore } from 'src/app/store/app.state';
 
 @Component({
     selector:'account-page',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 })
 
 export class AccountComponent{
-    constructor(private store:Store<any>, private router:Router){}
+    constructor(private store:Store<AppStore>, private router:Router){}
 
     forms = {
         changePassword:{

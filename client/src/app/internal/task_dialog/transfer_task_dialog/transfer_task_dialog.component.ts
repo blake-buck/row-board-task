@@ -4,6 +4,8 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { Inject, Component } from '@angular/core';
 import { transferTaskEmpty } from 'src/app/store/app.actions';
 import { selectRows, selectBoards } from 'src/app/store/app.selector';
+import { Row, Board, Task } from '../../../../../../shared/types';
+import { AppStore } from 'src/app/store/app.state';
 
 @Component({
     templateUrl:'./transfer_task_dialog.component.html',
@@ -13,16 +15,16 @@ import { selectRows, selectBoards } from 'src/app/store/app.selector';
 
 export class TransferTaskDialogComponent{
     
-    rows$: Observable<any>
-    boards$: Observable<any>
+    rows$: Observable<Row[]>
+    boards$: Observable<Board[]>
 
     selectedRow=null;
     selectedBoard=null;
 
     constructor(
-        private store:Store<any>,
+        private store:Store<AppStore>,
         public dialogRef: MatDialogRef<TransferTaskDialogComponent>, 
-        @Inject(MAT_DIALOG_DATA) public data:any,
+        @Inject(MAT_DIALOG_DATA) public data: Task,
         public dialog:MatDialog
     ){
         this.rows$ = this.store.select(selectRows);

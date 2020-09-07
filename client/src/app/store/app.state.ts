@@ -28,6 +28,8 @@ export interface AppState{
     taskCount:number;
 }
 
+export type AppStore = {appReducer: AppState};
+
 export const appStateTypes = {
     partitionKey: isString,
     currentTaskKey: isNumber,

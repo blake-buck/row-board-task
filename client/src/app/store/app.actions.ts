@@ -1,9 +1,11 @@
 import { createAction, props } from "@ngrx/store";
+import { AppState } from './app.state';
+import { Row, Task, Board } from '../../../../shared/types';
 
 export const getState = createAction('GET_STATE');
 export const setState = createAction(
     'SET_STATE',
-    props<{state:any}>()
+    props<{state:AppState}>()
 );
 
 export const addRow = createAction('ADD_ROW');
@@ -12,7 +14,7 @@ export const duplicateRow = createAction('DUPLICATE_ROW', props<{key:number}>())
 
 export const archiveRow = createAction(
     'ARCHIVE_ROW',
-    props<{archivedRow:any}>()
+    props<{archivedRow:Row}>()
 );
 
 export const editRowTitle = createAction(
@@ -22,7 +24,7 @@ export const editRowTitle = createAction(
 
 export const editRowTitleSuccess = createAction(
     'EDIT_ROW_TITLE_ACCESS',
-    props<{rows:any}>()
+    props<{rows:Row[]}>()
 )
 
 export const editRowDescription = createAction(
@@ -37,7 +39,7 @@ export const editRowExpanded = createAction(
 
 export const deleteRow = createAction(
     'DELETE_ROW',
-    props<{deletedRow:any}>()
+    props<{deletedRow:Row}>()
 )
 
 
@@ -87,7 +89,7 @@ export const addTask = createAction(
 
 export const editTask = createAction(
     'EDIT_TASK',
-    props<{task:any}>()
+    props<{task:Task}>()
 )
 
 export const linkTask = createAction(
@@ -97,12 +99,12 @@ export const linkTask = createAction(
 
 export const deleteTask = createAction(
     'DELETE_TASK',
-    props<{task:any}>()
+    props<{task:Task}>()
 )
 
 export const archiveTask = createAction(
     'ARCHIVE_TASK',
-    props<{task:any}>()
+    props<{task:Task}>()
 )
 
 export const transferTaskEmpty = createAction(
@@ -117,24 +119,7 @@ export const transferTask = createAction(
 
 export const reorderBoardTasks = createAction(
     'REORDER_BOARD_TASKS',
-    props<{payload:{key:number, tasks:any}}>()
-)
-
-export const postStateToCosmos = createAction(
-    'POST_STATE_TO_COSMOS'
-)
-
-export const putStateToCosmos = createAction(
-    'PUT_STATE_TO_COSMOS'
-)
-
-export const getStateFromCosmos = createAction(
-    'GET_STATE_FROM_COSMOS'
-)
-
-export const getStateFromCosmosSuccess = createAction(
-    'GET_STATE_FROM_COSMOS_SUCCESS',
-    props<{state:any}>()
+    props<{payload:{key:number, tasks:Task}}>()
 )
 
 export const scrollRowForward = createAction(
@@ -147,7 +132,7 @@ export const scrollRowBackward = createAction(
 
 export const saveChanges = createAction(
     'SAVE_CHANGES',
-    props<{appState:any}>()
+    props<{appState:AppState}>()
 )
 
 export const openTaskDialog = createAction(
@@ -158,7 +143,7 @@ export const closeTaskDialog = createAction(
 );
 export const setSelectedTask = createAction(
     'SET_SELECTED_TASK',
-    props<{task:any}>()
+    props<{task:Task}>()
 );
 
 export const shiftRowUp = createAction(
@@ -173,17 +158,17 @@ export const shiftRowDown = createAction(
 
 export const restoreArchivedRow = createAction(
     'RESTORE_ARCHIVED_ROW',
-    props<{row:any}>()
+    props<{row:Row}>()
 )
 
 export const restoreArchivedBoard = createAction(
     'RESTORE_ARCHIVED_BOARD',
-    props<{board:any, row:any}>()
+    props<{board:Board, row:Row}>()
 )
 
 export const restoreArchivedTask = createAction(
     'RESTORE_ARCHIVED_TASK',
-    props<{board:any, task:any}>()
+    props<{board:Board, task:Task}>()
 )
 
 
@@ -226,18 +211,18 @@ export const initializeDbState = createAction('DB_INITIALIZE_STATE');
 
 export const uploadTaskPhoto = createAction(
     'UPLOAD_TASK_PHOTO',
-    props<{fileName:string, dataUrl:string | ArrayBuffer, task:any}>()
+    props<{fileName:string, dataUrl:string | ArrayBuffer, task:Task}>()
 );
 export const deleteTaskPhoto = createAction(
     'DELETE_TASK_PHOTO',
-    props<{fileName:string, task:any, fullUrl:string}>()
+    props<{fileName:string, task:Task, fullUrl:string}>()
 )
 
 export const uploadTaskAttachment = createAction(
     'UPLOAD_TASK_ATTACHMENT',
-    props<{fileName:string, dataUrl:string | ArrayBuffer, task:any}>()
+    props<{fileName:string, dataUrl:string | ArrayBuffer, task:Task}>()
 )
 export const deleteTaskAttachment = createAction(
     'DELETE_TASK_ATTACHMENT',
-    props<{fileName:string, task:any, fullUrl:string}>()
+    props<{fileName:string, task:Task, fullUrl:string}>()
 )

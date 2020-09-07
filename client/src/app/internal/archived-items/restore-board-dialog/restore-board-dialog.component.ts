@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { selectRows } from 'src/app/store/app.selector';
 import { restoreArchivedBoard } from 'src/app/store/app.actions';
+import { AppStore } from 'src/app/store/app.state';
 
 @Component({
     selector:'restore-board-dialog',
@@ -12,8 +13,7 @@ import { restoreArchivedBoard } from 'src/app/store/app.actions';
 
 export class RestoreBoardDialogComponent{
     constructor(
-        @Inject(MAT_DIALOG_DATA) public data:any,
-        private store:Store<any>,
+        private store:Store<AppStore>,
         public dialogRef: MatDialogRef<RestoreBoardDialogComponent>,
         private dialog:MatDialog
     ){}

@@ -12,7 +12,6 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 
 export class PreviewAttachmentDialogComponent{
     constructor(
-        private store:Store<any>,
         private sanitization:DomSanitizer,
         public dialogRef: MatDialogRef<PreviewAttachmentDialogComponent>, 
         @Inject(MAT_DIALOG_DATA) public data:any,

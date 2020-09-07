@@ -13,9 +13,11 @@ export class DataController{
     constructor(private dataService:DataService, private responseService:ResponseService, private jwtService: JwtService){}
     
     @Get('state')
-    async getAppState(@Req() req:any){
+    async getAppState(@Req() req:Request){
         try{
-            const { jwt } = req.headers;
+            let { jwt } = req.headers;
+            jwt = jwt.toString();
+
             const userId = this.jwtService.decode(jwt)['username'];
 
             return this.responseService.standardMessage(
@@ -29,9 +31,11 @@ export class DataController{
 
     @Post('state')
     @HttpCode(200)
-    async postAppState(@Req() req:any){
+    async postAppState(@Req() req:Request){
         try{
-            const { jwt } = req.headers;
+            let { jwt } = req.headers;
+            jwt = jwt.toString();
+            
             const userId = this.jwtService.decode(jwt)['username'];
 
             return this.responseService.standardMessage(
@@ -44,9 +48,11 @@ export class DataController{
     }
     
     @Put('state')
-    async putAppState(@Req() req:any){
+    async putAppState(@Req() req:Request){
         try{
-            const { jwt } = req.headers;
+            let { jwt } = req.headers;
+            jwt = jwt.toString();
+
             const userId = this.jwtService.decode(jwt)['username'];
 
             return this.responseService.standardMessage(
@@ -59,9 +65,11 @@ export class DataController{
     }
     
     @Delete('state')
-    async deleteAppState(@Req() req:any){
+    async deleteAppState(@Req() req:Request){
         try{
-            const { jwt } = req.headers;
+            let { jwt } = req.headers;
+            jwt = jwt.toString();
+            
             const userId = this.jwtService.decode(jwt)['username'];
             return this.responseService.standardMessage(
                 await this.dataService.deleteState(userId)
@@ -73,7 +81,7 @@ export class DataController{
     }
 
     @Post('file')
-    async uploadFile(@Req() req:any){
+    async uploadFile(@Req() req:Request){
         try{
             const {fileName, dataUrl} = req.body;
             const {jwt} = req.headers;
@@ -95,7 +103,7 @@ export class DataController{
     }
 
     @Delete('file/:file')
-    async deleteFile(@Req() req:any, @Param() params){
+    async deleteFile(@Req() req:Request, @Param() params){
         try{
             const {jwt} = req.headers;
             const fileName = params.file;

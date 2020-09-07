@@ -3,12 +3,12 @@ import {Store} from '@ngrx/store';
 import { MatDialog} from '@angular/material';
 
 import {addCompletionStyling, onDrop, labelLength, cyclePhoto} from './task.logic';
-export interface AppState{
-    appReducer:any
-}
 
-import {TaskDialogComponent} from '../task_dialog/task_dialog.component';
 import { editTask, transferTask, scrollRowForward, scrollRowBackward, setSelectedTask, openTaskDialog } from 'src/app/store/app.actions';
+import { AppStore } from 'src/app/store/app.state';
+import { Task, Board } from '../../../../../shared/types';
+
+type LocalTask = Task & {isInput: boolean};
 
 @Component({
     selector:'task',
@@ -16,12 +16,13 @@ import { editTask, transferTask, scrollRowForward, scrollRowBackward, setSelecte
     styleUrls:['./task.component.css']
 })
 
+
 export class TaskComponent{
     @ViewChild('elementWrapper', {read: ElementRef, static:false}) elementWrapper: ElementRef;
     @ViewChild('taskBodyInput', {read: ElementRef, static:false}) taskBodyInput: ElementRef;
 
-    @Input() task:any;
-    @Input() board:any;
+    @Input() task:LocalTask;
+    @Input() board:Board;
 
     @Output() taskTransfer = new EventEmitter();
     @Output() taskChange   = new EventEmitter();
@@ -35,7 +36,7 @@ export class TaskComponent{
     currentDisplayPhoto = 0;
     classAddedToList = false
 
-    constructor(private store:Store<AppState>, public dialog:MatDialog){}
+    constructor(private store:Store<AppStore>, public dialog:MatDialog){}
 
     ngOnInit(){
         if(this.task.isEditing){
