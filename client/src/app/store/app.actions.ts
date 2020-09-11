@@ -131,8 +131,7 @@ export const scrollRowBackward = createAction(
 )
 
 export const saveChanges = createAction(
-    'SAVE_CHANGES',
-    props<{appState:AppState}>()
+    'SAVE_CHANGES'
 )
 
 export const openTaskDialog = createAction(

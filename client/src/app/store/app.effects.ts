@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, mergeMap} from 'rxjs/operators'
+import { first, map, mergeMap} from 'rxjs/operators'
 import { Store } from '@ngrx/store';
 import { selectAppState } from './app.selector';
 import { combineLatest } from 'rxjs';
@@ -167,8 +167,9 @@ export class AppEffects {
     updateDbState$ = createEffect(
         () => this.actions$.pipe(
             ofType(saveChanges),
-            mergeMap(action => this.service.updateDbState(action.appState)),
-            map(result =>  result)
+            mergeMap((action) => this.store.select(selectAppState).pipe(first())),
+            mergeMap(appState => this.service.updateDbState(appState)),
+            map(result =>  console.log(result))
         ),
         { dispatch: false }
     )
@@ -192,6 +193,7 @@ export class AppEffects {
                         displayImageUrls:[...task.displayImageUrls, fileLocation]
                     }
                 }));
+                this.store.dispatch(saveChanges());
             })
         ),
         {dispatch: false}
@@ -215,6 +217,8 @@ export class AppEffects {
                         displayImageUrls: task.displayImageUrls.filter(url => url !== fullUrl)
                     }
                 }))
+                this.store.dispatch(saveChanges());
+
             })
         ),
         {dispatch: false}
@@ -240,6 +244,8 @@ export class AppEffects {
                         attachment:true
                     }
                 }));
+
+                this.store.dispatch(saveChanges());
             })
         ),
         {dispatch: false}
@@ -257,7 +263,7 @@ export class AppEffects {
                 const task = result[1];
                 const fullUrl = result[2];
 
-                task.attachedFiles = task.attachedFiles.files.filter(file => file.link !== fullUrl);
+                task.attachedFiles = task.attachedFiles.filter(file => file.link !== fullUrl);
                 if(task.attachedFiles.length === 0){
                     task.attachment = false;
                 }
@@ -265,6 +271,8 @@ export class AppEffects {
                 this.store.dispatch(editTask({
                     task
                 }))
+                this.store.dispatch(saveChanges());
+
             })
         ),
         {dispatch: false}

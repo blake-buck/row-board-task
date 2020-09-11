@@ -22,7 +22,7 @@ import { Row } from '../../../../../shared/types';
 export class RowHolderComponent{
     constructor(private store:Store<AppStore>, private dialog:MatDialog, private sanitization:DomSanitizer, private router:Router){}
     
-    rows$:Observable<Row> = this.store.select(selectRows);
+    rows$:Observable<Row[]> = this.store.select(selectRows);
 
     rowCount$:Observable<Number> = this.store.select(selectRowCount);
     boardCount$:Observable<Number> = this.store.select(selectBoardCount);
@@ -94,10 +94,7 @@ export class RowHolderComponent{
     }
 
     saveChanges(){
-        this.store.select(selectAppState).pipe(first()).subscribe(appState => {
-            console.log(appState)
-            this.store.dispatch(saveChanges({appState}));
-        })
+        this.store.dispatch(saveChanges());
     }
 
 }
