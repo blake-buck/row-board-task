@@ -13,7 +13,7 @@ export class AuthenticationGuard implements CanActivate{
     async canActivate(){
         if(this.service.isAccessTokenExpired()){
             try{
-                const result:ApiResult = await this.service.refresh().toPromise()
+                const result:ApiResult = await this.service.refresh().toPromise<any>()
                 localStorage.setItem('accessToken', result.message.AuthenticationResult.AccessToken)
             }
             catch(e){

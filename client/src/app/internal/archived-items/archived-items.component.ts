@@ -9,14 +9,21 @@ import { RestoreTaskDialogComponent } from './restore-task-dialog/restore-task-d
 import { Row, Board, Task } from '../../../../../shared/types';
 import { AppStore } from 'src/app/store/app.state';
 
+
+interface ArchivedRow extends Row{
+    boards:any[];
+}
+
 @Component({
     selector:'archived-items',
     templateUrl:'./archived-items.component.html',
     styleUrls:['./archived-items.component.scss']
 })
 
+
+
 export class ArchivedItemsComponent{
-    archivedRows$:Observable<Row[]>;
+    archivedRows$:Observable<ArchivedRow[]>;
     archivedBoards$:Observable<Board[]>;
     archivedTasks$:Observable<Task[]>;
 

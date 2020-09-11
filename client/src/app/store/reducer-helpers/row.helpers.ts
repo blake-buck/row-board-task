@@ -79,7 +79,7 @@ export function _deleteRow(state, action){
     const {deletedRow} = action;
     let updatedRows = state.rows.filter(row => row.key !== deletedRow.key);
     let updatedBoards = state.boards.filter(board => !deletedRow.boards.includes(board.key));
-    let deletedTasksCount = state.boards.filter(board => deletedRow.boards.includes(board.key)).map(board => board.tasks).reduce((acc, currentVal) => acc.length + currentVal.length)
+    let deletedTasksCount = state.boards.filter(board => deletedRow.boards.includes(board.key)).map(board => board.tasks).reduce((acc, currentVal) => acc + currentVal.length, 0)
     return {
         ...state,
         isDataSaved:false,
@@ -95,7 +95,7 @@ export function _archiveRow(state, action){
     const {archivedRow} = action;
     let updatedRows = state.rows.filter(row => row.key !== archivedRow.key);
     let updatedBoards = state.boards.filter(board => !archivedRow.boards.includes(board.key)).map((board, index) => ({...board, position:index}));
-    let archivedTasksCount = state.boards.filter(board => archivedRow.boards.includes(board.key)).map(board => board.tasks).reduce((acc, currentVal) => acc.length + currentVal.length);
+    let archivedTasksCount = state.boards.filter(board => archivedRow.boards.includes(board.key)).map(board => board.tasks).reduce((acc, currentVal) => acc + currentVal.length, 0);
 
     return {
         ...state,
@@ -131,6 +131,6 @@ export function _restoreArchivedRow(state, action){
         ],
         rowCount:state.rowCount + 1,
         boardCount: state.boardCount + action.row.boards.length,
-        taskCount: state.taskCount + action.row.boards.map(board => board.tasks).reduce((acc, currentVal) => acc.length + currentVal.length)
+        taskCount: state.taskCount + action.row.boards.map(board => board.tasks).reduce((acc, currentVal) => acc + currentVal.length, 0)
     }
 }

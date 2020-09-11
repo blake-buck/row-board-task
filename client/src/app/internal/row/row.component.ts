@@ -23,8 +23,8 @@ export class RowComponent{
 
     @ViewChild('scrollRow', {read: ElementRef, static:false}) scrollRow: ElementRef;
 
-    boards$:Observable<Board[]> = this.store.pipe(select(selectSpecificBoards, this.rowData.key));
     specificBoards$;
+    boards$ :Observable<Board[]> ;
 
     isEditingTitle = false;
     isEditingDescription = false;
@@ -32,6 +32,10 @@ export class RowComponent{
     canScrollRow = false;
 
     constructor(private store:Store<AppStore>, private actions$:Actions){}
+
+    ngOnInit(){
+        this.boards$ = this.store.pipe(select(selectSpecificBoards, this.rowData.key));
+    }
 
 
     ngOnDestroy(){
