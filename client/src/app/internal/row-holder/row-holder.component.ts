@@ -32,6 +32,12 @@ export class RowHolderComponent{
 
     isStateLoading$ = this.store.select(selectIsStateLoading);
 
+    sidebarOpen = false;
+
+    toggleSidebarOpen(){
+        this.sidebarOpen = !this.sidebarOpen;
+    }
+
     addRow(){
         this.store.dispatch(addRow())
     }

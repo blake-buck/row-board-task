@@ -1,5 +1,6 @@
 .toolbar-row{
     display:flex; 
+    justify-content: space-between;
     button{
         margin-left:5px;
         margin-right:5px;
@@ -28,4 +29,34 @@ footer{
             margin-right:5px;
         }
     }
+}
+
+.row-holder{
+    position: relative;
+    margin-bottom:20px;
+}
+.sidebar{
+    transition:0.2s;
+    width:250px;
+    height:100vh;
+
+    position: fixed;
+    top:0px;
+    right:-260px;
+    z-index:10;
+
+    display:flex;
+    flex-direction: column;
+
+    background:lightgray;
+    border-left:1px solid black;
+}
+.sidebar.open{
+    transition:0.2s;
+    right:0px;
+}
+.sidebar .menu-button-row{
+    display:flex;
+    justify-content: flex-end;
+    margin:5px;
 }

@@ -1,36 +1,52 @@
-<export-button *ngIf='beginDataExport' [exportData]='exportData' title='app_state' (linkHasBegunDownload)='downloadLinkLoads()'></export-button>
-<mat-toolbar color='primary'>
-  <mat-toolbar-row class='toolbar-row'>
-    <button mat-flat-button (click)='saveChanges()'><mat-icon>save</mat-icon>Save</button>
-    <button mat-button (click)='addRow()'>Add Row</button>
-    <button mat-button (click)='accordion.closeAll()'>Close All</button>
-    <button mat-button (click)='accordion.openAll()'>Open All</button>
-    <button mat-button (click)='openArchivedItemsDialog()'><mat-icon>archive</mat-icon>Archived Items</button>
-    <button mat-flat-button (click)='exportAppState()'>Export App State</button>
-    <button mat-flat-button (click)='beginAppStateImport()'>Import App State</button>
-    <button mat-icon-button (click)='toAccountPage()'><mat-icon>settings</mat-icon></button>
-  </mat-toolbar-row>
-</mat-toolbar>
-
-
-<mat-accordion #accordion='matAccordion' multi='true'>
-  <row *ngFor='let row of rows$ | async' [rowData]='row' [accordion]='accordion'></row>
-</mat-accordion>
-
-<div class='loading-message' *ngIf='isStateLoading$ | async'>
-  <mat-spinner></mat-spinner>
-  <h1>Loading App Data</h1>
-</div>
-
-<footer>
-  <span *ngIf='(dataSaved$ | async) as dataSaved'>Saved</span>
-  <span *ngIf='!(dataSaved$ | async)'>Unsaved Changes</span>
+<div class='row-holder'>
+  <export-button *ngIf='beginDataExport' [exportData]='exportData' title='app_state' (linkHasBegunDownload)='downloadLinkLoads()'></export-button>
   
-  <span class='running-count'>
-    <span>Rows: {{rowCount$ | async}}</span>
-    <span>Boards: {{boardCount$ | async}}</span>
-    <span>Tasks: {{taskCount$ | async}}</span>
-  </span>
-</footer>
+  <mat-toolbar color='primary'>
+    <mat-toolbar-row class='toolbar-row'>
+      <span>
+        <button mat-icon-button matTooltip='Save changes' (click)='saveChanges()'><mat-icon>save</mat-icon></button>
+        <button mat-icon-button matTooltip='Account settings' (click)='toAccountPage()'><mat-icon>settings</mat-icon></button>
+      </span>
 
-<input id='importAppState' type='file' style='display:none;' (change)='importAppState($event)' />
+      <button mat-icon-button (click)='toggleSidebarOpen()'><mat-icon>menu</mat-icon></button>
+      
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div class='sidebar' [ngClass]='{"open": sidebarOpen}'>
+    <div class='menu-button-row'>
+      <button mat-icon-button (click)='toggleSidebarOpen()'><mat-icon>menu</mat-icon></button>
+    </div>
+    <mat-action-list>
+      <button mat-list-item (click)='addRow()'><mat-icon matListIcon>add_box</mat-icon>Add Row</button>
+      <button mat-list-item (click)='openArchivedItemsDialog()'><mat-icon matListIcon>archive</mat-icon>Archived Items</button>
+      <button mat-list-item (click)='exportAppState()'><mat-icon matListIcon>cloud_download</mat-icon>Export App State</button>
+      <button mat-list-item (click)='beginAppStateImport()'><mat-icon matListIcon>cloud_upload</mat-icon>Import App State</button>
+      <button mat-list-item (click)='accordion.closeAll()'><mat-icon matListIcon>keyboard_arrow_down</mat-icon>Close All Rows</button>
+      <button mat-list-item (click)='accordion.openAll()'><mat-icon matListIcon>keyboard_arrow_up</mat-icon>Open All Rows</button>
+    </mat-action-list>
+    
+  </div>
+
+  <mat-accordion #accordion='matAccordion' multi='true'>
+    <row *ngFor='let row of rows$ | async' [rowData]='row' [accordion]='accordion'></row>
+  </mat-accordion>
+
+  <div class='loading-message' *ngIf='isStateLoading$ | async'>
+    <mat-spinner></mat-spinner>
+    <h1>Loading App Data</h1>
+  </div>
+
+  <footer>
+    <span *ngIf='(dataSaved$ | async) as dataSaved'>Saved</span>
+    <span *ngIf='!(dataSaved$ | async)'>Unsaved Changes</span>
+    
+    <span class='running-count'>
+      <span>Rows: {{rowCount$ | async}}</span>
+      <span>Boards: {{boardCount$ | async}}</span>
+      <span>Tasks: {{taskCount$ | async}}</span>
+    </span>
+  </footer>
+
+  <input id='importAppState' type='file' style='display:none;' (change)='importAppState($event)' />
+</div>
