@@ -32,24 +32,21 @@
 
     </mat-expansion-panel-header>
 
-    <mat-divider style='margin-bottom:10px;'></mat-divider>
-
-    
-    
-
-    <button mat-stroked-button class='row-action-button' (click)='addBoard(rowData)'>New Board <mat-icon>add</mat-icon></button>
-    <button mat-stroked-button class='row-action-button' [matMenuTriggerFor]='rowActions'>Row Actions</button>
-    
-    <mat-menu #rowActions='matMenu'>
-        <button mat-menu-item (click)='toggleEditTitle(rowData)'>Edit Title</button>
-        <button mat-menu-item (click)='toggleEditDescription(rowData)'>Edit Description</button>
-        <button mat-menu-item (click)='archiveRow(rowData)'>Archive Row</button>
-        <button mat-menu-item (click)='deleteRow(rowData)'>Delete Row</button>
-    </mat-menu>
+    <mat-divider></mat-divider>
 
     <button mat-icon-button matTooltip='Shift row down' (click)='shiftRowDown(rowData)'><mat-icon>keyboard_arrow_down</mat-icon></button>
     <button mat-icon-button matTooltip='Shift row up' (click)='shiftRowUp(rowData)'><mat-icon>keyboard_arrow_up</mat-icon></button>
-    
+    <button mat-icon-button matTooltip='Row Actions' [matMenuTriggerFor]='rowActions' ><mat-icon>more_vert</mat-icon></button>
+    <button mat-icon-button matTooltip='Add Board' (click)='addBoard(rowData)' ><mat-icon>add</mat-icon></button>
+
+    <mat-menu #rowActions='matMenu'>
+        <button mat-menu-item (click)='toggleEditTitle(rowData)'><mat-icon>edit</mat-icon>Edit Title</button>
+        <button mat-menu-item (click)='toggleEditDescription(rowData)'><mat-icon>edit</mat-icon>Edit Description</button>
+        <button mat-menu-item (click)='archiveRow(rowData)'><mat-icon>archive</mat-icon>Archive Row</button>
+        <button mat-menu-item (click)='deleteRow(rowData)'><mat-icon>delete</mat-icon>Delete Row</button>
+    </mat-menu>
+
+    <mat-divider></mat-divider>
 
     <div #scrollRow class='home_div' (dragover)='onMouseEnter($event)' (dragleave)='onMouseLeave($event)'>
         <div *ngFor='let board of boards$ | async'>
