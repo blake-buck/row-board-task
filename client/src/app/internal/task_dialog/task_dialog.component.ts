@@ -212,7 +212,6 @@ export class TaskDialogComponent {
         }
         else if(e.code === 'Enter' && e.target.value !== ''){
             this.toggleEditChecklistItem(e, checklistKey, item, data)
-            this.addChecklistItem(checklistKey, data)
         }
         else{
             // TODO: add debounce
