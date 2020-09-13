@@ -28,7 +28,7 @@ export class DatePickDialogComponent{
     selectedMonthIndex=moment().month();
     days=calculateDays(this.selectedMonthIndex)
     firstDayOfMonthIsoIndex = calculateFirstDayOfMonth(this.selectedMonthIndex)
-    dueDateMoment = this.data.dueDate;
+    dueDateMoment = moment(this.data.dueDate);
     
     
     tabChange(e){
