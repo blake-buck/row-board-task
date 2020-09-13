@@ -9,19 +9,19 @@ export class HeadersInterceptor implements HttpInterceptor{
     
     intercept(req, next){
         if(localStorage.getItem('accessToken')){
-            if(this.service.isAccessTokenExpired()){
-                return this.service.refresh().pipe(
-                    first(),
-                    map((result:any) => {
-                        const accessToken = result.message.AuthenticationResult.RefreshToken;
-                        this.service.addTokensToStorage({accessToken});
-                        const updatedHeaders = req.clone({
-                            headers: req.headers.set('jwt', accessToken)
-                        })
-                        return next.handle(updatedHeaders);
-                    })
-                )
-            }
+            // if(this.service.isAccessTokenExpired()){
+            //     return this.service.refresh().pipe(
+            //         first(),
+            //         map((result:any) => {
+            //             const accessToken = result.message.AuthenticationResult.RefreshToken;
+            //             this.service.addTokensToStorage({accessToken});
+            //             const updatedHeaders = req.clone({
+            //                 headers: req.headers.set('jwt', accessToken)
+            //             })
+            //             return next.handle(updatedHeaders);
+            //         })
+            //     )
+            // }
 
             const updatedHeaders = req.clone({
                 headers: req.headers.set('jwt', localStorage.getItem('accessToken'))
