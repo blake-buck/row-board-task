@@ -2,6 +2,14 @@
     <button mat-icon-button (click)='closeDialog()'><mat-icon>clear</mat-icon></button>
 </div>
 
+<mat-form-field>
+  <mat-label>Year due</mat-label>
+  <mat-select [(value)]='selectedYear' (selectionChange)='yearChange()'>
+    <mat-option *ngFor='let year of yearSelectionValues' [value]='year'>
+      {{year}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
 <mat-tab-group [selectedIndex]='selectedMonthIndex' (selectedIndexChange)='tabChange($event)' class='max-secondary-dialog-width'>
         
     <mat-tab *ngFor='let month of months' [label]='month'>

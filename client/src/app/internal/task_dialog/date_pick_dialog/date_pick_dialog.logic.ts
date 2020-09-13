@@ -17,23 +17,23 @@ export const months =[
 
 export const currentDayMoment = moment();
 
-export function calculateDays(selectedMonthIndex){
-    return new Array(moment().month(selectedMonthIndex).daysInMonth())
+export function calculateDays(selectedYear, selectedMonthIndex){
+    return new Array(moment().year(selectedYear).month(selectedMonthIndex).daysInMonth())
 }
 
-export function calculateFirstDayOfMonth(selectedMonthIndex){
-    return moment().month(selectedMonthIndex).date(1).weekday()
+export function calculateFirstDayOfMonth(selectedYear, selectedMonthIndex){
+    return moment().year(selectedYear).month(selectedMonthIndex).date(1).weekday()
 }
 
-export function tabChange(e, dueDateMoment){
+export function tabChange(e, selectedYear, dueDateMoment){
     let selectedMonthIndex = e;
-    let days= calculateDays(selectedMonthIndex)
-    let firstDayOfMonthIsoIndex = calculateFirstDayOfMonth(selectedMonthIndex)
+    let days= calculateDays(selectedYear, selectedMonthIndex)
+    let firstDayOfMonthIsoIndex = calculateFirstDayOfMonth(selectedYear, selectedMonthIndex)
 
     if(selectedMonthIndex === moment().month()){
         days[moment().date()-1] ='cyan'
     }
-    if(dueDateMoment && dueDateMoment.month() === selectedMonthIndex){
+    if(dueDateMoment && dueDateMoment.year() === selectedYear && dueDateMoment.month() === selectedMonthIndex){
         days[dueDateMoment.date()-1] = '#adff2f'
     }
 
@@ -44,17 +44,17 @@ export function tabChange(e, dueDateMoment){
     }
 }
 
-export function dateSelection(day, selectedMonthIndex, dueDateMoment, data){
-    let momentToExport = moment();
-    momentToExport.set('month', selectedMonthIndex);
-    momentToExport.set('date', day+1);    
-    
-    let days = calculateDays(selectedMonthIndex)
-    if(selectedMonthIndex === moment().month())
+export function dateSelection(day, selectedYear, selectedMonthIndex, dueDateMoment, data){
+        
+    let days = calculateDays(selectedYear, selectedMonthIndex)
+    if(dueDateMoment.year() === selectedYear && selectedMonthIndex === moment().month()){
         days[moment().date()-1] ='cyan'
+
+    }
     days[day] = '#adff2f'
 
     dueDateMoment = moment();
+    dueDateMoment.set('year', selectedYear)
     dueDateMoment.set('month',selectedMonthIndex);
     dueDateMoment.set('date', day + 1) 
 

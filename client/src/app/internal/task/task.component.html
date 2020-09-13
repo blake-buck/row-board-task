@@ -80,7 +80,7 @@
                     <div style='width:100%; overflow-wrap: break-word; word-wrap: break-word;' [ngClass]='{"text-complete":task.isComplete}'>{{task.body}}</div>
                     <div class='task-due-date' *ngIf='task.dueDate'>
                         <mat-icon>alarm</mat-icon>
-                        <span >{{moment(task.dueDate).format('MM/DD')}}</span>
+                        <span >{{moment(task.dueDate).format('MM/DD/YY')}}</span>
                     </div>
                 </div>
                 

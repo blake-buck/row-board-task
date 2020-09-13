@@ -21,26 +21,45 @@ export class DatePickDialogComponent{
         public dialog:MatDialog
     ){}
 
+    currentYear = moment().year();
+    yearSelectionValues = [
+        this.currentYear,
+        this.currentYear + 1,
+        this.currentYear + 2,
+        this.currentYear + 3,
+        this.currentYear + 4
+    ]
+    selectedYear = this.currentYear;
+
     months = months;
     currentDayMoment = currentDayMoment;
 
 
     selectedMonthIndex=moment().month();
-    days=calculateDays(this.selectedMonthIndex)
-    firstDayOfMonthIsoIndex = calculateFirstDayOfMonth(this.selectedMonthIndex)
+    days=calculateDays(this.selectedYear, this.selectedMonthIndex)
+    firstDayOfMonthIsoIndex = calculateFirstDayOfMonth(this.selectedYear, this.selectedMonthIndex)
     dueDateMoment = moment(this.data.dueDate);
     
-    
+    yearChange(){
+        this.days = calculateDays(this.selectedYear, this.selectedMonthIndex);
+        this.firstDayOfMonthIsoIndex = calculateFirstDayOfMonth(this.selectedYear, this.selectedMonthIndex);
+        
+        if(this.selectedYear === this.currentYear && this.selectedMonthIndex === moment().month()){
+            this.days[moment().date()-1] ='cyan'
+        }
+        if(this.dueDateMoment && this.dueDateMoment.year() === this.selectedYear && this.dueDateMoment.month() === this.selectedMonthIndex){
+            this.days[this.dueDateMoment.date()-1] = '#adff2f'
+        }
+    }
     tabChange(e){
-        let state = tabChange(e, this.dueDateMoment);
+        let state = tabChange(e, this.selectedYear, this.dueDateMoment);
         this.selectedMonthIndex = state.selectedMonthIndex;
         this.days = state.days;
         this.firstDayOfMonthIsoIndex = state.firstDayOfMonthIsoIndex;
     }
 
     dateSelection(day){
-        console.log('DATE SELECTION ', this.data.dueDate)
-        let state = dateSelection(day, this.selectedMonthIndex, this.dueDateMoment, this.data);
+        let state = dateSelection(day, this.selectedYear, this.selectedMonthIndex, this.dueDateMoment, this.data);
 
         if(state.days){
             this.days = state.days;
@@ -60,8 +79,8 @@ export class DatePickDialogComponent{
         this.data.dueDate = null;
         this.dueDateMoment = null;
         this.store.dispatch(editTask({task:this.data}))
-        this.days=calculateDays(this.selectedMonthIndex)
-        this.firstDayOfMonthIsoIndex = calculateFirstDayOfMonth(this.selectedMonthIndex)
+        this.days=calculateDays(this.selectedYear, this.selectedMonthIndex)
+        this.firstDayOfMonthIsoIndex = calculateFirstDayOfMonth(this.selectedYear, this.selectedMonthIndex)
 
         if(this.selectedMonthIndex === moment().month()){
             this.days[moment().date()-1] ='cyan'
@@ -70,7 +89,7 @@ export class DatePickDialogComponent{
 
     ngOnInit(){
         this.days[moment().date()-1] ='cyan'
-        if(this.dueDateMoment && this.dueDateMoment.month() === this.selectedMonthIndex){
+        if(this.dueDateMoment && this.dueDateMoment.year() === this.selectedYear && this.dueDateMoment.month() === this.selectedMonthIndex){
             this.days[this.dueDateMoment.date()-1] = '#adff2f'
         }
     }
