@@ -96,6 +96,7 @@ export class RowHolderComponent{
     }
 
     toAccountPage(){
+        this.saveChanges();
         this.router.navigate(['account']);
     }
 

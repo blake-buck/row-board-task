@@ -1,9 +1,11 @@
+import * as moment from 'moment';
+
 export function orderByLastEdited(tasks){
     let orderedArray = tasks.slice(0, tasks.length + 1);
 
     for(let i=0; i < orderedArray.length; i++){
         for(let j=i; j<orderedArray.length; j++){
-            if(orderedArray[j].lastEdited.isAfter(orderedArray[i].lastEdited)){
+            if(moment(orderedArray[j].lastEdited).isAfter(orderedArray[i].lastEdited)){
                 let placeholder = orderedArray[i];
                 orderedArray[i] = orderedArray[j];
                 orderedArray[j] = placeholder;
@@ -64,7 +66,7 @@ export function orderByDateCreated(tasks){
     for(let i=0; i< tasks.length; i++){
         for(let j=i; j < tasks.length; j++){
 
-            if(orderedArray[j].dateCreated.isBefore(orderedArray[i].dateCreated)){
+            if(moment(orderedArray[j].dateCreated).isBefore(orderedArray[i].dateCreated)){
                 
                 let placeholder = orderedArray[i];
 
