@@ -8,7 +8,10 @@ import { editTask, transferTask, scrollRowForward, scrollRowBackward, setSelecte
 import { AppStore } from 'src/app/store/app.state';
 import { Task, Board } from '../../../../../shared/types';
 
+
+import * as moment from 'moment';
 type LocalTask = Task & {isInput: boolean};
+
 
 @Component({
     selector:'task',
@@ -35,6 +38,9 @@ export class TaskComponent{
 
     currentDisplayPhoto = 0;
     classAddedToList = false
+
+    moment = moment;
+
 
     constructor(private store:Store<AppStore>, public dialog:MatDialog){}
 

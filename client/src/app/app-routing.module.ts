@@ -11,7 +11,7 @@ import { DatabaseSyncGuard } from './internal/database-sync.guard';
 
 const routes:Routes = [
     {path:'', component:LoginComponent},
-    {path:'register', component:RegisterComponent},
+    // {path:'register', component:RegisterComponent},
     {path:'forgot-password', component:ForgotPasswordComponent},
     {path:'forgot-password/confirm', component:ConfirmForgotPasswordComponent},
 

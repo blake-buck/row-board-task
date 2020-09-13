@@ -20,7 +20,7 @@ import { labelLength } from '../task/task.logic';
 import { map, first } from 'rxjs/operators';
 import { AppStore } from 'src/app/store/app.state';
 
-
+import * as moment from 'moment';
 
 @Component({
     selector:'task-dialog',
@@ -47,6 +47,8 @@ export class TaskDialogComponent {
 
     commentContent = '';
     data$;
+
+    moment = moment;
 
     constructor(
         private store:Store<AppStore>,
