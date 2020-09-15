@@ -8,18 +8,12 @@ import { ApiResult } from './store/app.effects';
     providedIn: 'root',
 })
 export class AuthenticationGuard implements CanActivate{
-    constructor(private service: AppService, private router:Router){}
+    constructor( private router:Router){}
 
     async canActivate(){
-        if(this.service.isAccessTokenExpired()){
-            try{
-                const result:ApiResult = await this.service.refresh().toPromise<any>()
-                localStorage.setItem('accessToken', result.message.AuthenticationResult.AccessToken)
-            }
-            catch(e){
-                return this.router.parseUrl('/');
-            }
+        if(localStorage.getItem('refreshToken') && localStorage.getItem('accessToken')){
+            return true;
         }
-        return true;
+        return this.router.parseUrl('/');
     }
 }

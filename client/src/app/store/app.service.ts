@@ -36,6 +36,15 @@ export class AppService{
         return tokenPayload.exp - Math.floor(Date.now()/1000) < 0;
     }
 
+    async completeRefreshToken(apiCall){
+        if(this.isAccessTokenExpired()){
+            const accessToken = (await this.refresh().toPromise<any>()).message.AuthenticationResult.AccessToken
+            this.addTokensToStorage({accessToken})
+        }
+
+        return await apiCall().toPromise();
+    }
+
     forgotPassword(username){
         return this.http.post(`${environment.apiUrl}/api/auth/forgot-password`, {username});
     }
@@ -45,34 +54,34 @@ export class AppService{
     }
 
     changePassword({previousPassword, proposedPassword}){
-        return this.http.post(`${environment.apiUrl}/api/auth/change-password`, {previousPassword, proposedPassword});
+        return this.completeRefreshToken(() => this.http.post(`${environment.apiUrl}/api/auth/change-password`, {previousPassword, proposedPassword}));
     }
 
     deleteAccount(){
-        return this.http.delete(`${environment.apiUrl}/api/auth/delete-account`);
+        return this.completeRefreshToken(() => this.http.delete(`${environment.apiUrl}/api/auth/delete-account`));
     }
 
     retrieveStateFromDb(){
-        return this.http.get(`${environment.apiUrl}/api/data/state`);
+        return this.completeRefreshToken(() => this.http.get(`${environment.apiUrl}/api/data/state`));
     }
 
     initializeDbState(){
-        return this.http.post(`${environment.apiUrl}/api/data/state`, initialState);
+        return this.completeRefreshToken(() => this.http.post(`${environment.apiUrl}/api/data/state`, initialState));
     }
 
     updateDbState(appState){
-        return this.http.put(`${environment.apiUrl}/api/data/state`, appState);
+        return this.completeRefreshToken(() => this.http.put(`${environment.apiUrl}/api/data/state`, appState));
     }
 
     deleteDbState(){
-        return this.http.delete(`${environment.apiUrl}/api/data/state`);
+        return this.completeRefreshToken(() => this.http.delete(`${environment.apiUrl}/api/data/state`));
     }
 
     uploadFile(fileName, dataUrl){
-        return this.http.post(`${environment.apiUrl}/api/data/file`, {fileName, dataUrl});
+        return this.completeRefreshToken(() => this.http.post(`${environment.apiUrl}/api/data/file`, {fileName, dataUrl}));
     }
 
     deleteFile(fileName){
-        return this.http.delete(`${environment.apiUrl}/api/data/file/${fileName}`);
+        return this.completeRefreshToken(() => this.http.delete(`${environment.apiUrl}/api/data/file/${fileName}`));
     }
 }
