@@ -43,6 +43,22 @@ export function _shiftRowDown(state, action){
     return state;
 }
 
+export function _editRowTitle(state, action){
+    return {
+        ...state,
+        isDataSaved:false,
+        rows:state.rows.map(row => {
+            if(row.key === action.key){
+                return{
+                    ...row,
+                    title:action.title
+                }
+            }
+            return row
+        })
+    };
+}
+
 export function _editRowDescription(state, action){
     return {
         ...state,

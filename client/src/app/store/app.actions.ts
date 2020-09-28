@@ -21,12 +21,6 @@ export const editRowTitle = createAction(
     'EDIT_ROW_TITLE',
     props<{key:number, title:string}>()
 );
-
-export const editRowTitleSuccess = createAction(
-    'EDIT_ROW_TITLE_ACCESS',
-    props<{rows:Row[]}>()
-)
-
 export const editRowDescription = createAction(
     'EDIT_ROW_DESCRIPTION',
     props<{key:number, description:string}>()

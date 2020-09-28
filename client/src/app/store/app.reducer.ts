@@ -1,8 +1,8 @@
-import {getState, addRow, editRowDescription, addBoard, transferBoard, editBoardTitle, archiveBoard, deleteBoard, toggleHideCompleteTasks, addTask, editTask, deleteTask, transferTaskEmpty, transferTask, linkTask, editRowTitleSuccess, saveChanges, editRowExpanded, openTaskDialog, setSelectedTask, closeTaskDialog, shiftRowUp, shiftRowDown, deleteRow, archiveRow, archiveTask, restoreArchivedRow, restoreArchivedBoard, restoreArchivedTask, setState, loginSuccess, forgotPassword, retrieveStateFromDbSuccess} from './app.actions';
+import {getState, addRow, editRowDescription, addBoard, transferBoard, editBoardTitle, archiveBoard, deleteBoard, toggleHideCompleteTasks, addTask, editTask, deleteTask, transferTaskEmpty, transferTask, linkTask, saveChanges, editRowExpanded, openTaskDialog, setSelectedTask, closeTaskDialog, shiftRowUp, shiftRowDown, deleteRow, archiveRow, archiveTask, restoreArchivedRow, restoreArchivedBoard, restoreArchivedTask, setState, loginSuccess, forgotPassword, retrieveStateFromDbSuccess, editRowTitle} from './app.actions';
 import {initialState } from './app.state';
 import { _addTask, _editTask, _deleteTask, _transferTaskEmpty, _transferTask, _linkTask, _archiveTask, _restoreArchivedTask } from './reducer-helpers/task.helpers';
 import { _addBoard, _transferBoard, _editBoardTitle, _archiveBoard, _deleteBoard, _reorderBoardTasks, _toggleHideCompleteTasks, _restoreArchivedBoard } from './reducer-helpers/board.helpers';
-import { _addRow, _editRowDescription, _editRowExpanded, _shiftRowUp, _shiftRowDown, _deleteRow, _archiveRow, _restoreArchivedRow } from './reducer-helpers/row.helpers';
+import { _addRow, _editRowDescription, _editRowExpanded, _shiftRowUp, _shiftRowDown, _deleteRow, _archiveRow, _restoreArchivedRow, _editRowTitle } from './reducer-helpers/row.helpers';
 
 export function appReducer(state=initialState, action){
     switch(action.type){
@@ -22,9 +22,8 @@ export function appReducer(state=initialState, action){
         case restoreArchivedRow.type:
             return _restoreArchivedRow(state, action);
 
-        case editRowTitleSuccess.type:
-            return {...state,
-                isDataSaved:false, rows:action.rows}
+        case editRowTitle.type:
+            return _editRowTitle(state, action);
         
         case editRowDescription.type:
             return _editRowDescription(state, action);

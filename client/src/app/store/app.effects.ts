@@ -4,7 +4,7 @@ import { first, map, mergeMap} from 'rxjs/operators'
 import { Store } from '@ngrx/store';
 import { selectAppState } from './app.selector';
 import { combineLatest } from 'rxjs';
-import { editRowTitle, editRowTitleSuccess, openTaskDialog, closeTaskDialog, login, loginSuccess, forgotPassword, confirmForgotPassword, changePassword, deleteAccount, retrieveStateFromDb, initializeDbState, retrieveStateFromDbSuccess, saveChanges, uploadTaskPhoto, editTask, deleteTaskPhoto, uploadTaskAttachment, deleteTaskAttachment } from './app.actions';
+import { openTaskDialog, closeTaskDialog, login, loginSuccess, forgotPassword, confirmForgotPassword, changePassword, deleteAccount, retrieveStateFromDb, initializeDbState, retrieveStateFromDbSuccess, saveChanges, uploadTaskPhoto, editTask, deleteTaskPhoto, uploadTaskAttachment, deleteTaskAttachment } from './app.actions';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { TaskDialogComponent } from '../internal/task_dialog/task_dialog.component';
 import { AppService } from './app.service';
@@ -27,28 +27,6 @@ export class AppEffects {
         private router: Router,
         private snackbar: MatSnackBar
     ){}
-
-    editRowTitle$ = createEffect(
-        () => this.actions$.pipe(
-            ofType(editRowTitle),
-            map(action => {
-                let appState = this.store.select(selectAppState)
-                return combineLatest(appState, [action])
-            }),
-            map(payload => {
-                payload.subscribe(val => {
-                    let state = val[0]
-                    let clonedRows = [...state.rows]
-                    let index = clonedRows.findIndex(row => row.key === val[1].key)
-                    let modifiedRow = {...clonedRows[index], title:val[1].title}
-                    clonedRows.splice(index, 1, {...modifiedRow})
-                    this.store.dispatch(editRowTitleSuccess({rows:clonedRows}))
-                }).unsubscribe()
-                
-            })
-        ),
-        {dispatch:false}
-    )
 
     openTaskDialog$ = createEffect(
         () => this.actions$.pipe(
