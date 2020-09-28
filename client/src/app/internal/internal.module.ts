@@ -24,6 +24,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from '../app-routing.module';
 import { EffectsModule } from '@ngrx/effects';
 import { AccountComponent } from './account/account.component';
+import { InputAutofocusDirective } from './util/input-autofocus.directive';
 
 
 @NgModule({
@@ -50,7 +51,9 @@ import { AccountComponent } from './account/account.component';
         RestoreBoardDialogComponent,
         RestoreTaskDialogComponent,
 
-        AccountComponent
+        AccountComponent,
+
+        InputAutofocusDirective
     ],
     imports: [
         BrowserModule,

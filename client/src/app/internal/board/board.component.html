@@ -5,7 +5,7 @@
         <h3 (click)='toggleEditBoardTitle(board)' *ngIf='!isEditingBoardTitle && !board.title' class='placeholderTitle' >Board Title...</h3>
         
         <mat-form-field *ngIf='isEditingBoardTitle' class='board-title-input'>
-            <input #boardTitleInput matInput (focusout)='toggleEditBoardTitle(board)' *ngIf='isEditingBoardTitle' [value]='board.title' class='board-title-input-a' (keyup)='editBoardTitle($event, board)'>
+            <input input-autofocus matInput (focusout)='toggleEditBoardTitle(board)' *ngIf='isEditingBoardTitle' [value]='board.title' class='board-title-input-a' (keyup)='editBoardTitle($event, board)'>
         </mat-form-field>
 
         <div class='board-buttons'>

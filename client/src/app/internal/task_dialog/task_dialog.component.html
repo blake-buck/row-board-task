@@ -9,7 +9,7 @@
 
         <form (submit)='toggleInput("isEditingBody", "isEditingBodyFocused", $event, data)' *ngIf='isEditingBody'>
             <mat-form-field>
-                    <input #bodyInput matInput (hover)='onBodyInputLoad()' (focusout)='toggleInput("isEditingBody", "isEditingBodyFocused", $event, data)' [value]='data.body' (keyup)='changeTaskProperty("body", $event.target.value, true, data)'/>
+                    <input input-autofocus matInput (hover)='onBodyInputLoad()' (focusout)='toggleInput("isEditingBody", "isEditingBodyFocused", $event, data)' [value]='data.body' (keyup)='changeTaskProperty("body", $event.target.value, true, data)'/>
             </mat-form-field>
         </form>
 
@@ -59,7 +59,7 @@
         
         <p *ngIf='!isEditingDescription'>{{data.description}}</p>
         <mat-form-field *ngIf='isEditingDescription'>
-            <textarea matInput (focusout)='toggleInput("isEditingDescription", "isEditingDescriptionFocused", $event, data)' (keyup)='changeTaskProperty("description", $event.target.value, true, data)' cdkTextareaAutosize #autosize="cdkTextareaAutosize" #descriptionInput cdkAutosizeMinRows="4" [value]='data.description'></textarea>
+            <textarea input-autofocus matInput (focusout)='toggleInput("isEditingDescription", "isEditingDescriptionFocused", $event, data)' (keyup)='changeTaskProperty("description", $event.target.value, true, data)' cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4" [value]='data.description'></textarea>
         </mat-form-field>
     </div>
 
@@ -94,7 +94,7 @@
             <div class='dialog-checklist-title-wrapper'>
                 <mat-icon [style.color]='checklist.color'>check_box</mat-icon>
                
-                <input #checklistTitle *ngIf='checklist.title.isEditing' placeholder='Checklist title...' (keyup)='changeChecklistTitle($event, checklist.key, data)' [value]='checklist.title.content' (focusout)='toggleEditChecklistTitle(checklist.key, data)' />
+                <input input-autofocus *ngIf='checklist.title.isEditing' placeholder='Checklist title...' (keyup)='changeChecklistTitle($event, checklist.key, data)' [value]='checklist.title.content' (focusout)='toggleEditChecklistTitle(checklist.key, data)' />
                 <button *ngIf='checklist.title.isEditing' mat-icon-button (click)='deleteChecklist(checklist, data)'><mat-icon>delete</mat-icon></button>
                 
                 <h4 *ngIf='!checklist.title.isEditing' (click)='toggleEditChecklistTitle(checklist.key, data)'>{{checklist.title.content}}</h4>
@@ -109,7 +109,7 @@
                 </mat-checkbox>
                 
                 <mat-checkbox *ngIf='item.isEditing' [checked]='item.checked' (change)='toggleChecklistItem($event, checklist.key, item, data)'>
-                    <input #checklistInput class='dialog-checklist-item-input'  (focusout)='toggleEditChecklistItem($event, checklist.key, item, data)' (keyup)='changeChecklistItem($event, checklist.key, i, data, item)' [value]='item.content' />
+                    <input input-autofocus class='dialog-checklist-item-input'  (focusout)='toggleEditChecklistItem($event, checklist.key, item, data)' (keyup)='changeChecklistItem($event, checklist.key, i, data, item)' [value]='item.content' />
                 </mat-checkbox>
             </div>
             <button mat-flat-button *ngIf='checklist.title.content && !checklist.title.isEditing' (click)='addChecklistItem(checklist.key, data)'>Add Item</button>

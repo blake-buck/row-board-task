@@ -14,7 +14,7 @@
                 <mat-form-field class='task-list-field' style='margin-bottom:-0.5em; margin-top:-0.5em; ' >
                     <textarea   
                         matInput
-                        #taskBodyInput
+                        input-autofocus
                         [value]='task.body'
                         (keyup)='changeTaskBody($event)'
                         (focusout)='toggleInput()'

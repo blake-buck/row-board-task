@@ -26,8 +26,6 @@ export class BoardComponent{
     orderByAlphabetical=orderByAlphabetical;
     orderByDateCreated=orderByDateCreated;
     orderByLastEdited=orderByLastEdited;
-
-    @ViewChild('boardTitleInput', {read: ElementRef, static:false}) boardTitleInput: ElementRef;
     
     @Input() boardTitle:string;
     @Input() boardKey:number;
@@ -43,17 +41,8 @@ export class BoardComponent{
 
     constructor(private store:Store<AppStore>, public dialog:MatDialog){}
 
-   ngOnInit(){
-       this.board$ = this.store.select(selectBoardFromBoardKey, this.boardKey)
-   }
-
-    ngAfterViewChecked(){
-        if(this.isEditingBoardTitle && !this.isEditingBoardTitleFocused){
-            this.isEditingBoardTitleFocused = true;
-            setTimeout(() => {
-                this.boardTitleInput.nativeElement.focus();
-            }, 0)
-        }
+    ngOnInit(){
+        this.board$ = this.store.select(selectBoardFromBoardKey, this.boardKey)
     }
 
     archiveBoard(board){

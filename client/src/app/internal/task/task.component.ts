@@ -22,7 +22,6 @@ type LocalTask = Task & {isInput: boolean};
 
 export class TaskComponent{
     @ViewChild('elementWrapper', {read: ElementRef, static:false}) elementWrapper: ElementRef;
-    @ViewChild('taskBodyInput', {read: ElementRef, static:false}) taskBodyInput: ElementRef;
 
     @Input() task:LocalTask;
     @Input() board:Board;
@@ -51,15 +50,6 @@ export class TaskComponent{
     }
 
     ngAfterViewChecked(){
-        if(this.task.isInput && !this.isTaskTitleInputFocused){
-            this.isTaskTitleInputFocused = true;
-            setTimeout(() => {
-                this.taskBodyInput.nativeElement.focus({preventScroll:true});
-                this.taskBodyInput.nativeElement.scrollIntoView();
-            }, 0)
-            
-        }
-
         if(this.task.displayImageUrls.length === 1){   
             setTimeout(() => {
                 this.currentDisplayPhoto = 0;

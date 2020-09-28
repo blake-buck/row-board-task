@@ -29,11 +29,6 @@ import * as moment from 'moment';
 })
 
 export class TaskDialogComponent {
-    @ViewChild('bodyInput', {read: ElementRef, static:false}) bodyInput: ElementRef;
-    @ViewChild('descriptionInput', {read: ElementRef, static:false}) descriptionInput: ElementRef;
-    @ViewChild('checklistTitle', {read: ElementRef, static:false}) checklistTitle: ElementRef;
-    @ViewChild('checklistInput', {read: ElementRef, static:false}) checklistInput: ElementRef;
-
     @ViewChild('autosize', {static:false}) autosize:CdkTextareaAutosize;
 
     isEditingBody = false;
@@ -69,11 +64,6 @@ export class TaskDialogComponent {
             })
         }
 
-        ngAfterViewChecked(){
-            this.autofocusInput('isEditingBody', 'isEditingBodyFocused', 'bodyInput');
-            this.autofocusInput('isEditingDescription', 'isEditingDescriptionFocused', 'descriptionInput');
-        }
-
         ngOnDestroy(){
             setTimeout(() => {
                 if(!document.querySelector('.task-dialog')){
@@ -81,15 +71,6 @@ export class TaskDialogComponent {
                 }
             }, 500)
         }
-    
-    autofocusInput(isEditingProperty, isFocused, inputElement){
-        if(this[isEditingProperty] && !this[isFocused]){
-            this[isFocused] = true;
-            setTimeout((input = this[inputElement]) => {
-                input.nativeElement.focus();
-            }, 0)
-        }
-    }
     
     addLabel(labelColor, data){
         this.store.dispatch(editTask({task:addLabel(data, labelColor)}))
@@ -108,10 +89,6 @@ export class TaskDialogComponent {
         else{
             this[isEditing] = true
         }
-    }
-
-    onBodyInputLoad(){
-        this.bodyInput.nativeElement.focus()
     }
     
     onCloseDialog(data){
@@ -146,9 +123,7 @@ export class TaskDialogComponent {
 
     toggleEditChecklistTitle(checklistKey, data){
         let result = toggleEditChecklistTitle(checklistKey, data)
-        if(result.isEditing){
-            setTimeout(() => this.checklistTitle.nativeElement.focus(), 0)
-        }
+
         if(!result.isEditing){
             this.store.dispatch(editTask({task:result.data}))
         }
@@ -188,21 +163,14 @@ export class TaskDialogComponent {
 
     toggleEditChecklistItem(e, checklistKey, item, data){
         let result = toggleEditChecklistItem(checklistKey, item, data)
-        if(result.isEditing){
-            setTimeout(() => this.checklistInput.nativeElement.focus(), 0)
-        }
+        
         if(!result.isEditing){
             this.store.dispatch(editTask({task:result.data}))
         }
     }
 
-    focusChecklistInput(e){
-        // e.target.focus()
-    }
-
     addChecklistItem(checklistKey, data){
         this.store.dispatch(editTask({task:addChecklistItem(checklistKey, data)}))
-        setTimeout(() => this.checklistInput.nativeElement.focus(), 0)
     }
     
     changeChecklistItem(e, checklistKey, index, data, item){
