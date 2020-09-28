@@ -11,7 +11,6 @@ export function _addTask(state, action){
                     ...board,
                     
                     tasks:[
-                        ...board.tasks,
                         {
                             key:state.currentTaskKey, boardKey:action.key, 
                             body:'', description:'',
@@ -32,7 +31,8 @@ export function _addTask(state, action){
                             lastEdited:moment().format(),
 
                             dialogOpen:false
-                        }
+                        },
+                        ...board.tasks
                     ]
                 }
             }
