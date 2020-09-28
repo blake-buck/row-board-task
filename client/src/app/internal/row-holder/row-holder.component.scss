@@ -1,3 +1,8 @@
+mat-toolbar{
+    position:sticky;
+    top:0px;
+    z-index:100;
+}
 .toolbar-row{
     display:flex; 
     justify-content: space-between;
