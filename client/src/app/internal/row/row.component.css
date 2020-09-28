@@ -1,6 +1,9 @@
 .row-wrapper{
     min-width:400px;
-    
+    color:black;
+}
+.row-wrapper input.mat-input-element, .row-wrapper button.mat-button, .row-wrapper mat-panel-description{
+    color:black;
 }
 .row-action-button{
     margin-right:10px;

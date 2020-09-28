@@ -14,7 +14,7 @@
             <span *ngIf='!isEditingTitle'>{{rowData.title}}</span>
             <form (submit)='submitTitle($event, rowData)' *ngIf='isEditingTitle'>
                 <mat-form-field style='width:80%;'>
-                    <input name='title' matInput (keyup)='editTitle($event, rowData)' [value]='rowData.title'/>
+                    <input input-autofocus name='title' matInput (keyup)='editTitle($event, rowData)' [value]='rowData.title'/>
                 </mat-form-field>
                 <button mat-button>Save</button>
             </form>        
@@ -24,7 +24,7 @@
             <span *ngIf='!isEditingDescription'>{{rowData.description}}</span>
             <form (submit)='submitDescription($event, rowData)' *ngIf='isEditingDescription'>
                 <mat-form-field style='width:80%;'>
-                    <input name='description' matInput (keyup)='editDescription($event, rowData)' [value]='rowData.description'/>
+                    <input input-autofocus name='description' matInput (keyup)='editDescription($event, rowData)' [value]='rowData.description'/>
                 </mat-form-field>
                 <button mat-button>Save</button>
             </form>
