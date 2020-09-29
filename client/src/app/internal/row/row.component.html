@@ -48,10 +48,12 @@
 
     <mat-divider></mat-divider>
 
-    <div #scrollRow class='home_div' (dragover)='onMouseEnter($event)' (dragleave)='onMouseLeave($event)'>
-        <div *ngFor='let board of boards$ | async'>
-            <board class='board' [boardKey]='board.key' [boardTitle]='board.title' (autoScroller)='autoScroller($event)'></board>
-        </div>
-    </div>
+    <board-list 
+        #scrollRow
+        [boards$]='boards$' 
+        [onMouseEnter]='onMouseEnter' 
+        [onMouseLeave]='onMouseLeave' 
+        
+    ></board-list>
 
 </mat-expansion-panel>

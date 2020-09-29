@@ -29,6 +29,9 @@ export class BoardComponent{
     
     @Input() boardTitle:string;
     @Input() boardKey:number;
+    
+    @Input() scrollRowForward;
+    @Input() scrollRowBackward;
 
     @Output() autoScroller = new EventEmitter();
 
@@ -91,10 +94,10 @@ export class BoardComponent{
         const beginScrollingWidth = 100; 
         const targetHasBoardAttribute =  e.target.getAttribute('class').includes('board');
         if(e.screenX > window.innerWidth - beginScrollingWidth && targetHasBoardAttribute){
-            this.store.dispatch(scrollRowForward())
+            this.scrollRowForward();
         }   
         else if(e.screenX < beginScrollingWidth && targetHasBoardAttribute){
-            this.store.dispatch(scrollRowBackward())
+            this.scrollRowBackward()
         }
     }
 

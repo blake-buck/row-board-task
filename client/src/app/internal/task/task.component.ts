@@ -26,6 +26,9 @@ export class TaskComponent{
     @Input() task:LocalTask;
     @Input() board:Board;
 
+    @Input() scrollRowForward;
+    @Input() scrollRowBackward;
+
     @Output() taskTransfer = new EventEmitter();
     @Output() taskChange   = new EventEmitter();
     
@@ -67,11 +70,11 @@ export class TaskComponent{
     onDrag(e){
         const startScrollingBoundary = 125;
         const elementHasTaskAttribute = e.target.getAttribute('class').includes('task');
-        if(e.clientX > window.innerWidth - startScrollingBoundary && elementHasTaskAttribute){
-            this.store.dispatch(scrollRowForward())
+        if(e.screenX > window.innerWidth - startScrollingBoundary && elementHasTaskAttribute){
+            this.scrollRowForward()
         }   
-        else if(e.clientX < startScrollingBoundary && elementHasTaskAttribute){
-            this.store.dispatch(scrollRowBackward())
+        else if(e.screenX < startScrollingBoundary && elementHasTaskAttribute){
+            this.scrollRowBackward()
         }
     }
 

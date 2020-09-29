@@ -1,0 +1,13 @@
+<div *ngIf='true'>
+    <div #scrollRow class='home_div' (dragover)='onMouseEnter($event)' (dragleave)='onMouseLeave($event)'  >
+        <div *ngFor='let board of boards$ | async'>
+            <board 
+                class='board' 
+                [boardKey]='board.key' 
+                [boardTitle]='board.title' 
+                [scrollRowForward]='scrollRowForward()'
+                [scrollRowBackward]='scrollRowBackward()'
+            ></board>
+        </div>
+    </div>
+</div>

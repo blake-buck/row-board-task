@@ -25,11 +25,13 @@ import { AppRoutingModule } from '../app-routing.module';
 import { EffectsModule } from '@ngrx/effects';
 import { AccountComponent } from './account/account.component';
 import { InputAutofocusDirective } from './util/input-autofocus.directive';
+import { BoardListComponent } from './row/board-list/board-list.component';
 
 
 @NgModule({
     declarations: [
         RowComponent,
+        BoardListComponent,
     
         BoardComponent,
         ExportButtonComponent,

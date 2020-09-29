@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef, ViewChildren } from '@angular/core';
 
 import {Store, select} from '@ngrx/store';
 import {Observable} from 'rxjs';
@@ -10,6 +10,7 @@ import { selectSpecificBoards } from '../../store/app.selector';
 import { Actions } from '@ngrx/effects';
 import { AppStore } from 'src/app/store/app.state';
 import { Row, Board } from '../../../../../shared/types';
+import { BoardListComponent } from './board-list/board-list.component';
 
 @Component({
     templateUrl:'./row.component.html',
@@ -21,7 +22,6 @@ export class RowComponent{
     @Input() rowData:Row;
     @Input() accordion:any;
 
-    @ViewChild('scrollRow', {read: ElementRef, static:false}) scrollRow: ElementRef;
 
     specificBoards$;
     boards$ :Observable<Board[]> ;
@@ -37,11 +37,6 @@ export class RowComponent{
         this.boards$ = this.store.pipe(select(selectSpecificBoards, this.rowData.key));
     }
 
-
-    ngOnDestroy(){
-        this.scroll.unsubscribe()
-    }
-
     onMouseEnter(e){
         e.preventDefault();
         this.canScrollRow = true;
@@ -50,20 +45,7 @@ export class RowComponent{
         e.preventDefault();
         this.canScrollRow = false;
     }
-
-    scroll = this.actions$.subscribe(val => {
-        if(val.type === scrollRowForward.type && this.canScrollRow){
-            if(this.scrollRow && this.scrollRow.nativeElement){
-                this.scrollRow.nativeElement.scrollLeft = this.scrollRow.nativeElement.scrollLeft + 6; 
-            }
-        }
-        else if(val.type === scrollRowBackward.type && this.canScrollRow){
-            if(this.scrollRow && this.scrollRow.nativeElement){
-                this.scrollRow.nativeElement.scrollLeft = this.scrollRow.nativeElement.scrollLeft - 6;
-            }
-        }
-    })
-
+    
     editTitle(e, rowData){
         if(e.key === ' '){
             e.target.value += ' ';
