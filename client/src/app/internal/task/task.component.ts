@@ -26,9 +26,6 @@ export class TaskComponent{
     @Input() task:LocalTask;
     @Input() board:Board;
 
-    @Input() scrollRowForward;
-    @Input() scrollRowBackward;
-
     @Output() taskTransfer = new EventEmitter();
     @Output() taskChange   = new EventEmitter();
     
@@ -65,17 +62,6 @@ export class TaskComponent{
         setTimeout(() => {
             this.disableDialogOpening = false;
         }, 500)
-    }
-
-    onDrag(e){
-        const startScrollingBoundary = 125;
-        const elementHasTaskAttribute = e.target.getAttribute('class').includes('task');
-        if(e.screenX > window.innerWidth - startScrollingBoundary && elementHasTaskAttribute){
-            this.scrollRowForward()
-        }   
-        else if(e.screenX < startScrollingBoundary && elementHasTaskAttribute){
-            this.scrollRowBackward()
-        }
     }
 
     openDialog(){

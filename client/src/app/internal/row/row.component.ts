@@ -36,15 +36,6 @@ export class RowComponent{
     ngOnInit(){
         this.boards$ = this.store.pipe(select(selectSpecificBoards, this.rowData.key));
     }
-
-    onMouseEnter(e){
-        e.preventDefault();
-        this.canScrollRow = true;
-    }
-    onMouseLeave(e){
-        e.preventDefault();
-        this.canScrollRow = false;
-    }
     
     editTitle(e, rowData){
         if(e.key === ' '){
