@@ -14,7 +14,7 @@
         </form>
 
         <div class='due-date' *ngIf='data.dueDate'>
-            <h4>Due {{moment(data.dueDate).fromNow()}} on {{moment(data.dueDate).format('dddd, MMMM Do YYYY')}} </h4>
+            <h4>Due {{data.dueDate | momentPipe:'fromNow'}} on {{data.dueDate | momentPipe:'format':'dddd, MMMM Do YYYY'}} </h4>
         </div>
 
         <div>

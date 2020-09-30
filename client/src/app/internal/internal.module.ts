@@ -26,6 +26,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { AccountComponent } from './account/account.component';
 import { InputAutofocusDirective } from './util/input-autofocus.directive';
 import { BoardListComponent } from './row/board-list/board-list.component';
+import { MomentPipe } from './util/moment.pipe';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { BoardListComponent } from './row/board-list/board-list.component';
 
         AccountComponent,
 
-        InputAutofocusDirective
+        InputAutofocusDirective,
+        MomentPipe
     ],
     imports: [
         BrowserModule,
