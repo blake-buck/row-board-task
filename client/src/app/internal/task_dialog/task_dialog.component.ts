@@ -1,7 +1,6 @@
-import {Component, ViewChild, ElementRef, Inject} from '@angular/core';
-import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import {Component} from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { PreviewAttachmentDialogComponent} from './preview_attachment_dialog/preview_attachment_dialog.component';
 import {AttachmentDialogComponent} from './attachment_dialog/attachment_dialog.component';
@@ -10,7 +9,7 @@ import {PhotoDialogComponent} from './photo_dialog/photo_dialog.component';
 import {DeleteDialogComponent} from './delete_dialog/delete_dialog.component';
 
 import {TransferTaskDialogComponent} from './transfer_task_dialog/transfer_task_dialog.component';
-import { addLabel, addComment, addChecklist, deleteChecklist, changeChecklistTitle, toggleEditChecklistTitle, toggleChecklistItem, toggleEditChecklistItem, addChecklistItem, deleteChecklistItem, changeChecklistItemText, removeFile, deleteComment } from './task_dialog.logic';
+import { addLabel, removeFile } from './task_dialog.logic';
 import { editTask, closeTaskDialog, openTaskDialog, setSelectedTask, archiveTask } from 'src/app/store/app.actions';
 import { selectBoardAndRowTitleFromTaskKey, selectSpecificTask, selectSelectedTask } from 'src/app/store/app.selector';
 import { Observable } from 'rxjs';
@@ -19,7 +18,16 @@ import { HttpClient } from '@angular/common/http';
 import { map, first } from 'rxjs/operators';
 import { AppStore } from 'src/app/store/app.state';
 
-import * as moment from 'moment';
+const dialogHashMap = {
+    'delete-dialog': DeleteDialogComponent,
+    'date-pick-dialog': DatePickDialogComponent,
+    'photo-dialog': PhotoDialogComponent,
+    'attachment-dialog': AttachmentDialogComponent,
+    'preview-attachment-dialog': PreviewAttachmentDialogComponent,
+    'transfer-task-dialog': TransferTaskDialogComponent,
+    'link_task_dialog': LinkTaskDialogComponent
+};
+
 
 @Component({
     selector:'task-dialog',
@@ -29,18 +37,10 @@ import * as moment from 'moment';
 
 export class TaskDialogComponent {
 
-    isEditingBody = false;
-    isEditingBodyFocused = false;
-
-    isEditingDescription = false;
-    isEditingDescriptionFocused = false;
-
     boardAndRowTitle$:Observable<{rowTitle:string, boardTitle:string}>;
     linkedTasks$ = [];
 
     data$;
-
-    moment = moment;
 
     constructor(
         private store:Store<AppStore>,
@@ -73,21 +73,6 @@ export class TaskDialogComponent {
         this.store.dispatch(editTask({task:addLabel(data, labelColor)}))
     }
 
-    toggleInput(isEditing, isFocused, e, data){
-        if(e){
-            e.preventDefault();
-        }
-
-        if(this[isEditing]){
-            this.store.dispatch(editTask({task:data}));
-            this[isEditing] = false
-            this[isFocused] = false;
-        }
-        else{
-            this[isEditing] = true
-        }
-    }
-    
     onCloseDialog(data){
         this.store.dispatch(closeTaskDialog())
     }
@@ -106,36 +91,8 @@ export class TaskDialogComponent {
 
 
     openDialog(id, dialogData, taskData){
-        let dialogComponent;
-        switch(id){
-            case 'delete-dialog':
-                dialogComponent = DeleteDialogComponent;
-                break;
-
-            case 'date-pick-dialog':
-                dialogComponent = DatePickDialogComponent;
-                break;
-
-            case 'photo-dialog':
-                dialogComponent = PhotoDialogComponent;
-                break;
-
-            case 'attachment-dialog':
-                dialogComponent = AttachmentDialogComponent;
-                break;
-
-            case 'preview-attachment-dialog':
-                dialogComponent = PreviewAttachmentDialogComponent;
-                break;
-
-            case 'transfer-task-dialog':
-                dialogComponent = TransferTaskDialogComponent;
-                break;
-            
-            case 'link_task_dialog':
-                dialogComponent = LinkTaskDialogComponent;
-                break;
-        }
+        const dialogComponent = dialogHashMap[id];
+        
         this.dialog.open(
             dialogComponent,
             {
