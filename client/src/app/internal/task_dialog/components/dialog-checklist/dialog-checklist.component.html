@@ -1,0 +1,24 @@
+<div *ngFor='let checklist of data.checklists' class='dialog-checklist'>
+    <div class='dialog-checklist-title-wrapper'>
+        <mat-icon [style.color]='checklist.color'>check_box</mat-icon>
+       
+        <input input-autofocus *ngIf='checklist.title.isEditing' placeholder='Checklist title...' (keyup)='changeChecklistTitle($event, checklist.key, data)' [value]='checklist.title.content' (focusout)='toggleEditChecklistTitle(checklist.key, data)' />
+        <button *ngIf='checklist.title.isEditing' mat-icon-button (click)='deleteChecklist(checklist, data)'><mat-icon>delete</mat-icon></button>
+        
+        <h4 *ngIf='!checklist.title.isEditing' (click)='toggleEditChecklistTitle(checklist.key, data)'>{{checklist.title.content}}</h4>
+        <h6 *ngIf='!checklist.title.isEditing'>{{checklist.completedTasks}} / {{checklist.content.length}}</h6> 
+    </div>
+    
+    <div *ngFor='let item of checklist.content; index as i' class='dialog-checklist-item'>
+        <mat-checkbox 
+            *ngIf='!item.isEditing' [checked]='item.checked' (change)='toggleChecklistItem($event,checklist.key, item, data)' 
+            draggable="true" (dragstart)='onChecklistItemDragStart($event, item, data)' (dragover)='onChecklistItemDragOver($event, data)' (drop)='onChecklistDrop($event, item, data)'>
+                <div class='dialog-checklist-item-content' (click)='toggleEditChecklistItem($event, checklist.key, item, data)'>{{item.content}}</div>
+        </mat-checkbox>
+        
+        <mat-checkbox *ngIf='item.isEditing' [checked]='item.checked' (change)='toggleChecklistItem($event, checklist.key, item, data)'>
+            <input input-autofocus class='dialog-checklist-item-input'  (focusout)='toggleEditChecklistItem($event, checklist.key, item, data)' (keyup)='changeChecklistItem($event, checklist.key, i, data, item)' [value]='item.content' />
+        </mat-checkbox>
+    </div>
+    <button mat-flat-button *ngIf='checklist.title.content && !checklist.title.isEditing' (click)='addChecklistItem(checklist.key, data)'>Add Item</button>
+</div>

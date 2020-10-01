@@ -27,6 +27,12 @@ import { AccountComponent } from './account/account.component';
 import { InputAutofocusDirective } from './util/input-autofocus.directive';
 import { BoardListComponent } from './row/board-list/board-list.component';
 import { MomentPipe } from './util/moment.pipe';
+import { LabelRowComponent } from './task_dialog/components/label-row.component';
+import { IconRowComponent } from './task_dialog/components/icon-row.component';
+import { DialogDescriptionComponent } from './task_dialog/components/dialog-description.component';
+import { DialogCommentsComponent } from './task_dialog/components/dialog-comments/dialog-comments.component';
+import { DialogChecklistComponent } from './task_dialog/components/dialog-checklist/dialog-checklist.component';
+import { DialogTitleComponent } from './task_dialog/components/dialog-title.component';
 
 
 @NgModule({
@@ -40,7 +46,15 @@ import { MomentPipe } from './util/moment.pipe';
         TransferBoardDialogComponent,
     
         TaskComponent,
+
         TaskDialogComponent,
+        LabelRowComponent,
+        IconRowComponent,
+        DialogDescriptionComponent,
+        DialogCommentsComponent,
+        DialogChecklistComponent,
+        DialogTitleComponent,
+
         DeleteDialogComponent,
         DatePickDialogComponent,
         PhotoDialogComponent, 

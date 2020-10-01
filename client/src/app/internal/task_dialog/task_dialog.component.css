@@ -8,6 +8,17 @@
     overflow-wrap: break-word;
     max-width: 100%;
 }
+.dialog-body mat-form-field input{
+    width:100%;
+}
+.dialog-title  dialog-title .dialog-body mat-form-field{
+    width:100%;
+}
+.dialog-title dialog-title .dialog-body input{
+    font-size:2em;
+    font-weight: bold;
+    width:100%;
+}
 
 .dialog-wrapper{
     display: grid;
@@ -40,14 +51,7 @@
     transition:.5s;
     opacity:1
 }
-.dialog-title mat-form-field{
-    width:100%;
-}
-.dialog-title input{
-    font-size:2em;
-    font-weight: bold;
-    width:100%;
-}
+
 
 .dialog-exit{
     grid-column:5/ 6;
@@ -63,7 +67,7 @@
     margin-bottom:0px;
 }
 
-.dialog-description{
+.dialog-description, dialog-description{
     grid-column:1/4;
     grid-row:2;
     white-space: pre-wrap;
@@ -96,7 +100,7 @@
 }
 
 
-.dialog-comments{
+.dialog-comments, dialog-comments{
     grid-column:1/4;
     grid-row:3;
     overflow-y:auto;
@@ -231,7 +235,11 @@
     display:flex;
     flex-direction: column;
 }
-.dialog-actions-button-wrapper button{
+.dialog-actions-button-wrapper button, 
+.dialog-actions-button-wrapper tags-menu 
+.dialog-actions-button-wrapper label-menu 
+.dialog-actions-button-wrapper card-color-menu 
+.dialog-actions-button-wrapper font-color-menu {
     margin:5px;
     font-weight:bold;
     display:flex;
@@ -331,7 +339,12 @@ p.label:first-of-type{
         flex-direction:row;
         flex-wrap:wrap;
     }
-    .dialog-actions .dialog-actions-button-wrapper button{
+    .dialog-actions .dialog-actions-button-wrapper button,
+    .dialog-actions .dialog-actions-button-wrapper tags-menu,
+    .dialog-actions .dialog-actions-button-wrapper label-menu,
+    .dialog-actions .dialog-actions-button-wrapper card-color-menu,
+    .dialog-actions .dialog-actions-button-wrapper font-color-menu
+    {
         width:50%;
         height:60px;
     }
