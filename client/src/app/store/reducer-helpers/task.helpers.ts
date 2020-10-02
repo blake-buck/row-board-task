@@ -104,43 +104,76 @@ export function _transferTaskEmpty(state, action){
 }
 
 export function _transferTask(state, action){
-    let {droppedOnTaskId, droppedOnTaskBoard, droppedTaskId, droppedTaskBoard} = action.payload;
+    let {droppedOnTaskId, droppedOnTaskBoard, droppedTaskId, droppedTaskBoard, droppedAbove} = action.payload;
     let newBoards = state.boards.slice();
+
     if(droppedOnTaskBoard === droppedTaskBoard){
-        
-        let modifiedBoard = state.boards.find((board) => board.key === droppedOnTaskBoard);
+        let modifiedBoard = newBoards.find(board => board.key === droppedOnTaskBoard);
 
-        let draggedIndex = modifiedBoard.tasks.findIndex((task)=> task.key === droppedTaskId) 
-        let droppedIndex = modifiedBoard.tasks.findIndex((task)=> task.key === droppedOnTaskId);   
+        let draggedTask = modifiedBoard.tasks.find(task => task.key === droppedTaskId);
+        let droppedOnTask = modifiedBoard.tasks.find(task => task.key === droppedOnTaskId);
 
-        let addedItem = {...modifiedBoard.tasks[draggedIndex], ...{}}
-        modifiedBoard.tasks.splice(draggedIndex, 1);
-        modifiedBoard.tasks.splice(droppedIndex, 0,  addedItem)
+
+        if(draggedTask.key !== droppedOnTask.key){
+            modifiedBoard.tasks = modifiedBoard.tasks.filter(task => task.key !== draggedTask.key);
+
+            if(droppedAbove){
+                modifiedBoard.tasks = modifiedBoard.tasks.map(task => {
+                    if(task.key === droppedOnTask.key){
+                        return [draggedTask, droppedOnTask];
+                    }
+                    return task;
+                })
+            }
+            else{
+                modifiedBoard.tasks = modifiedBoard.tasks.map(task => {
+                    if(task.key === droppedOnTask.key){
+                        return [droppedOnTask, draggedTask];
+                    }
+                    return task;
+                })
+            }
+    
+            modifiedBoard.tasks = modifiedBoard.tasks.flat()
+        }
         
-        return {
-            ...state,
-            isDataSaved:false,
-            boards:newBoards
-        };
     }
     else{
         let droppedOnBoard = newBoards.find((board) => board.key === droppedOnTaskBoard);
         let draggedBoard   = newBoards.find((board) => board.key === droppedTaskBoard);
 
-        let draggedIndex = draggedBoard.tasks.findIndex((task)=> task.key === droppedTaskId);
-        let droppedIndex = droppedOnBoard.tasks.findIndex((task)=> task.key === droppedOnTaskId);   
-        
-        let addedItem =  {...draggedBoard.tasks[draggedIndex]};
-        addedItem.boardKey = droppedOnTaskBoard;
-        draggedBoard.tasks.splice(draggedIndex, 1);
-        droppedOnBoard.tasks.splice(droppedIndex+1, 0, addedItem);
+        let draggedTask = draggedBoard.tasks.find(task => task.key === droppedTaskId);
+        let droppedOnTask = droppedOnBoard.tasks.find(task => task.key === droppedOnTaskId);
 
-        return {
-            ...state,
-            isDataSaved:false,
-            boards:newBoards
-        };
+        draggedBoard.tasks = draggedBoard.tasks.filter(task => task.key !== draggedTask.key);
+        
+        if(droppedAbove){
+            droppedOnBoard.tasks = droppedOnBoard.tasks.map(task => {
+                if(task.key === droppedOnTask.key){
+                    return [{...draggedTask, boardKey: droppedOnBoard.key}, droppedOnTask]
+                }
+                return task;
+            })
+        }
+        else{
+            droppedOnBoard.tasks = droppedOnBoard.tasks.map(task => {
+                if(task.key === droppedOnTask.key){
+                    return [droppedOnTask, {...draggedTask, boardKey: droppedOnBoard.key}]
+                }
+                return task;
+            })
+        }
+
+        droppedOnBoard.tasks = droppedOnBoard.tasks.flat();
+
     }
+
+    return {
+        ...state,
+        isDataSaved:false,
+        boards:newBoards
+    };
+
 }
 
 export function _linkTask(state, action){

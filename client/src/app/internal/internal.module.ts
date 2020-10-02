@@ -33,6 +33,7 @@ import { DialogDescriptionComponent } from './task_dialog/components/dialog-desc
 import { DialogCommentsComponent } from './task_dialog/components/dialog-comments/dialog-comments.component';
 import { DialogChecklistComponent } from './task_dialog/components/dialog-checklist/dialog-checklist.component';
 import { DialogTitleComponent } from './task_dialog/components/dialog-title.component';
+import { DropTargetDirective } from './util/drop-target.directive';
 
 
 @NgModule({
@@ -70,6 +71,7 @@ import { DialogTitleComponent } from './task_dialog/components/dialog-title.comp
 
         AccountComponent,
 
+        DropTargetDirective,
         InputAutofocusDirective,
         MomentPipe
     ],

@@ -9,7 +9,6 @@ import { AppStore } from 'src/app/store/app.state';
 import { Task, Board } from '../../../../../shared/types';
 
 
-import * as moment from 'moment';
 type LocalTask = Task & {isInput: boolean};
 
 
@@ -37,9 +36,6 @@ export class TaskComponent{
 
     currentDisplayPhoto = 0;
     classAddedToList = false
-
-    moment = moment;
-
 
     constructor(private store:Store<AppStore>, public dialog:MatDialog){}
 
@@ -120,7 +116,13 @@ export class TaskComponent{
     onDrop(e){
         e.preventDefault();
         let transferedData = e.dataTransfer.getData('text');
-        let payload = onDrop(transferedData, this.task)
+
+        let droppedAbove = false;
+        if(e.layerY < (this.elementWrapper.nativeElement.offsetHeight /2)){
+            droppedAbove = true;
+        }
+
+        let payload = onDrop(transferedData, this.task, droppedAbove)
         if(payload){
             this.store.dispatch(transferTask({payload}))
         }
@@ -128,7 +130,6 @@ export class TaskComponent{
     }
 
     onDragOver(e){
-        // e.preventDefault();
     }
 
     onDragStart(e){

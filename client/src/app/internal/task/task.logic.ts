@@ -10,7 +10,7 @@ export function addCompletionStyling(property, task){
     }
 }
 
-export function onDrop(transferredData, task){
+export function onDrop(transferredData, task, droppedAbove){
     if(transferredData.includes('+')){
         transferredData = transferredData.split('+')
         let droppedTaskId = +transferredData[0];
@@ -19,7 +19,7 @@ export function onDrop(transferredData, task){
         let droppedOnTaskId = task.key;
         let droppedOnTaskBoard = task.boardKey;
 
-        return {droppedOnTaskId, droppedOnTaskBoard, droppedTaskId, droppedTaskBoard}
+        return {droppedOnTaskId, droppedOnTaskBoard, droppedTaskId, droppedTaskBoard, droppedAbove}
     }
     return null;
 }
