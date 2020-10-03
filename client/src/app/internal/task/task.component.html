@@ -64,7 +64,7 @@
     </div>
 
     <div *ngIf='displayLabelText' class='label-row'>
-        <input (click)='toggleDisplayLabelText()' *ngFor='let label of task.labels; index as i' [value]='label.text' [size]='label.text.length ? label.text.length : 1' [style.background]='label.background' />
+        <input (click)='toggleDisplayLabelText()' *ngFor='let label of task.labels; index as i' [value]='label.text' [size]='label.text.length > 1 ? label.text.length-1 : 1' [style.background]='label.background' />
     </div>
     
     <div class='task-list-item-wrapper'>

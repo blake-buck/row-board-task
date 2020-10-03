@@ -8,7 +8,7 @@ import { AppStore } from 'src/app/store/app.state';
     template:`
     <div class='label-row'>
         <p class='label' *ngFor='let label of data.labels; index as i' style ='font-weight:bold; color:white' [style.background]='label.background'>
-            <input maxlength='20' [value]='label.text' [style.background]='label.background' [size]='label.text.length ? label.text.length : 1' (keyup)='changeLabelContent($event, label, data)' (focusout)='saveLabelContent(data)'/>
+            <input maxlength='20' [value]='label.text' [style.background]='label.background' [size]='label.text.length > 1 ? label.text.length-1 : 1' (keyup)='changeLabelContent($event, label, data)' (focusout)='saveLabelContent(data)'/>
             <mat-icon (click)='removeLabel(i, data)'>clear</mat-icon>
         </p>
     </div>
