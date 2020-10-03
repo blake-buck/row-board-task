@@ -5,7 +5,7 @@ import {Store, select} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import {orderByLastEdited, orderByAlphabetical, orderByDateCreated, onDrop} from './board.logic';
+import {orderByLastEdited, orderByAlphabetical, orderByDateCreated, onDrop, orderByCompletion, reverseList} from './board.logic';
 import {editBoardTitle, archiveBoard, deleteBoard, toggleHideCompleteTasks, addTask, editTask, reorderBoardTasks, duplicateBoard, scrollRowForward, scrollRowBackward} from '../../store/app.actions'
 import { selectRows, selectBoards, selectBoardFromBoardKey } from '../../store/app.selector';
 import { TransferBoardDialogComponent } from './transfer-board-dialog/transfer-board-dialog.component';
@@ -26,6 +26,8 @@ export class BoardComponent{
     orderByAlphabetical=orderByAlphabetical;
     orderByDateCreated=orderByDateCreated;
     orderByLastEdited=orderByLastEdited;
+    orderByCompletion = orderByCompletion;
+    reverseList = reverseList;
     
     @Input() boardTitle:string;
     @Input() boardKey:number;

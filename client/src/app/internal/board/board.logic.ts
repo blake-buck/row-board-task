@@ -1,5 +1,7 @@
 import * as moment from 'moment';
+import { Task } from '../../../../../shared/types';
 
+// todo replace all these hand rolled bubble sorts with array.sort()
 export function orderByLastEdited(tasks){
     let orderedArray = tasks.slice(0, tasks.length + 1);
 
@@ -78,6 +80,23 @@ export function orderByDateCreated(tasks){
     }
 
     return orderedArray
+}
+
+export function orderByCompletion(tasks:Task[]){
+    let orderedArray = [];
+    for(let i =0; i < tasks.length; i++){
+        if(tasks[i].isComplete){
+            orderedArray.push(tasks[i]);
+        }
+        else{
+            orderedArray.unshift(tasks[i]);
+        }
+    }
+    return orderedArray;
+}
+
+export function reverseList(tasks:Task[]){
+    return tasks.reverse()
 }
 
 export function onDrop(eventDataTransfer, board, boardKey){
