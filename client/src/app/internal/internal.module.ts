@@ -35,6 +35,7 @@ import { DialogChecklistComponent } from './task_dialog/components/dialog-checkl
 import { DialogTitleComponent } from './task_dialog/components/dialog-title.component';
 import { DropTargetDirective } from './util/drop-target.directive';
 import { DragScrollingDirective } from './util/drag-scrolling.directive';
+import { VerticalScrollingDirective } from './util/vertical-scrolling.directive';
 
 
 @NgModule({
@@ -75,6 +76,7 @@ import { DragScrollingDirective } from './util/drag-scrolling.directive';
         DropTargetDirective,
         InputAutofocusDirective,
         DragScrollingDirective,
+        VerticalScrollingDirective,
         MomentPipe
     ],
     imports: [
