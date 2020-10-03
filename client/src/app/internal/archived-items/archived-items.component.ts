@@ -37,17 +37,17 @@ export class ArchivedItemsComponent{
         this.dialog.closeAll();
     }
 
-    restoreRow(row){
+    restoreRow(row:Row){
         this.store.dispatch(restoreArchivedRow({row}))
     }
 
-    restoreBoard(board){
+    restoreBoard(board:Board){
         this.dialog.open(RestoreBoardDialogComponent, {
             data:board
         })
     }
 
-    restoreTask(task){
+    restoreTask(task: Task){
         this.dialog.open(RestoreTaskDialogComponent, {
             data:task
         })

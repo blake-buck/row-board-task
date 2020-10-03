@@ -17,6 +17,7 @@ import { LinkTaskDialogComponent } from './link_task_dialog/link_task_dialog.com
 import { HttpClient } from '@angular/common/http';
 import { map, first } from 'rxjs/operators';
 import { AppStore } from 'src/app/store/app.state';
+import { Task } from '../../../../../shared/types';
 
 const dialogHashMap = {
     'delete-dialog': DeleteDialogComponent,
@@ -69,15 +70,15 @@ export class TaskDialogComponent {
             }, 500)
         }
     
-    addLabel(labelColor, data){
+    addLabel(labelColor, data:Task){
         this.store.dispatch(editTask({task:addLabel(data, labelColor)}))
     }
 
-    onCloseDialog(data){
+    onCloseDialog(){
         this.store.dispatch(closeTaskDialog())
     }
 
-    changeTaskProperty(property, value, delayDispatch, data){
+    changeTaskProperty(property, value, delayDispatch, data:Task){
         data[property] = value;
         if(!delayDispatch){
             this.store.dispatch(editTask({task:data}));
@@ -90,7 +91,7 @@ export class TaskDialogComponent {
     }
 
 
-    openDialog(id, dialogData, taskData){
+    openDialog(id, dialogData, taskData:Task){
         const dialogComponent = dialogHashMap[id];
         
         this.dialog.open(
@@ -102,16 +103,16 @@ export class TaskDialogComponent {
         );
     }
 
-    removeFile(index, data){
+    removeFile(index, data:Task){
         this.store.dispatch(editTask({task:removeFile(index, data)}))
     }
 
-    getLinkedTaskInfo(taskKey:number, boardKey:number, index){
+    getLinkedTaskInfo(taskKey:number, boardKey:number){
         return this.store.pipe(select(selectSpecificTask, ({taskKey, boardKey})))
     }
 
 
-    archiveTask(data){
+    archiveTask(data:Task){
         this.store.dispatch(archiveTask({task:data}));
         this.dialog.closeAll();
     }

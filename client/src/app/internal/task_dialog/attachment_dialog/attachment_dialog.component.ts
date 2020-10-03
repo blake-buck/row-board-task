@@ -5,6 +5,7 @@ import { PhotoDialogComponent } from '../photo_dialog/photo_dialog.component';
 import { uploadTaskAttachment, deleteTaskAttachment } from 'src/app/store/app.actions';
 import { selectSelectedTask } from 'src/app/store/app.selector';
 import { AppStore } from 'src/app/store/app.state';
+import { Task } from '../../../../../../shared/types';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class AttachmentDialogComponent{
     data$ = this.store.select(selectSelectedTask);    
     isLoading = false;
 
-    getFile(e, task){
+    getFile(e, task:Task){
         this.isLoading = true;
         let fileReader = new FileReader();
     
@@ -36,7 +37,7 @@ export class AttachmentDialogComponent{
         
     }
 
-    removeFile(index, task){
+    removeFile(index, task:Task){
         const file = task.attachedFiles[index];
         this.store.dispatch(deleteTaskAttachment({fileName:file.name, task, fullUrl:file.link}));
     }

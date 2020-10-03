@@ -1,8 +1,8 @@
 import * as moment from 'moment';
-import { Task } from '../../../../../shared/types';
+import { Board, Task } from '../../../../../shared/types';
 
 // todo replace all these hand rolled bubble sorts with array.sort()
-export function orderByLastEdited(tasks){
+export function orderByLastEdited(tasks:Task[]){
     let orderedArray = tasks.slice(0, tasks.length + 1);
 
     for(let i=0; i < orderedArray.length; i++){
@@ -17,7 +17,7 @@ export function orderByLastEdited(tasks){
     return orderedArray;
 }
 
-export function orderByAlphabetical(tasks){
+export function orderByAlphabetical(tasks:Task[]){
     let reorganizedBoard = [];
     let orderedArray = tasks.slice(0, tasks.length + 1);
 
@@ -62,7 +62,7 @@ function turnCharacterIntoNumber(character){
     return char;
 }
 
-export function orderByDateCreated(tasks){
+export function orderByDateCreated(tasks:Task[]){
     let orderedArray = tasks.slice(0, tasks.length+1)
        
     for(let i=0; i< tasks.length; i++){
@@ -99,7 +99,7 @@ export function reverseList(tasks:Task[]){
     return tasks.reverse()
 }
 
-export function onDrop(eventDataTransfer, board, boardKey){
+export function onDrop(eventDataTransfer, board:Board, boardKey:number){
     let type = '';
     let payload = {};
     

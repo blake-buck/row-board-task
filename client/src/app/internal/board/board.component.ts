@@ -1,13 +1,12 @@
-import {Component, Input, Output, EventEmitter, Injectable, Inject, OnInit, ViewChild, ElementRef} from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatTabChangeEvent} from '@angular/material';
-import {Store, select} from '@ngrx/store';
+import {Component, Input, Output, EventEmitter, Injectable} from '@angular/core';
+import { MatDialog} from '@angular/material';
+import {Store} from '@ngrx/store';
 
 import {Observable} from 'rxjs';
-import { DomSanitizer } from '@angular/platform-browser';
 
 import {orderByLastEdited, orderByAlphabetical, orderByDateCreated, onDrop, orderByCompletion, reverseList} from './board.logic';
-import {editBoardTitle, archiveBoard, deleteBoard, toggleHideCompleteTasks, addTask, editTask, reorderBoardTasks, duplicateBoard, scrollRowForward, scrollRowBackward} from '../../store/app.actions'
-import { selectRows, selectBoards, selectBoardFromBoardKey } from '../../store/app.selector';
+import {editBoardTitle, archiveBoard, toggleHideCompleteTasks, addTask, editTask, reorderBoardTasks} from '../../store/app.actions'
+import { selectBoardFromBoardKey } from '../../store/app.selector';
 import { TransferBoardDialogComponent } from './transfer-board-dialog/transfer-board-dialog.component';
 import { DeleteBoardDialogComponent } from './delete-board-dialog/delete-board-dialog.component';
 import { Task, Board } from '../../../../../shared/types';
@@ -47,7 +46,7 @@ export class BoardComponent{
         this.board$ = this.store.select(selectBoardFromBoardKey, this.boardKey)
     }
 
-    archiveBoard(board){
+    archiveBoard(board:Board){
         this.store.dispatch(archiveBoard({key:board.key}))
     }
 
@@ -55,11 +54,11 @@ export class BoardComponent{
         this.store.dispatch(addTask({key:this.boardKey}))
     }
 
-    onTaskChange(changedTask){
+    onTaskChange(changedTask:Task){
         this.store.dispatch(editTask({task:changedTask}))
     }
 
-    toggleEditBoardTitle(board){
+    toggleEditBoardTitle(board:Board){
         if(this.isEditingBoardTitle){
             this.store.dispatch(editBoardTitle({key:board.key, title:board.title}))
         }
@@ -70,7 +69,7 @@ export class BoardComponent{
         }
     }
     
-    editBoardTitle(e, board){  
+    editBoardTitle(e, board:Board){  
         if(e.code === 'Enter'){
             this.toggleEditBoardTitle(board)
         }
@@ -79,17 +78,17 @@ export class BoardComponent{
         }
     }
 
-    toggleHideCompleteTasks(key, hideCompleteTasks){
+    toggleHideCompleteTasks(key:number, hideCompleteTasks:boolean){
         this.store.dispatch(toggleHideCompleteTasks({key, hideCompleteTasks}))
     }
    
-    onDragStart(e, board){
+    onDragStart(e, board:Board){
         if(!e.dataTransfer.getData('text').includes('+')){
             e.dataTransfer.setData('text/plain', `BOARD${board.key}-${board.rowKey}`);
         }        
     }
 
-    onDrop(e, board){
+    onDrop(e, board:Board){
         e.preventDefault();
         let eventDataTransfer = e.dataTransfer.getData('text')
         
@@ -104,12 +103,12 @@ export class BoardComponent{
         this.autoScroller.emit({forward:true, offset:e.clientX})
     }
 
-    onDragOver(e, board){
+    onDragOver(e){
         e.preventDefault()
     }
 
 
-    openDialog(id, data){
+    openDialog(id, data:Task | number){
         let component;
         switch(id){
             case 'delete-board-dialog':
@@ -130,7 +129,7 @@ export class BoardComponent{
         );
     }
 
-    orderTasksBy(orderBy, tasks, key){
+    orderTasksBy(orderBy, tasks:Task[], key:number){
         this.store.dispatch(reorderBoardTasks({payload:{key, tasks:orderBy(tasks)}}))
     }
     

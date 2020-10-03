@@ -4,6 +4,7 @@ import { MatDialogRef } from '@angular/material';
 import { uploadTaskPhoto, deleteTaskPhoto } from 'src/app/store/app.actions';
 import { selectSelectedTask } from 'src/app/store/app.selector';
 import { AppStore } from 'src/app/store/app.state';
+import { Task } from '../../../../../../shared/types';
 
 @Component({
     templateUrl:'./photo_dialog.component.html',
@@ -19,7 +20,7 @@ export class PhotoDialogComponent{
     data$ = this.store.select(selectSelectedTask);
     isLoading = false;
 
-    getFile(e, task){
+    getFile(e, task:Task){
         this.isLoading = true;
         let fileReader = new FileReader();
     
@@ -37,7 +38,7 @@ export class PhotoDialogComponent{
         this.dialogRef.close(); 
     }
 
-    deleteImage(index, task){
+    deleteImage(index, task:Task){
         const fullUrl = task.displayImageUrls[index];
         const splitUrl = fullUrl.split('/');
         const fileName = splitUrl[splitUrl.length - 1];

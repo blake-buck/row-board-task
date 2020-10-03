@@ -1,16 +1,14 @@
-import { Component, Input, ViewChild, ElementRef, ViewChildren } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import {Store, select} from '@ngrx/store';
 import {Observable} from 'rxjs';
 
 import { onDragStart, onDragOver, onDrop } from './row.logic';
 
-import { archiveRow, editRowTitle, editRowDescription, addBoard, transferBoard, scrollRowForward, scrollRowBackward, editRowExpanded, shiftRowUp, shiftRowDown, deleteRow } from '../../store/app.actions';
+import { archiveRow, editRowTitle, editRowDescription, addBoard, transferBoard, editRowExpanded, shiftRowUp, shiftRowDown, deleteRow } from '../../store/app.actions';
 import { selectSpecificBoards } from '../../store/app.selector';
-import { Actions } from '@ngrx/effects';
 import { AppStore } from 'src/app/store/app.state';
 import { Row, Board } from '../../../../../shared/types';
-import { BoardListComponent } from './board-list/board-list.component';
 
 @Component({
     templateUrl:'./row.component.html',
@@ -23,7 +21,7 @@ export class RowComponent{
     @Input() accordion:any;
 
 
-    specificBoards$;
+    specificBoards$ :Observable<Board[]>;
     boards$ :Observable<Board[]> ;
 
     isEditingTitle = false;
@@ -31,57 +29,54 @@ export class RowComponent{
 
     canScrollRow = false;
 
-    constructor(private store:Store<AppStore>, private actions$:Actions){}
+    constructor(private store:Store<AppStore>){}
 
     ngOnInit(){
         this.boards$ = this.store.pipe(select(selectSpecificBoards, this.rowData.key));
     }
     
-    editTitle(e, rowData){
+    editTitle(e){
         if(e.key === ' '){
             e.target.value += ' ';
         }
     }
-    submitTitle(e, rowData){
+    submitTitle(e, rowData: Row){
         e.preventDefault();
-        this.toggleEditTitle(rowData);
+        this.toggleEditTitle();
         this.store.dispatch(editRowTitle({key:rowData.key, title: new FormData(e.target).get('title').toString()}))
-
     }
 
-    editDescription(e, rowData){
-        console.log(e.key)
+    editDescription(e){
         if(e.key === ' '){
             e.target.value += ' ';
         }
     }
-    submitDescription(e, rowData){
+    submitDescription(e, rowData: Row){
         e.preventDefault();
-        this.toggleEditDescription(rowData);
+        this.toggleEditDescription();
         this.store.dispatch(editRowDescription({key:rowData.key, description: new FormData(e.target).get('description').toString()}))
     }
 
     onDragStart = onDragStart
     onDragOver = onDragOver
 
-    addBoard(row){
+    addBoard(row:Row){
         this.store.dispatch(addBoard({key:row.key}))
     }
 
-    archiveRow(archivedRow){
+    archiveRow(archivedRow:Row){
         this.store.dispatch(archiveRow({archivedRow}))
     }
 
-    toggleEditDescription(row){
-        if(this.isEditingDescription){}
+    toggleEditDescription(){
         this.isEditingDescription = !this.isEditingDescription;
     }
 
-    toggleEditTitle(row){
+    toggleEditTitle(){
         this.isEditingTitle = !this.isEditingTitle;
     }
 
-    onDrop(e, row){
+    onDrop(e, row:Row){
         let payload = onDrop(e, row);
         if(payload){
           this.store.dispatch(transferBoard({payload}));
@@ -100,15 +95,15 @@ export class RowComponent{
         }
     }
 
-    shiftRowDown(row){
+    shiftRowDown(row: Row){
         this.store.dispatch(shiftRowDown({position:row.position}))
     }
 
-    shiftRowUp(row){
+    shiftRowUp(row: Row){
         this.store.dispatch(shiftRowUp({position:row.position}))
     }
 
-    deleteRow(row){
+    deleteRow(row: Row){
         this.store.dispatch(deleteRow({deletedRow:row}))
     }
 }

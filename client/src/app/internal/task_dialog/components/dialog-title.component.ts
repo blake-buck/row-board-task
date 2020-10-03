@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { editTask } from 'src/app/store/app.actions';
 import { AppStore } from 'src/app/store/app.state';
+import { Task } from '../../../../../../shared/types';
 
 @Component({
     selector:'dialog-title',
@@ -26,7 +27,7 @@ export class DialogTitleComponent{
     constructor(private store:Store<AppStore>){}
     
     isEditingBody = false;
-    toggleInput(data){
+    toggleInput(data:Task){
         if(this.isEditingBody){
             this.store.dispatch(editTask({task:data}))
         }

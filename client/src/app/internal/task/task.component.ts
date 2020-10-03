@@ -108,7 +108,7 @@ export class TaskComponent{
 
     labelLength = labelLength;
 
-    changeLabelText(e, labelIndex, task){
+    changeLabelText(e, labelIndex, task:Task){
         this.labelLength(e.target.value.length)
         task.labels[labelIndex].text = e.target.value;
     }

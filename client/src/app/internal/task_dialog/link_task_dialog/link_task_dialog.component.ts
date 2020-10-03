@@ -32,7 +32,7 @@ export class LinkTaskDialogComponent{
         this.dialogRef.close();
     }
 
-    taskAlreadyExists(task){
+    taskAlreadyExists(task:Task){
         return this.data.linkedTasks.some(val => val.taskKey === task.key)
     }
 }

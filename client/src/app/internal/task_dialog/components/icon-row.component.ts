@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Task } from '../../../../../../shared/types';
 
 @Component({
     selector:'icon-row',
@@ -18,5 +19,5 @@ import { Component, Input } from '@angular/core';
 })
 
 export class IconRowComponent{
-    @Input() data;
+    @Input() data:Task;
 }

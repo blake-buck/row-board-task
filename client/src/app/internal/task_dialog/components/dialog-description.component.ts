@@ -3,6 +3,7 @@ import { Component, Input, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { editTask } from 'src/app/store/app.actions';
 import { AppStore } from 'src/app/store/app.state';
+import { Task } from '../../../../../../shared/types';
 
 @Component({
     selector:'dialog-description',
@@ -38,7 +39,7 @@ export class DialogDescriptionComponent{
     constructor(private store:Store<AppStore>){}
     
     isEditingDescription = false;
-    toggleInput(data){
+    toggleInput(data:Task){
         if(this.isEditingDescription){
             this.store.dispatch(editTask({task:data}));
         }

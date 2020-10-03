@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { editTask } from 'src/app/store/app.actions';
 import { AppStore } from 'src/app/store/app.state';
+import { Task } from '../../../../../../shared/types';
 
 @Component({
     selector:'label-row',
@@ -17,7 +18,7 @@ import { AppStore } from 'src/app/store/app.state';
 })
 
 export class LabelRowComponent{
-    @Input() data;
+    @Input() data:Task;
     
     constructor(private store:Store<AppStore>){}
     
@@ -25,11 +26,11 @@ export class LabelRowComponent{
         label.text = e.target.value
     }
 
-    saveLabelContent(data){
+    saveLabelContent(data: Task){
         this.store.dispatch(editTask({task:data}))
     }
 
-    removeLabel(i, data){
+    removeLabel(i, data: Task){
         data.labels.splice(i, 1);
         this.store.dispatch(editTask({task:data}))        
     }

@@ -1,4 +1,6 @@
-export function addCompletionStyling(property, task){
+import { Task } from '../../../../../shared/types';
+
+export function addCompletionStyling(property, task:Task){
     if(task.isComplete && property === 'opacity'){
         return '.5'
     }
@@ -10,7 +12,7 @@ export function addCompletionStyling(property, task){
     }
 }
 
-export function onDrop(transferredData, task, droppedAbove){
+export function onDrop(transferredData, task:Task, droppedAbove){
     if(transferredData.includes('+')){
         transferredData = transferredData.split('+')
         let droppedTaskId = +transferredData[0];

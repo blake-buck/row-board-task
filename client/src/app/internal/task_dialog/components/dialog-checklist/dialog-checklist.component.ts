@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { editTask } from 'src/app/store/app.actions';
 import { AppStore } from 'src/app/store/app.state';
+import { Task } from '../../../../../../../shared/types';
 import { addChecklist, deleteChecklist, toggleEditChecklistTitle, changeChecklistTitle, toggleChecklistItem, toggleEditChecklistItem, addChecklistItem, deleteChecklistItem, changeChecklistItemText } from '../../task_dialog.logic';
 
 @Component({
@@ -15,22 +16,22 @@ export class DialogChecklistComponent{
 
     constructor(private store:Store<AppStore>){}
 
-    addChecklist(data){
+    addChecklist(data: Task){
         this.store.dispatch(editTask({task:addChecklist(data)}))
     }
 
-    deleteChecklist(checklist, data){
+    deleteChecklist(checklist, data: Task){
         this.store.dispatch(editTask({task:deleteChecklist(data, checklist)}))
     }
 
-    toggleEditChecklistTitle(checklistKey, data){
+    toggleEditChecklistTitle(checklistKey, data: Task){
         let result = toggleEditChecklistTitle(checklistKey, data)
 
         if(!result.isEditing){
             this.store.dispatch(editTask({task:result.data}))
         }
     }
-    changeChecklistTitle(e, checklistKey, data){
+    changeChecklistTitle(e, checklistKey, data: Task){
         changeChecklistTitle(e.target.value, data, checklistKey);
     }
 
@@ -42,7 +43,7 @@ export class DialogChecklistComponent{
         e.preventDefault();
     }
 
-    onChecklistDrop(e, item, data){
+    onChecklistDrop(e, item, data: Task){
         let droppedItemKeys = JSON.parse(e.dataTransfer.getData('text/plain'))
         if(droppedItemKeys.checklistKey === item.checklistKey){
             let modifiedChecklist = data.checklists.find(checklist => checklist.key === droppedItemKeys.checklistKey).content;
@@ -56,14 +57,14 @@ export class DialogChecklistComponent{
     }
 
 
-    toggleChecklistItem(e, checklistKey, item, data){
+    toggleChecklistItem(e, checklistKey, item, data: Task){
         let result = toggleChecklistItem(checklistKey, item, data);
         if(result){
             this.store.dispatch(editTask({task:result}))
         }
     }
 
-    toggleEditChecklistItem(e, checklistKey, item, data){
+    toggleEditChecklistItem(e, checklistKey, item, data: Task){
         let result = toggleEditChecklistItem(checklistKey, item, data)
         
         if(!result.isEditing){
@@ -71,11 +72,11 @@ export class DialogChecklistComponent{
         }
     }
 
-    addChecklistItem(checklistKey, data){
+    addChecklistItem(checklistKey, data: Task){
         this.store.dispatch(editTask({task:addChecklistItem(checklistKey, data)}))
     }
     
-    changeChecklistItem(e, checklistKey, index, data, item){
+    changeChecklistItem(e, checklistKey, index, data: Task, item){
 
         if(e.code === 'Delete'){ 
             this.store.dispatch(editTask({task:deleteChecklistItem(checklistKey, index, data)}))          
