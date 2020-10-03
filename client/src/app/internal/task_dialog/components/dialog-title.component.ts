@@ -14,7 +14,7 @@ import { AppStore } from 'src/app/store/app.state';
 
         <form (submit)='toggleInput(data)' *ngIf='isEditingBody'>
             <mat-form-field style='width:100%;'>
-                    <input style='font-size:2em; font-weight: bold; width:100%;' input-autofocus matInput (focusout)='toggleInput(data)' [value]='data.body' (keyup)='changeTaskProperty($event)'/>
+                    <input style='font-size:2em; font-weight: bold; width:100%;' input-autofocus matInput (focusout)='toggleInput(data)' [value]='data.body' (keyup)='editBody($event)'/>
             </mat-form-field>
         </form>
     `,
