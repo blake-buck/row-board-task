@@ -50,3 +50,7 @@ body{
     width:100vw;
     max-width:500px;
 }
+
+mat-expansion-panel div.mat-expansion-panel-body{
+    padding:0px;
+}
