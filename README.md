@@ -1,6 +1,9 @@
 # row-board-task
 row-board-task is a multi-row kanban board application.
 
+![row-board-task homepage](./client/src/assets/readme_image_one.png)
+![row-board-task task dialog](./client/src/assets/readme_image_two.png)
+
 ## Features
 - Rows contain a list of boards, which contain a list of tasks
 - Tasks can be marked complete, marked with icon tags or text labels, given a due date, linked to other tasks
@@ -21,4 +24,4 @@ A guide to selfhosting this application can be found [here](#).
 - Implement search functionality
 - Fix Firefox redirect bug
 - Implement a more effecient save strategy than overwriting the entire app state
-- Major code cleanup needed on the frontend
+- Code cleanup needed on the frontend
