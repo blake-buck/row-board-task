@@ -16,7 +16,7 @@ import { CognitoController } from './cognito/cognito.controller';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
-      rootPath:join(__dirname, '../../client/dist/row-board-task-client')
+      rootPath:join(__dirname, '../../../../client/dist/row-board-task-client')
     }),
     ConfigModule.forRoot({
       isGlobal:true
