@@ -23,6 +23,8 @@ export class CognitoController{
 
     @Post('register')
     async register(@Req() req: Request){
+        //  disabling this route for the time being
+        throw new BadRequestException(this.responseService.standardMessage('Registering has been disabled for the time being. Check with the site owner if you\'d like to provision a user account.', 400));
         const {username, password} = req.body;
 
         const badRequestStatus = 400;
