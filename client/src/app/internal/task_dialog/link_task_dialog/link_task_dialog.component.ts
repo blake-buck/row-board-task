@@ -16,6 +16,10 @@ export class LinkTaskDialogComponent{
     rows$ = this.store.select(selectRows);
     boards$ = this.store.select(selectBoards);
 
+    selectedRow;
+    selectedBoard;
+    selectedTask;
+    
     constructor(
         private store:Store<AppStore>,
         public dialogRef: MatDialogRef<LinkTaskDialogComponent>, 

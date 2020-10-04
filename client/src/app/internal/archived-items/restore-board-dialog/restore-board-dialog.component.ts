@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { selectRows } from 'src/app/store/app.selector';
 import { restoreArchivedBoard } from 'src/app/store/app.actions';
 import { AppStore } from 'src/app/store/app.state';
+import { Board } from '../../../../../../shared/types';
 
 @Component({
     selector:'restore-board-dialog',
@@ -14,6 +15,7 @@ import { AppStore } from 'src/app/store/app.state';
 export class RestoreBoardDialogComponent{
     constructor(
         private store:Store<AppStore>,
+        @Inject(MAT_DIALOG_DATA) public data:Board,
         public dialogRef: MatDialogRef<RestoreBoardDialogComponent>,
         private dialog:MatDialog
     ){}

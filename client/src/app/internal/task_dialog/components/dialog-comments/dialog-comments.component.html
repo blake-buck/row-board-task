@@ -8,7 +8,7 @@
         <h4>{{comment.content}}</h4>
     </div>
 
-    <textarea rows='3' placeholder='Write a note here...' [value]='commentContent' (keyup)='changeCommentContent($event, data)'></textarea>
+    <textarea rows='3' placeholder='Write a note here...' [value]='commentContent' (keyup)='changeCommentContent($event)'></textarea>
     
     <div class='dialog-comments-actions'>
         <button mat-raised-button (click)='addComment(data)'>Add</button>
