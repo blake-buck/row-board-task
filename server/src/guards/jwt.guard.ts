@@ -4,8 +4,7 @@ import { JwtService } from "@nestjs/jwt";
 
 // verifies user JWT
 const jwkToPem = require('jwk-to-pem');
-const jwk = require('../../jwks.json');
-
+import * as jwk from '../jwks.json';
 @Injectable()
 export class JwtGuard implements CanActivate{
     constructor(private jwtService:JwtService, private configService:ConfigService){}

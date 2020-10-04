@@ -3,7 +3,7 @@ import {JwtModule} from '@nestjs/jwt'
 import { Module } from "@nestjs/common";
 
 const jwkToPem = require('jwk-to-pem');
-const jwk = require('../../jwks.json');
+import * as jwk from '../jwks.json';
 
 @Module({
     imports:[

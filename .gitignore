@@ -3,4 +3,4 @@
 /server/node_modules
 /server/dist
 /server/.env
-/server/jwks.json
+/server/src/jwks.json
