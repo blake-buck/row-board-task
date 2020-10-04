@@ -15,12 +15,12 @@ export class DragScrollingDirective{
             // scrollling right
             // dragging right to left
             if(screenX < this.previousX){
-                scrollAmount = 3;
+                scrollAmount = 10;
             }
             else{
                 // scrolling left
                 // dragging left to right
-                scrollAmount = -3
+                scrollAmount = -10
             }
         }
         this.previousX = screenX;
