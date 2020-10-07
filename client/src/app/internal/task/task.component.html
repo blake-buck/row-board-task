@@ -1,6 +1,6 @@
 <div role='listitem'
     (dblclick)=toggleInput() 
-    *ngIf='task.isInput && (!board.hideCompleteTasks && !task.isComplete)'
+    *ngIf='task.isInput'
     class='task-list-item'
     [style.background]='task.cardColor'
     [style.color]='task.fontColor'
