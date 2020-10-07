@@ -16,10 +16,6 @@ export class DialogChecklistComponent{
 
     constructor(private store:Store<AppStore>){}
 
-    addChecklist(data: Task){
-        this.store.dispatch(editTask({task:addChecklist(data)}))
-    }
-
     deleteChecklist(checklist, data: Task){
         this.store.dispatch(editTask({task:deleteChecklist(data, checklist)}))
     }

@@ -9,7 +9,7 @@ import {PhotoDialogComponent} from './photo_dialog/photo_dialog.component';
 import {DeleteDialogComponent} from './delete_dialog/delete_dialog.component';
 
 import {TransferTaskDialogComponent} from './transfer_task_dialog/transfer_task_dialog.component';
-import { addLabel, removeFile } from './task_dialog.logic';
+import { addChecklist, addLabel, removeFile } from './task_dialog.logic';
 import { editTask, closeTaskDialog, openTaskDialog, setSelectedTask, archiveTask } from 'src/app/store/app.actions';
 import { selectBoardAndRowTitleFromTaskKey, selectSpecificTask, selectSelectedTask } from 'src/app/store/app.selector';
 import { Observable } from 'rxjs';
@@ -72,6 +72,10 @@ export class TaskDialogComponent {
     
     addLabel(labelColor, data:Task){
         this.store.dispatch(editTask({task:addLabel(data, labelColor)}))
+    }
+
+    addChecklist(data: Task){
+        this.store.dispatch(editTask({task:addChecklist(data)}))
     }
 
     onCloseDialog(){
