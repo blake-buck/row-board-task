@@ -36,6 +36,7 @@ import { DialogTitleComponent } from './task_dialog/components/dialog-title.comp
 import { DropTargetDirective } from './util/drop-target.directive';
 import { DragScrollingDirective } from './util/drag-scrolling.directive';
 import { VerticalScrollingDirective } from './util/vertical-scrolling.directive';
+import { LabelSizePipe } from './util/label-size.pipe';
 
 
 @NgModule({
@@ -77,7 +78,8 @@ import { VerticalScrollingDirective } from './util/vertical-scrolling.directive'
         InputAutofocusDirective,
         DragScrollingDirective,
         VerticalScrollingDirective,
-        MomentPipe
+        MomentPipe,
+        LabelSizePipe
     ],
     imports: [
         BrowserModule,
