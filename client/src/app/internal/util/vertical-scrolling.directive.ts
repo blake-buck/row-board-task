@@ -6,15 +6,26 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
 
 export class VerticalScrollingDirective{
     startScrollingBoundary = 125;
-    @HostListener('dragover', ['$event.screenY']) onDragOver(screenY){
 
-        if(screenY < this.startScrollingBoundary){
-            // scroll up
-            document.scrollingElement.scrollTop -= 10;
-        }
-        else if(screenY > window.innerHeight - this.startScrollingBoundary){
-            // scroll down
-            document.scrollingElement.scrollTop += 10;
+    delayDispatch = false;
+    dragoverTimeout;
+    
+    @HostListener('dragover', ['$event.screenY']) onDragOver(screenY){
+        if(!this.delayDispatch){
+            this.delayDispatch = true;
+            this.dragoverTimeout = setTimeout(() => {
+                this.delayDispatch = false;
+                if(screenY < this.startScrollingBoundary){
+                    // scroll up
+                    document.scrollingElement.scrollTop -= 20;
+                }
+                else if(screenY > window.innerHeight - this.startScrollingBoundary){
+                    // scroll down
+                    
+                    document.scrollingElement.scrollTop += 20;
+                }
+            }, 50)
         }
     }
+
 }
