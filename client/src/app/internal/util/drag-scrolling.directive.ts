@@ -32,6 +32,7 @@ export class DragScrollingDirective{
         if(e.target.classList.contains('board-wrapper') || e.target.classList.contains('board-list')){
             this.previousX = e.screenX;
             this.mouseDown=true;
+            document.body.style.userSelect = 'none';
         }
     }
 
@@ -43,11 +44,17 @@ export class DragScrollingDirective{
     }
 
     @HostListener('mouseup') onMouseUp(){
-        this.mouseDown = false;
-        this.previousX = null;
+        if(this.mouseDown || this.previousX){
+            document.body.style.userSelect = 'auto';
+            this.mouseDown = false;
+            this.previousX = null;
+        }
     }
     @HostListener('mouseleave') onMouseLeave(){
-        this.mouseDown = false;
-        this.previousX = null;
+        if(this.mouseDown || this.previousX){
+            document.body.style.userSelect = 'auto';
+            this.mouseDown = false;
+            this.previousX = null;
+        }
     }
 }
