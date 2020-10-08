@@ -16,11 +16,19 @@ export function _shiftRowUp(state, action){
     if(position !== 0){
         let precedingRow = state.rows[position -1];
         let shiftedRow = state.rows[position]
-        state.rows.splice(position-1, 2, shiftedRow, precedingRow)
+        console.log(precedingRow, shiftedRow)
         return {
             ...state,
             isDataSaved:false,
-            rows:state.rows.map((row, index) => ({...row, position:index}))
+            rows:state.rows.map((row, index) => {
+                if(row.key === precedingRow.key){
+                    return {...shiftedRow, position: index};
+                }
+                if(row.key === shiftedRow.key){
+                    return {...precedingRow, position:index};
+                }
+                return row;
+            })
         }
     }
 

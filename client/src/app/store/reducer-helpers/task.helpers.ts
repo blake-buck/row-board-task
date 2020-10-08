@@ -23,6 +23,7 @@ export function _addTask(state, action){
                             dueDate:null,
                             displayImageUrls:[],
                             attachedFiles:[],
+                            attachment:false,
                             labels:[],
                             
                             linkedTasks:[],

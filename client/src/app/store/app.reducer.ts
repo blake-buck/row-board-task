@@ -11,7 +11,7 @@ export function appReducer(state=initialState, action){
             return state;
         
         case setState.type:
-            return action.state.appReducer;
+            return {...action.state.appReducer, isDataSaved: false};
 
         case addRow.type:
             return _addRow(state);

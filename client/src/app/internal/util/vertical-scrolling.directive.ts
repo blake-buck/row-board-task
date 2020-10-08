@@ -21,7 +21,6 @@ export class VerticalScrollingDirective{
                 }
                 else if(screenY > window.innerHeight - this.startScrollingBoundary){
                     // scroll down
-                    
                     document.scrollingElement.scrollTop += 20;
                 }
             }, 50)
