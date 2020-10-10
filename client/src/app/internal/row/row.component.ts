@@ -35,9 +35,13 @@ export class RowComponent{
         this.boards$ = this.store.pipe(select(selectSpecificBoards, this.rowData.key));
     }
     
-    editTitle(e){
+    editTitle(e, rowData){
         if(e.key === ' '){
             e.target.value += ' ';
+        }
+        if(e.key === 'Enter'){
+            this.toggleEditTitle();
+            this.store.dispatch(editRowTitle({key:rowData.key, title: e.target.value}))
         }
     }
     submitTitle(e, rowData: Row){
@@ -46,9 +50,13 @@ export class RowComponent{
         this.store.dispatch(editRowTitle({key:rowData.key, title: new FormData(e.target).get('title').toString()}))
     }
 
-    editDescription(e){
+    editDescription(e, rowData){
         if(e.key === ' '){
             e.target.value += ' ';
+        }
+        if(e.key === 'Enter'){
+            this.toggleEditDescription();
+            this.store.dispatch(editRowDescription({key:rowData.key, description: e.target.value}))
         }
     }
     submitDescription(e, rowData: Row){
