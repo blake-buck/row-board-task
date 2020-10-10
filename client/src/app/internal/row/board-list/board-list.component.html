@@ -1,4 +1,4 @@
-<div class='board-list' drag-scrolling #scrollRow class='home_div' (dragover)='onMouseEnter($event)' (dragleave)='onMouseLeave($event)'  >
+<div class='board-list' drag-scrolling #scrollRow class='home_div' (dragover)='onDragOver($event)' (dragleave)='onMouseLeave($event)'  >
     <div class='board-wrapper' *ngFor='let board of boards$ | async'>
         <board 
             class='board' 

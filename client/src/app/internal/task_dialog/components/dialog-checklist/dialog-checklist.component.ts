@@ -35,10 +35,6 @@ export class DialogChecklistComponent{
         e.dataTransfer.setData('text/plain', `{"itemKey":${item.key}, "checklistKey":${item.checklistKey}}`);
     }
 
-    onChecklistItemDragOver(e){
-        e.preventDefault();
-    }
-
     onChecklistDrop(e, item, data: Task){
         let droppedItemKeys = JSON.parse(e.dataTransfer.getData('text/plain'))
         if(droppedItemKeys.checklistKey === item.checklistKey){

@@ -12,7 +12,7 @@
     <div *ngFor='let item of checklist.content; index as i' class='dialog-checklist-item'>
         <mat-checkbox 
             *ngIf='!item.isEditing' [checked]='item.checked' (change)='toggleChecklistItem($event,checklist.key, item, data)' 
-            draggable="true" (dragstart)='onChecklistItemDragStart($event, item, data)' (dragover)='onChecklistItemDragOver($event, data)' (drop)='onChecklistDrop($event, item, data)'>
+            draggable="true" (dragstart)='onChecklistItemDragStart($event, item, data)'  (drop)='onChecklistDrop($event, item, data)'>
                 <div class='dialog-checklist-item-content' (click)='toggleEditChecklistItem($event, checklist.key, item, data)'>{{item.content}}</div>
         </mat-checkbox>
         

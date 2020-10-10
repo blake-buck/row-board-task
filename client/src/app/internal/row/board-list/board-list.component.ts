@@ -11,7 +11,7 @@ export class BoardListComponent{
     
     @ViewChild('scrollRow', {static:false}) scrollRow: ElementRef;
 
-    onMouseEnter(e){
+    onDragOver(e){
         e.preventDefault();
         const startScrollingBoundary = 125;
         if(e.screenX > window.innerWidth - startScrollingBoundary){

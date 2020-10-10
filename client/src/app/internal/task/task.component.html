@@ -1,62 +1,16 @@
 <div role='listitem'
-    (dblclick)=toggleInput() 
-    *ngIf='task.isInput'
-    class='task-list-item'
-    [style.background]='task.cardColor'
-    [style.color]='task.fontColor'
-    style='height:100%;padding-top:10px;padding-bottom:10px;min-height:47px;'
-    #elementWrapper
->   
-    <div class='task-list-item-wrapper'>
-        <img *ngIf='task.displayImageUrls && task.displayImageUrls.length > 0' [src]='task.displayImageUrls[0]' />
-        <div class='task-list-item-div'>
-            <form class='task-list-form' (submit)='toggleInput($event)'>
-                <mat-form-field class='task-list-field' style='margin-bottom:-0.5em; margin-top:-0.5em; ' >
-                    <textarea   
-                        matInput
-                        input-autofocus
-                        [value]='task.body'
-                        (keyup)='changeTaskBody($event)'
-                        (focusout)='toggleInput()'
-                        cdkTextareaAutosize
-                    >
-                    </textarea>
-                </mat-form-field>
-            </form>
-
-            <div>
-                <mat-icon *ngIf='task.important'>visibility</mat-icon>
-                <mat-icon *ngIf='task.warning'>warning</mat-icon>
-                <mat-icon *ngIf='task.payment'>payment</mat-icon>
-                <mat-icon *ngIf='task.vacation'>weekend</mat-icon>
-                <mat-icon *ngIf='task.attachment'>attach_file</mat-icon>
-                <mat-icon *ngIf='task.social'>group</mat-icon>
-                <mat-icon *ngIf='task.work'>work</mat-icon>
-                <mat-icon *ngIf='task.travel'>local_airport</mat-icon>
-            </div>
-        </div>
-    </div>
-
-    <span class='task-list-checklist-icon-wrapper'>
-            <mat-icon *ngFor='let checklist of task.checklists' [style.color]='checklist.color'>check_box</mat-icon>
-    </span>
-
-</div>
-
-<div role='listitem'
     (click)='openDialog()' 
     *ngIf='!task.isInput && (board.hideCompleteTasks===false && task.isComplete===true || task.isComplete===false)' 
     draggable="true" 
     (dragstart)='onDragStart($event)'
     (dragend)='onDragEnd($event)' 
-    drop-target
-    (dragover)='onDragOver($event)' 
     (drop)='onDrop($event)' 
     class='task-list-item'
     [style.background]='task.cardColor'
     [style.color]='task.fontColor'
     [ngClass]='{"card-complete":task.isComplete}'
     style='height:100%;padding-top:10px;padding-bottom:10px; position:relative; '
+
     #elementWrapper
 >   
     <div (click)='toggleDisplayLabelText()' *ngIf='!displayLabelText' class='label-row'>
@@ -75,7 +29,7 @@
         </div>
 
         <div class='task-list-item-div'>
-            <div class='task-list-text-due-date' >
+            <div class='task-list-text-due-date' *ngIf='!task.isInput'>
                 <div style='display:flex; align-items:center;'>
                     <div style='width:100%; overflow-wrap: break-word; word-wrap: break-word;' [ngClass]='{"text-complete":task.isComplete}'>{{task.body}}</div>
                     <div class='task-due-date' *ngIf='task.dueDate'>
@@ -83,8 +37,22 @@
                         <span >{{task.dueDate | momentPipe:'format':'MM/DD/YY'}}</span>
                     </div>
                 </div>
-                
             </div>
+
+    
+            <form class='task-list-form' (submit)='toggleInput($event)' *ngIf='task.isInput'>
+                <mat-form-field class='task-list-field' style='margin-bottom:-0.5em; margin-top:-0.5em; ' >
+                    <textarea   
+                        matInput
+                        input-autofocus
+                        [value]='task.body'
+                        (keyup)='changeTaskBody($event)'
+                        (focusout)='toggleInput()'
+                        cdkTextareaAutosize
+                    >
+                    </textarea>
+                </mat-form-field>
+            </form>
             
 
             <div class='task-list-labels'>

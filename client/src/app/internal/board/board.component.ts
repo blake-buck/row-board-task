@@ -103,9 +103,7 @@ export class BoardComponent{
         this.autoScroller.emit({forward:true, offset:e.clientX})
     }
 
-    onDragOver(e){
-        e.preventDefault()
-    }
+
 
 
     openDialog(id, data:Task | number){

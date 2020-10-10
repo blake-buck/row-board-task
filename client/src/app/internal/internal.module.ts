@@ -33,7 +33,6 @@ import { DialogDescriptionComponent } from './task_dialog/components/dialog-desc
 import { DialogCommentsComponent } from './task_dialog/components/dialog-comments/dialog-comments.component';
 import { DialogChecklistComponent } from './task_dialog/components/dialog-checklist/dialog-checklist.component';
 import { DialogTitleComponent } from './task_dialog/components/dialog-title.component';
-import { DropTargetDirective } from './util/drop-target.directive';
 import { DragScrollingDirective } from './util/drag-scrolling.directive';
 import { VerticalScrollingDirective } from './util/vertical-scrolling.directive';
 import { LabelSizePipe } from './util/label-size.pipe';
@@ -74,7 +73,6 @@ import { LabelSizePipe } from './util/label-size.pipe';
 
         AccountComponent,
 
-        DropTargetDirective,
         InputAutofocusDirective,
         DragScrollingDirective,
         VerticalScrollingDirective,

@@ -122,15 +122,15 @@ export class TaskComponent{
             droppedAbove = true;
         }
 
-        let payload = onDrop(transferedData, this.task, droppedAbove)
+        let payload = onDrop(transferedData, this.task, false)
         if(payload){
             this.store.dispatch(transferTask({payload}))
         }
                 
     }
 
-    onDragOver(e){
-    }
+    delimitDragEnter = false;
+
 
     onDragStart(e){
         e.dataTransfer.setData('text/plain', `${this.task.key}+${this.task.boardKey}`);

@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import {Store, select} from '@ngrx/store';
 import {Observable} from 'rxjs';
 
-import { onDragStart, onDragOver, onDrop } from './row.logic';
+import { onDragStart, onDrop } from './row.logic';
 
 import { archiveRow, editRowTitle, editRowDescription, addBoard, transferBoard, editRowExpanded, shiftRowUp, shiftRowDown, deleteRow } from '../../store/app.actions';
 import { selectSpecificBoards } from '../../store/app.selector';
@@ -58,7 +58,6 @@ export class RowComponent{
     }
 
     onDragStart = onDragStart
-    onDragOver = onDragOver
 
     addBoard(row:Row){
         this.store.dispatch(addBoard({key:row.key}))
