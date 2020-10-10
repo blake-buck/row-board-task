@@ -1,6 +1,6 @@
 <div role='listitem'
     (click)='openDialog()' 
-    *ngIf='!task.isInput && (board.hideCompleteTasks===false && task.isComplete===true || task.isComplete===false)' 
+    *ngIf='board.hideCompleteTasks===false || (board.hideCompleteTasks === true && task.isComplete === false)' 
     draggable="true" 
     (dragstart)='onDragStart($event)'
     (dragend)='onDragEnd($event)' 
