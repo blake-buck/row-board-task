@@ -40,7 +40,6 @@ export class DialogChecklistComponent{
     }
 
     onChecklistDrop(e, item, data: Task){
-        console.log('on drop');
         let droppedItemKeys = JSON.parse(e.dataTransfer.getData('text/plain'))
         if(droppedItemKeys.checklistKey === item.checklistKey){
             let modifiedChecklist = data.checklists.find(checklist => checklist.key === droppedItemKeys.checklistKey).content;
