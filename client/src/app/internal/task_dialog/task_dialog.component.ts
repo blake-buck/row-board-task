@@ -65,7 +65,7 @@ export class TaskDialogComponent {
         ngOnDestroy(){
             setTimeout(() => {
                 if(!document.querySelector('.task-dialog')){
-                    document.querySelector('#pageTitle').textContent = 'AngularFundamentals'
+                    document.querySelector('#pageTitle').textContent = 'row-board-task'
                 }
             }, 500)
         }
