@@ -1,4 +1,42 @@
-<mat-card class='form-wrapper'>
+<header>
+    <h1>row-board-task</h1>
+    <h2>A multi-row kanban board application</h2>
+</header>
+
+
+<mat-card>
+    <h2>Example row</h2>
+    <img mat-card-img alt='screenshot depicting a row with tasks in the application' src='https://raw.githubusercontent.com/blake-buck/row-board-task/master/client/src/assets/readme_image_one.png' />
+</mat-card>
+
+<mat-card>
+    <h2>Example task dialog</h2>
+    <img mat-card-img alt='screenshot depicting a task dialog in the application' src='https://raw.githubusercontent.com/blake-buck/row-board-task/master/client/src/assets/readme_image_two.png' />
+</mat-card>
+<mat-card>
+    <h2>Feature List</h2>
+    <mat-list>
+        <mat-list-item>Kanban style task tracking on multiple rows</mat-list-item>
+        <mat-list-item>Variety of options for styling tasks including icons, labels, card color, etc</mat-list-item>
+        <mat-list-item>Can attach display photos and files to tasks</mat-list-item>
+        <mat-list-item>Can add checklists and due dates to tasks</mat-list-item>
+        <mat-list-item>Can sort tasks by alphabetically, date created, creation, etc</mat-list-item>
+    </mat-list>
+</mat-card>
+
+<mat-card>
+    <h2>Built With</h2>
+    <mat-list>
+        <mat-list-item>Angular v8.0.0</mat-list-item>
+        <mat-list-item>Node v10.15.3 with NestJS v7.0.0</mat-list-item>
+        <mat-list-item>MongoDB Atlas v4.2.9</mat-list-item>
+        <mat-list-item>Authentication provided by Amazon Cognito</mat-list-item>
+        <mat-list-item>File storage provided by AWS S3</mat-list-item>
+        <mat-list-item>Hosted on AWS Lightsail</mat-list-item>
+        <mat-list-item><a href='https://github.com/blake-buck/row-board-task'>Link to GitHub repository</a></mat-list-item>
+    </mat-list>
+</mat-card>    
+<mat-card class='form-wrapper login'>
     <h2>Login</h2>
 
     <form (submit)='login($event)'>
