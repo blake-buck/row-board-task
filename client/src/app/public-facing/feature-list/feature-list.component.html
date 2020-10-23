@@ -1,0 +1,66 @@
+<mat-toolbar>
+    <mat-toolbar-row class='toolbar-row'>
+      <a id='home-link' [routerLink]='["/"]'>row-board-task</a>
+
+      <span>
+          <a mat-button [routerLink]='["/features"]'>Features</a>
+          <a mat-stroked-button [routerLink]='["/login"]'>LOGIN</a>
+      </span>
+      
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<div class='row feature'>
+    <h1>App features</h1>
+    <div class='item-wrapper'>
+            <mat-icon>article</mat-icon>
+            <mat-list>
+                <mat-list-item>Archive items you don't want to delete but don't immediately need either</mat-list-item>
+                <mat-list-item>Export/import application data in a JSON format</mat-list-item>
+                <mat-list-item>Track how many rows, boards, and tasks you have in the footer</mat-list-item>
+            </mat-list>
+    </div>
+</div>
+
+<div class='row feature alternate'>
+    <h1>Row features</h1>
+    <div class='item-wrapper'>
+            <mat-icon>list</mat-icon>
+            <mat-list>
+                <mat-list-item>Shift rows up and down</mat-list-item>
+                <mat-list-item>Drag and drop boards to reorder as you see fit</mat-list-item>
+                <mat-list-item>Expand and collapse rows to show/hide boards</mat-list-item>
+            </mat-list>
+    </div>
+</div>
+
+<div class='row feature'>
+    <h1>Board features</h1>
+    <div class='item-wrapper'>
+            <mat-icon>view_carousel</mat-icon>
+            <mat-list>
+                <mat-list-item>Drag and drop tasks to reorder</mat-list-item>
+                <mat-list-item>Hide completed tasks from being displayed</mat-list-item>
+                <mat-list-item>Order tasks alphabetically, by time created, completion status, etc</mat-list-item>
+            </mat-list>
+    </div>
+</div>
+
+<div class='row feature alternate'>
+    <h1>Task Features</h1>
+    <div class='item-wrapper'>
+            <mat-icon>view_day</mat-icon>
+            <mat-list>
+                <mat-list-item>Mark tasks as complete</mat-list-item>
+                <mat-list-item>Add icon tags to tasks</mat-list-item>
+                <mat-list-item>Add colored text labels to tasks</mat-list-item>
+                <mat-list-item>Add due dates to tasks</mat-list-item>
+                <mat-list-item>Add checklists to tasks</mat-list-item>
+                <mat-list-item>Change task font and background color</mat-list-item>
+                <mat-list-item>Attach display photos and files to tasks</mat-list-item>
+                <mat-list-item>Link tasks to other tasks</mat-list-item>
+                <mat-list-item>Change task descriptions to include more detail</mat-list-item>
+                <mat-list-item>Leave timestamped comments on tasks</mat-list-item>
+            </mat-list>
+    </div>
+</div>
