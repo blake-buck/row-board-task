@@ -8,9 +8,11 @@ import { LoginComponent } from './public-facing/login/login.component';
 import { RegisterComponent } from './public-facing/register/register.component';
 import { AccountComponent } from './internal/account/account.component';
 import { DatabaseSyncGuard } from './internal/database-sync.guard';
+import { LandingComponent } from './public-facing/landing/landing.component';
 
 const routes:Routes = [
-    {path:'', component:LoginComponent},
+    {path:'', component:LandingComponent},
+    {path:'login', component:LoginComponent},
     // {path:'register', component:RegisterComponent},
     {path:'forgot-password', component:ForgotPasswordComponent},
     {path:'forgot-password/confirm', component:ConfirmForgotPasswordComponent},
