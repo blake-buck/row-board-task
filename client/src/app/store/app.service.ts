@@ -2,13 +2,20 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import {initialState} from './app.state';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AppService{
-    constructor(private http:HttpClient){}
+    constructor(private http:HttpClient, private router: Router){}
 
     login({username, password}){
         return this.http.post(`${environment.apiUrl}/api/auth/login`, {username, password});
+    }
+
+    logout(){
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('accessToken');
+        this.router.navigate(['/']);
     }
 
     refresh(){
@@ -38,8 +45,15 @@ export class AppService{
 
     async completeRefreshToken(apiCall){
         if(this.isAccessTokenExpired()){
-            const accessToken = (await this.refresh().toPromise<any>()).message.AuthenticationResult.AccessToken
-            this.addTokensToStorage({accessToken})
+            try{
+                const accessToken = (await this.refresh().toPromise<any>()).message.AuthenticationResult.AccessToken
+                this.addTokensToStorage({accessToken})
+            }
+            catch(e){
+                // if this request fails, best to assume that the refresh token has expired.
+                this.logout();
+                throw new Error('Reauthentication is required.')
+            }
         }
 
         return await apiCall().toPromise();
